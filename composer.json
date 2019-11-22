@@ -1,0 +1,11 @@
+{
+    "name": "vladyslav/blogpub",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Vladyslav Vekslyer",
+            "email": "vladatcanada@gmail.com"
+        }
+    ],
+    "require": {}
+}
