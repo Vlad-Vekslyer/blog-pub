@@ -1,21 +1,21 @@
 <?php
   // the initialize function takes an array of functions and calls each function
-  function initialize($initializers = array('initAutoloaderComposer', 'initAutoloaderClasses', 'initTwig')){
-    $initReturns = array();
-    foreach ($initializers as $initializer){
+  function initialize($initializers = array('initAutoloaderClasses', 'initAutoloaderComposer', 'initTwig')){
+    foreach ($initializers as $initializer)
       $initializer();
-    }
-
   }
 
-  // initialize composer autoload
-   function initAutoloaderComposer(){
-    require_once '../vendor/autoload.php';
+  // set autoloader for composer
+  function initAutoloaderComposer(){
+    $autoload = __DIR__ . "\\..\\vendor\\autoload.php";
+    require_once $autoload;
   }
 
+  // initialize a twig Environment object to be rendered throughout the application
   function initTwig(){
     initAutoloaderComposer();
-    $loader = new \Twig\Loader\FilesystemLoader('../views');
+    $views = __DIR__ . "\\..\\views";
+    $loader = new \Twig\Loader\FilesystemLoader($views);
     $twig = new \Twig\Environment($loader);
     $GLOBALS['twig'] = $twig;
   }
