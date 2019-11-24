@@ -4,5 +4,5 @@
   initialize();
   require_once "Header/Header.php";
   $landing = new \Blog\Template\Template('landing.html.twig');
-  $landing->output(initTwig());
+  $landing->output();
 ?>

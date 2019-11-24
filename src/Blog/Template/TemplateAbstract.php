@@ -10,6 +10,6 @@
       $this->varlist = $varlist;
     }
 
-    public abstract function output($twig);
+    public abstract function output();
   }
 ?>

@@ -3,7 +3,8 @@
   require_once 'TemplateAbstract.php';
 
   class Template extends TemplateConstructor {
-    public function output($twig){
+    public function output(){
+      $twig = $GLOBALS['twig'];
       if($this->varlist)
         echo $twig->render($this->template, $this->varlist);
       else

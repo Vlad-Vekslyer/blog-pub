@@ -1,8 +1,11 @@
 <?php
   // the initialize function takes an array of functions and calls each function
-  function initialize($initializers = array('initAutoloaderComposer','initAutoloaderClasses')){
-    foreach ($initializers as $initializer)
+  function initialize($initializers = array('initAutoloaderComposer', 'initAutoloaderClasses', 'initTwig')){
+    $initReturns = array();
+    foreach ($initializers as $initializer){
       $initializer();
+    }
+
   }
 
   // initialize composer autoload
@@ -14,7 +17,7 @@
     initAutoloaderComposer();
     $loader = new \Twig\Loader\FilesystemLoader('../views');
     $twig = new \Twig\Environment($loader);
-    return $twig;
+    $GLOBALS['twig'] = $twig;
   }
 
   // initialize autoloading of classes inside of fully-qualified namespaces
