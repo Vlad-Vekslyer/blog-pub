@@ -13,13 +13,12 @@
   // initialize autoloading of classes inside of fully-qualified namespaces
   function initAutoloaderClasses(){
     spl_autoload_register(function($class){
-      $prefix = 'src\\';
+      $prefix = 'Blog\\';
       $len = strlen($prefix);
       if (strncmp($prefix, $class, $len) !== 0)
         return;
 
-      $relative_class = substr($class, $len);
-      $file = __DIR__ . "\\" . str_replace('\\', '/', $relative_class) . '.php';
+      $file = __DIR__ . "\\" . str_replace('\\', '/', $class) . '.php';
       if (file_exists($file))
         require $file;
       else

@@ -1,6 +1,5 @@
 <?php
-  namespace src;
+  namespace Blog;
   require_once "../src/Initializer.php";
   initialize();
-  \src\Hello\Check::printHello();
 ?>
