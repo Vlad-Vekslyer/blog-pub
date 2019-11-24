@@ -10,6 +10,13 @@
     require_once '../vendor/autoload.php';
   }
 
+  function initTwig(){
+    initAutoloaderComposer();
+    $loader = new \Twig\Loader\FilesystemLoader('../views');
+    $twig = new \Twig\Environment($loader);
+    return $twig;
+  }
+
   // initialize autoloading of classes inside of fully-qualified namespaces
   function initAutoloaderClasses(){
     spl_autoload_register(function($class){
