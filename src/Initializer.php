@@ -1,8 +1,16 @@
 <?php
   // the initialize function takes an array of functions and calls each function
-  function initialize($initializers = array('initAutoloaderClasses', 'initAutoloaderComposer', 'initTwig')){
+  function initialize($initializers = array('initAutoloaderClasses', 'initAutoloaderComposer', 'initTwig','initEnv')){
     foreach ($initializers as $initializer)
       $initializer();
+  }
+
+  // load .env file to set envriomental variables
+  function initEnv(){
+    if(file_exists('../.env')){
+      $dotenv = new \Symfony\Component\Dotenv\Dotenv();
+      $dotenv->load('../.env');
+    }
   }
 
   // set autoloader for composer
@@ -31,8 +39,7 @@
       $file = __DIR__ . "\\" . str_replace('\\', '/', $class) . '.php';
       if (file_exists($file))
         require $file;
-      else
-        die("File not found at $file");
+
     });
   }
  ?>

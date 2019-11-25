@@ -8,6 +8,7 @@
         }
     ],
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "symfony/dotenv": "^5.0"
     }
 }
