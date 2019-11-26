@@ -7,9 +7,10 @@
 
   // load .env file to set envriomental variables
   function initEnv(){
-    if(file_exists('../.env')){
+    $env = __DIR__ . "\\..\\.env";
+    if(file_exists($env)){
       $dotenv = new \Symfony\Component\Dotenv\Dotenv();
-      $dotenv->load('../.env');
+      $dotenv->load($env);
     }
   }
 
