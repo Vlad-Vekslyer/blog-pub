@@ -21,16 +21,24 @@
           $statement->execute() or die($this->connection->error);
         } else die("Must include a title");
       }
-      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, 1, {$latestArticle['id']})");
+      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, 1, {$latestArticle['id']}, NOW)())");
       $statement->bind_param('s', $body);
       $statement->execute() or die($this->connection->error);
     }
 
-    public static function getLatestArticle(){
-      $connection = mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_NAME']);
-      $result = mysqli_query($connection, "SELECT * FROM articles ORDER BY date_created DESC LIMIT 1");
-      mysqli_close($connection);
-      return $result;
+    public function getContributions($articleId){
+      $statement = $this->connection->prepare("SELECT body,author FROM contributions WHERE article = ? ");
+      $statement->bind_param('i', $articleId);
+      $contributions = $statement->execute() or die($this->connection->error);
+      return $contributions;
+    }
+
+    public function getLatestArticle($cb = null){
+      $result = $this->connection->query("SELECT * FROM articles ORDER BY date_created DESC LIMIT 1") or die($this->connection->error);
+      if($cb == null)
+        return $result->fetch_array(MYSQLI_ASSOC);
+      else
+        $cb($result->fetch_array(MYSQLI_ASSOC));
     }
   }
 ?>
