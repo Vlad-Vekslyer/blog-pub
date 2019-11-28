@@ -13,7 +13,7 @@
   $article->getLatestArticle(function($articleData){
     global $article;
     $contributions = $article->getContributions($articleData['id']);
-    $edit = new \Blog\Template\Template('edit.html.twig');
+    $edit = new \Blog\Template\Template('edit.html.twig', ['contributions'=>$contributions, 'article'=>$articleData]);
     $edit->output();
   });
   $article->closeConnection();

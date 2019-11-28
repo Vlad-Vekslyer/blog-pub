@@ -8,28 +8,35 @@
     }
 
     public function commit($body, $title){
-      $latestArticle = self::getLatestArticle()->fetch_array(MYSQLI_ASSOC);
+      $latestArticle = $this->getLatestArticle();
       // has the current article hasn't received its first contribution yet?
       if(!isset($latestArticle['title'])){
         if($title != null){
-          // insert title of article and overwrite the date_created value
+          // insert title of article and overwrite the dat  e_created value
           $statement = $this->connection->prepare("UPDATE articles SET
             title = ?,
             date_created = NOW()
             WHERE id = {$latestArticle['id']}");
           $statement->bind_param('s', $title);
           $statement->execute() or die($this->connection->error);
+          $statement->close();
         } else die("Must include a title");
       }
-      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, 1, {$latestArticle['id']}, NOW)())");
+      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, 1, {$latestArticle['id']}, NOW())");
       $statement->bind_param('s', $body);
       $statement->execute() or die($this->connection->error);
+      $statement->close();
     }
 
     public function getContributions($articleId){
-      $statement = $this->connection->prepare("SELECT body,author FROM contributions WHERE article = ? ");
+      $statement = $this->connection->prepare("SELECT body,author FROM contributions WHERE article = ? ORDER BY date_created DESC");
       $statement->bind_param('i', $articleId);
-      $contributions = $statement->execute() or die($this->connection->error);
+      $statement->execute() or die($this->connection->error);
+      $statement->bind_result($body, $author);
+      $contributions = array();
+      while($statement->fetch()){
+        array_push($contributions, array("body"=>$body, "author"=>$author));
+      }
       return $contributions;
     }
 
