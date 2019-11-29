@@ -2,8 +2,8 @@
   namespace Blog;
   require_once "../../src/Initializer.php";
   initialize();
-  require_once "../Header/Header.php";
   $article = new \Blog\Database\Article();
+  require_once "../partials/PastArticles.php";
 
   if (isset($_POST['contribution'])){
     $title = isset($_POST['title']) ? $_POST['title'] : null;

@@ -12,8 +12,10 @@ form {
   display: flex;
   flex-direction: column;
 }
-
-input {
+form button {
+  align-self: flex-start;
+}
+form input {
   font-size: 2.5em;
   font-style: bold;
 }

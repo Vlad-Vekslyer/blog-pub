@@ -1,12 +1,21 @@
+    {{ include('partials/header.html.twig') }}
     <link rel='stylesheet' href='/stylesheets/edit.css'>
   </head>
   <body>
     <div class="container">
-      {% for contribution in contributions %}
-        <p>{{contribution.author}}: {{contribution.body}}<p/>
-      {% endfor %}
       <form action="/edit/index" method="post">
-        <input placeholder="Enter title...." type="text" name="title" value="">
+
+        {% if article.title == null %}
+          <input placeholder="Enter title...." type="text" name="title" value="">
+        {% else %}
+          <h1>{{article.title}}</h1>
+        {% endif %}
+
+        {% for contribution in contributions %}
+          <p>{{contribution.body}} - <i>written by {{contribution.author}}</i></p>
+          <br/>
+        {% endfor %}
+
         <textarea name="contribution" rows="5"></textarea>
         <button type="submit" name="button">Commit</button>
       </form>
