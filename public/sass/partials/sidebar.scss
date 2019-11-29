@@ -1,0 +1,18 @@
+aside {
+  float: right;
+  padding: 10px 25px;
+  box-sizing: border-box;
+  width: 15%;
+
+  ul {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+}
