@@ -4,6 +4,19 @@ form {
   display: flex;
   flex-direction: column;
 
+  .header {
+    h1 {
+      text-align: center;
+      position: relative;
+      width: auto;
+    }
+
+    button {
+      float: left;
+    }
+
+  }
+
   button {
     align-self: flex-start;
   }

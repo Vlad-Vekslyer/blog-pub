@@ -12,6 +12,14 @@ form {
   display: flex;
   flex-direction: column;
 }
+form .header h1 {
+  text-align: center;
+  position: relative;
+  width: auto;
+}
+form .header button {
+  float: left;
+}
 form button {
   align-self: flex-start;
 }
