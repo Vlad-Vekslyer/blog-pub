@@ -25,6 +25,13 @@ form {
     font-size: 2.5em;
     font-style: bold;
   }
+
+  .contribution {
+    width: 100%;
+    height: 20px;
+    overflow: hidden;
+    resize: none;
+  }
 }
 
 .container {

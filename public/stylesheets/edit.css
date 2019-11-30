@@ -27,5 +27,11 @@ form input {
   font-size: 2.5em;
   font-style: bold;
 }
+form .contribution {
+  width: 100%;
+  height: 20px;
+  overflow: hidden;
+  resize: none;
+}
 
 /*# sourceMappingURL=edit.css.map */
