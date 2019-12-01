@@ -18,6 +18,7 @@ class Contribution {
     }
   }
 
+  // creates a new textarea when user presses enter
   createContributionEvent(){
     this.contribution.addEventListener("keydown", function(event) {
       if(event.key == "Enter"){
@@ -27,6 +28,7 @@ class Contribution {
     });
   }
 
+  // control whether the user can submit the form
   buttonToggleEvent(){
     let button = document.querySelector('button[type="submit"]');
     this.contribution.addEventListener("input", () => {
@@ -35,6 +37,7 @@ class Contribution {
     });
   }
 
+  // controls the size of a textarea to adjust to the number of characters written
   sizeAdjustEvent(){
     this.contribution.addEventListener("keydown", function(event) {
         // calculated with element width divided by text.length when the text area is at full capacity
