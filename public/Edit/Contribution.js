@@ -4,16 +4,18 @@ class Contribution {
   contribution;
 
   constructor() {
-    let contributions = document.querySelector(".contributions");
-    let newTextarea = document.createElement("TEXTAREA");
-    newTextarea.classList.add("contribution");
-    this.contribution = newTextarea;
-    this.buttonToggleEvent();
-    this.sizeAdjustEvent();
-    this.createContributionEvent();
-    contributions.appendChild(newTextarea);
-    newTextarea.focus();
-    Contribution.contributionNum++;
+    if (contributionNum < 5){
+      let contributions = document.querySelector(".contributions");
+      let newTextarea = document.createElement("TEXTAREA");
+      newTextarea.classList.add("contribution");
+      newTextarea.setAttribute("name", `contribution-${contributionNum++}`);
+      this.contribution = newTextarea;
+      this.buttonToggleEvent();
+      this.sizeAdjustEvent();
+      this.createContributionEvent();
+      contributions.appendChild(newTextarea);
+      newTextarea.focus();
+    }
   }
 
   createContributionEvent(){
