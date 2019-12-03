@@ -5,10 +5,15 @@
   $article = new \Blog\Database\Article();
 
   if (isset($_POST['contribution-1'])){
+    $contributions = array();
     $title = isset($_POST['title']) ? $_POST['title'] : null;
     foreach ($_POST as $key => $contribution) {
       if(\preg_match("/contribution-[0-9]/", $key))
-        $article->commit($contribution, $title);
+        array_push($contributions, $contribution);
+    }
+    \Blog\Processor\Processor::processContributions($contributions);
+    foreach ($contributions as $contribution) {
+      $article->commit($contribution, $title);
     }
   }
 

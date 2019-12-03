@@ -17,7 +17,7 @@
         </div>
 
         {% for contribution in contributions %}
-          <p>{{contribution.body}} - <i>written by {{contribution.author}}</i></p>
+          <p>{{contribution.body | raw}}<i> - written by {{contribution.author}}</i></p>
           <br/>
         {% endfor %}
 

@@ -12,6 +12,7 @@
 
     public static function processContributions(&$contributions){
       foreach ($contributions as &$value) {
+        $value = \htmlspecialchars($value, ENT_QUOTES);
         $firstChars = substr($value, 0, 2);
         if(in_array($firstChars, self::$oneliners)){
           self::processOneliner($firstChars, $value);

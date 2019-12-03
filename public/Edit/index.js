@@ -29,5 +29,4 @@ reviewButton.addEventListener("click", () => {
     })
   })
   .catch(error => console.error("Fetch error:" + error.message))
-
-})
+});
