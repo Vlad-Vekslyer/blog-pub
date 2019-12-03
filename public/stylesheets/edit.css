@@ -19,6 +19,11 @@ form .header h1 {
 }
 form .header button {
   float: left;
+  position: relative;
+  z-index: 1;
+}
+form .header button:nth-of-type(2) {
+  float: right;
 }
 form button {
   align-self: flex-start;

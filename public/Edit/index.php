@@ -4,17 +4,6 @@
   initialize();
   $article = new \Blog\Database\Article();
 
-  $contributions = array(
-    "contribution-1" => "##Hello this is a header contribution",
-    "contribution-2" => "This is an %%emphasis%% contribution",
-    "contribution-3" => "This is a **bold** contribution",
-    "contribution-4" => "**Another** %%one%%"
-  );
-
-  \Blog\Processor\Processor::processContributions($contributions);
-
-  print_r($contributions);
-
   if (isset($_POST['contribution'])){
     $title = isset($_POST['title']) ? $_POST['title'] : null;
     $article->commit($_POST['contribution'], $title);

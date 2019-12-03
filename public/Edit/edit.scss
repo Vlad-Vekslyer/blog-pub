@@ -13,8 +13,13 @@ form {
 
     button {
       float: left;
+      position: relative;
+      z-index: 1;
     }
 
+    button:nth-of-type(2){
+      float: right;
+    }
   }
 
   button {
