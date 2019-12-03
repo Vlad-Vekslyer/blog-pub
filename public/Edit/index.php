@@ -4,9 +4,12 @@
   initialize();
   $article = new \Blog\Database\Article();
 
-  if (isset($_POST['contribution'])){
+  if (isset($_POST['contribution-1'])){
     $title = isset($_POST['title']) ? $_POST['title'] : null;
-    $article->commit($_POST['contribution'], $title);
+    foreach ($_POST as $key => $contribution) {
+      if(\preg_match("/contribution-[0-9]/", $key))
+        $article->commit($contribution, $title);
+    }
   }
 
   $article->getLatestArticle(function($articleData){

@@ -11,7 +11,7 @@
     static $multiliners = array("%%", "**");
 
     public static function processContributions(&$contributions){
-      foreach ($contributions as $key => &$value) {
+      foreach ($contributions as &$value) {
         $firstChars = substr($value, 0, 2);
         if(in_array($firstChars, self::$oneliners)){
           self::processOneliner($firstChars, $value);

@@ -3,14 +3,12 @@
   require_once "../../src/Initializer.php";
   initialize();
 
-  $contributions = array(
-    "contribution-1" => "##Hello this is a header contribution",
-    "contribution-2" => "This is an %%emphasis%% contribution",
-    "contribution-3" => "This is a **bold** contribution",
-    "contribution-4" => "**Another** %%one%%"
-  );
+  if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $data = (array) \json_decode(\file_get_contents("php://input"));
+    $contributions = $data['contributions'];
+    \Blog\Processor\Processor::processContributions($contributions);
+    $json = json_encode(array('contributions' => $contributions));
+    echo $json;
+  }
 
-  \Blog\Processor\Processor::processContributions($contributions);
-  $json = json_encode($contributions);
-  echo $json;
  ?>
