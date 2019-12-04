@@ -1,4 +1,5 @@
 let contributionNum = 1;
+const fontWidth = 7.9;
 
 class Contribution {
   contribution;
@@ -41,7 +42,6 @@ class Contribution {
   sizeAdjustEvent(){
     this.contribution.addEventListener("keydown", function(event) {
         // calculated with element width divided by text.length when the text area is at full capacity
-        const fontWidth = 7.9;
         const maxSize = Math.ceil(this.getBoundingClientRect().width / fontWidth);
         const textareaHeight = parseInt(getComputedStyle(this).height);
         if(this.textLength % maxSize == 0 && event.key != "Backspace" && this.textLength != 0) {
@@ -56,7 +56,6 @@ class Contribution {
       if(this.textLength == 0) this.style.height = "20px";
     });
   }
-
 }
 
 export default Contribution
