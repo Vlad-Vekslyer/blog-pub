@@ -1,5 +1,9 @@
-let contributionNum = 1;
+import decorate from "./decorate.js";
+
 const fontWidth = 7.9;
+let currentContribution;
+let selections = {};
+let contributionNum = 1;
 
 class Contribution {
   contribution;
@@ -13,6 +17,7 @@ class Contribution {
       this.contribution = newTextarea;
       this.buttonToggleEvent();
       this.sizeAdjustEvent();
+      this.newSelection();
       this.createContributionEvent();
       contributions.appendChild(newTextarea);
       newTextarea.focus();
@@ -56,6 +61,29 @@ class Contribution {
       if(this.textLength == 0) this.style.height = "20px";
     });
   }
+
+  newSelection(){
+    this.contribution.addEventListener("select", event => {
+      selections.start = event.target.selectionStart;
+      selections.end = event.target.selectionEnd + 1;
+      currentContribution = this.contribution;
+    });
+
+    this.contribution.addEventListener("focus", () => {
+      selections = {};
+      currentContribution = this.contribution;
+    });
+  }
+}
+
+let buttons = document.getElementById('decorator').children;
+
+for(let i = 0; i < buttons.length; i++){
+  buttons[i].addEventListener("click", function() {
+    let boundDecorate = decorate.bind(this);
+    if(selections.start && selections.end) boundDecorate(currentContribution, selections);
+    else boundDecorate(currentContribution);
+  })
 }
 
 export default Contribution

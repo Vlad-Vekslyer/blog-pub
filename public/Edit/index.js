@@ -1,5 +1,4 @@
 import Contribution from './Contribution.js';
-import decorate from './decorate.js';
 new Contribution();
 
 const reviewButton = document.getElementById("review-btn");
@@ -40,21 +39,3 @@ reviewButton.addEventListener("click", () => {
   })
   .catch(error => console.error("Fetch error:" + error.message))
 });
-
-const [header, emphasis, bold] = document.getElementById('decorator').children;
-const selections = {
-  start: null,
-  end: null
-}
-
-let textarea = document.getElementsByName("contribution-1")[0];
-textarea.addEventListener("select", event => {
-  selections.start = event.target.selectionStart;
-  selections.end = event.target.selectionEnd + 1;
-})
-
-emphasis.addEventListener("click", decorate(textarea, selections));
-
-bold.addEventListener("click", decorate(textarea, selections));
-
-header.addEventListener("click", decorate(textarea));
