@@ -66,3 +66,11 @@ bold.addEventListener("click", function() {
     textarea.value = charList.join('');
   }
 });
+
+header.addEventListener("click", function() {
+  let charList = textarea.value.split('');
+  charList.splice(0, 0, "##");
+  textarea.value = charList.join('');
+  let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
+  textarea.dispatchEvent(enterEvent);
+})
