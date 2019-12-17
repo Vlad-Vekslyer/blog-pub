@@ -1,5 +1,5 @@
 import Contribution from './Contribution.js';
-import {decorateSingle} from './Decorator.js';
+import decorate from './decorate.js';
 new Contribution();
 
 const reviewButton = document.getElementById("review-btn");
@@ -53,22 +53,8 @@ textarea.addEventListener("select", event => {
   selections.end = event.target.selectionEnd + 1;
 })
 
-emphasis.addEventListener("click", function() {
-  if(selections.start && selections.end){
-    let charList = textarea.value.split('');
-    charList.splice(selections.start, 0, "%%");
-    charList.splice(selections.end, 0, "%%");
-    textarea.value = charList.join('');
-  }
-});
+emphasis.addEventListener("click", decorate(textarea, selections));
 
-bold.addEventListener("click", function() {
-  if(selections.start && selections.end){
-    let charList = textarea.value.split('');
-    charList.splice(selections.start, 0, "**");
-    charList.splice(selections.end, 0, "**");
-    textarea.value = charList.join('');
-  }
-});
+bold.addEventListener("click", decorate(textarea, selections));
 
-header.addEventListener("click", decorateSingle(textarea));
+header.addEventListener("click", decorate(textarea));
