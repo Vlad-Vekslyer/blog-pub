@@ -1,4 +1,5 @@
 import Contribution from './Contribution.js';
+import {decorateSingle} from './Decorator.js';
 new Contribution();
 
 const reviewButton = document.getElementById("review-btn");
@@ -70,10 +71,4 @@ bold.addEventListener("click", function() {
   }
 });
 
-header.addEventListener("click", function() {
-  let charList = textarea.value.split('');
-  charList.splice(0, 0, "##");
-  textarea.value = charList.join('');
-  let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
-  textarea.dispatchEvent(enterEvent);
-})
+header.addEventListener("click", decorateSingle(textarea));
