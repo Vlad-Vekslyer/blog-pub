@@ -21,6 +21,8 @@ class Contribution {
       this.createContributionEvent();
       contributions.appendChild(newTextarea);
       newTextarea.focus();
+    } else {
+      alert("Reached maximum number of contributions");
     }
   }
 
