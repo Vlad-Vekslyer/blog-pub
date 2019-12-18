@@ -1,5 +1,7 @@
 import Contribution from './Contribution.js';
+import initDecorator from "./decorate.js";
 new Contribution();
+initDecorator();
 
 const reviewButton = document.getElementById("review-btn");
 const reviewSection = document.getElementById("review");

@@ -1,8 +1,4 @@
-import decorate from "./decorate.js";
-
 const fontWidth = 7.9;
-let currentContribution;
-let selections = {};
 let contributionNum = 1;
 
 class Contribution {
@@ -16,8 +12,8 @@ class Contribution {
       newTextarea.setAttribute("name", `contribution-${contributionNum++}`);
       this.contribution = newTextarea;
       this.buttonToggleEvent();
+      this.onSelection();
       this.sizeAdjustEvent();
-      this.newSelection();
       this.createContributionEvent();
       contributions.appendChild(newTextarea);
       newTextarea.focus();
@@ -64,28 +60,15 @@ class Contribution {
     });
   }
 
-  newSelection(){
-    this.contribution.addEventListener("select", event => {
-      selections.start = event.target.selectionStart;
-      selections.end = event.target.selectionEnd + 1;
-      currentContribution = this.contribution;
-    });
-
-    this.contribution.addEventListener("focus", () => {
-      selections = {};
-      currentContribution = this.contribution;
-    });
+  onSelection(){
+    let changeSelected = () => {
+      let selectedElement = document.getElementsByClassName("selected")[0];
+      if(selectedElement) selectedElement.classList.toggle("selected");
+      this.contribution.classList.toggle("selected");
+    }
+    this.contribution.addEventListener("focus", changeSelected);
+    this.contribution.addEventListener("select", changeSelected);
   }
-}
-
-let buttons = document.getElementById('decorator').children;
-
-for(let i = 0; i < buttons.length; i++){
-  buttons[i].addEventListener("click", function() {
-    let boundDecorate = decorate.bind(this);
-    if(selections.start && selections.end) boundDecorate(currentContribution, selections);
-    else boundDecorate(currentContribution);
-  })
 }
 
 export default Contribution
