@@ -16,6 +16,11 @@
           {% endif %}
         </div>
 
+        {% for contribution in contributions %}
+          <p>{{contribution.body | raw}}</p>
+          <br/>
+        {% endfor %}
+
         <div id="decorator">
           <button type="button" name="header">T</button>
           <button type="button" name="emphasis">
@@ -25,11 +30,6 @@
             <b>b</b>
           </button>
         </div>
-
-        {% for contribution in contributions %}
-          <p>{{contribution.body | raw}}<i> - written by {{contribution.author}}</i></p>
-          <br/>
-        {% endfor %}
 
         <div class="contributions">
           <!-- contribution textareas go here -->
