@@ -9,6 +9,9 @@
         <p>{{contribution.body | raw}}</p>
         <br/>
       {% endfor %}
+      {% if latest %}
+        <a href="/edit">Contribute</a>
+      {% endif %}
     </div>
   </body>
 </html>

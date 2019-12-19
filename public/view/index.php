@@ -13,7 +13,10 @@
     $article->getLatestArticle(function($articleData) {
       global $article;
       $contributions = $article->getContributions($articleData['id']);
-      $view = new \Blog\Template\Template('view.html.twig', ['contributions' => $contributions]);
+      $view = new \Blog\Template\Template('view.html.twig', [
+        'contributions' => $contributions,
+        'latest' => TRUE
+      ]);
       $view->output();
     });
   }
