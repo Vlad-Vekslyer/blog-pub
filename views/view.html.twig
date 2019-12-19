@@ -1,6 +1,14 @@
   {{ include('partials/header.html.twig') }}
+    <link rel='stylesheet' href='/stylesheets/view.css'>
+    <link rel="stylesheet" href="/stylesheets/partials/sidebar.css">
   </head>
   <body>
-    <h1>Hello!</h1>
+    {{ include('partials/sidebar.html.twig') }}
+    <div class="container">
+      {% for contribution in contributions %}
+        <p>{{contribution.body | raw}}</p>
+        <br/>
+      {% endfor %}
+    </div>
   </body>
 </html>
