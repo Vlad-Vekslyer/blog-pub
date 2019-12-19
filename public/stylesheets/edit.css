@@ -34,8 +34,8 @@ form input {
 }
 form .contribution {
   width: 100%;
-  height: 20px;
-  overflow: hidden;
+  min-height: 20px;
+  overflow-wrap: anywhere;
   resize: none;
 }
 
