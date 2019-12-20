@@ -16,7 +16,7 @@
       $article->commit($contribution, $title);
     }
   }
-
+   
   $article->getLatestArticle(function($articleData){
     global $article;
     $contributions = $article->getContributions($articleData['id']);
@@ -27,6 +27,7 @@
       'pastArticles'=>$pastArticles]);
     $edit->output();
   });
+
   $article->closeConnection();
 
  ?>

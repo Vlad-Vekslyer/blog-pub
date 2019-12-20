@@ -8,31 +8,31 @@
   margin-top: 10%;
 }
 
-form {
+#edit {
   display: flex;
   flex-direction: column;
 }
-form .header h1 {
+#edit .header h1 {
   text-align: center;
   position: relative;
   width: auto;
 }
-form .header button {
+#edit .header button {
   float: left;
   position: relative;
   z-index: 1;
 }
-form .header button:nth-of-type(2) {
+#edit .header button:nth-of-type(2) {
   float: right;
 }
-form button {
+#edit button {
   align-self: flex-start;
 }
-form input {
+#edit input {
   font-size: 2.5em;
   font-style: bold;
 }
-form .contribution {
+#edit .contribution {
   width: 100%;
   min-height: 20px;
   overflow-wrap: anywhere;

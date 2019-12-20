@@ -82,6 +82,8 @@ function initDecorator(){
           let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
           selectedCont.dispatchEvent(enterEvent);
       }
+      let selectedContName = selectedCont.attributes.getNamedItem('name').nodeValue;
+      document.querySelector(`input[name="${selectedContName}"]`).value = decoratedCont;
       processText(decoratedCont).then(processedCont => selectedCont.innerHTML = processedCont);
     });
   }

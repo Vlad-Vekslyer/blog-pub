@@ -31,7 +31,7 @@
 
     // get all the user contributions of a specific article
     public function getContributions($articleId){
-      $statement = $this->connection->prepare("SELECT body,author FROM contributions WHERE article = ? ORDER BY date_created DESC");
+      $statement = $this->connection->prepare("SELECT body,author FROM contributions WHERE article = ? ORDER BY date_created ASC");
       $statement->bind_param('i', $articleId);
       $statement->execute() or die($this->connection->error);
       $statement->bind_result($body, $author);
