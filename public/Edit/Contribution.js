@@ -14,6 +14,7 @@ class Contribution {
       this.buttonToggleEvent();
       this.onSelection();
       this.createContributionEvent();
+      this.updateForm();
       contributions.appendChild(newParagraph);
       newParagraph.focus();
     } else {
@@ -29,6 +30,23 @@ class Contribution {
         new Contribution();
       }
     });
+  }
+
+  updateForm(){
+    this.contribution.addEventListener("keyup", function(event) {
+      if(event.key == "Enter") return;
+      let name = this.attributes.getNamedItem("name").nodeValue;
+      let inputArr = document.querySelector(`input[name="${name}"]`).value.split('');
+      let newArr = [], i = 0, paragraphArr = this.innerText.split('');
+      while(paragraphArr.length > 0 || i < inputArr.length){
+        let front = inputArr[i] + inputArr[i + 1];
+        let back = inputArr[i] + inputArr[i - 1];
+        if(front !== "##" && back !== "##") newArr.push(paragraphArr.shift());
+        else newArr.push(inputArr[i]);
+        i++;
+      }
+      document.querySelector(`input[name="${name}"]`).value = newArr.join('');
+    })
   }
 
   // control whether the user can submit the form

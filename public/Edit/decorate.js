@@ -70,20 +70,20 @@ function initDecorator(){
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function() {
       let selectedCont = document.getElementsByClassName("selected")[0];
-      let selections;
-      let oneLinerKeys = Object.keys(oneLiners);
+      let selectedContName = selectedCont.attributes.getNamedItem('name').nodeValue;
+      let input = document.querySelector(`input[name="${selectedContName}"]`);
+      let selections, oneLinerKeys = Object.keys(oneLiners);
       // if clicked on a one-liner decoratorion, selections is null
       if (oneLinerKeys.indexOf(this.name) !== -1) selections = null;
       else selections = {start: window.getSelection().getRangeAt(0).startOffset, end: window.getSelection().getRangeAt(0).endOffset};
       // pass in the current this to allow the decorate function to know which button was clicked
-      let decoratedCont = decorate.call(this, selectedCont.innerText, selections);
+      let decoratedCont = decorate.call(this, input.value, selections);
       // fire an enter event to create a new textarea if a one-liner was added
       if(decoratedCont.length > selectedCont.innerText.length && !selections) {
           let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
           selectedCont.dispatchEvent(enterEvent);
       }
-      let selectedContName = selectedCont.attributes.getNamedItem('name').nodeValue;
-      document.querySelector(`input[name="${selectedContName}"]`).value = decoratedCont;
+      input.value = decoratedCont;
       processText(decoratedCont).then(processedCont => selectedCont.innerHTML = processedCont);
     });
   }

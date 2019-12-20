@@ -9,6 +9,5 @@ commitButton.addEventListener("click", () => {
   let form = document.getElementsByTagName("form")[0];
   let title = document.getElementById("title-input");
   if(title) document.getElementById("title-form").value = title.value;
-  console.log(form);
   form.submit();
 });
