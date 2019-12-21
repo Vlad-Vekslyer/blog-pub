@@ -1,18 +1,11 @@
-const oneLiners = {
-  "header": "##"
-}
-
-const multiLiners = {
-  "bold": "**",
-  "emphasis": "%%"
-}
+import {oneLiners, multiLiners} from "./tags.js";
 
 // returns a string decorated with tags
 // @selections are the indexes of a selected portion of text in the contribution(if any are selected)
-function decorate(contribution, selections){
+function decorate(formInput, paragraphInput, selections){
   // what tags to decorate with depends on the button that was clicked to call this function
   let decoration = this.name;
-  let charList = contribution.split('');
+  let charList = formInput.split('');
   manipulate(charList, decoration, selections);
   return charList.join('');
 }
@@ -42,6 +35,43 @@ function manipulate(charList, decoration, selections){
   }
 }
 
+// returns the occurence of the selected substring inside of str
+function getoOccurrence(str, selections){
+  let selectedStr = new RegExp(`${str.substring(selections.start, selections.end)}`, 'g');
+  let count = 0, index;
+  do {
+    selectedStr.test(str);
+    index = selectedStr.lastIndex;
+    if(index !== 0) count++;
+  } while (index !== 0 && index !== selections.start)
+  return count;
+}
+
+// initialize the decoration event listeners
+function initDecorator(){
+  console.log(getoOccurrence("hello, this is vlad hello, hello again", {start: 20, end : 25}));
+  let buttons = document.getElementById('decorator').children;
+  for(let i = 0; i < buttons.length; i++){
+    buttons[i].addEventListener("click", function() {
+      let selectedCont = document.getElementsByClassName("selected")[0];
+      let selectedContName = selectedCont.attributes.getNamedItem('name').nodeValue;
+      let input = document.querySelector(`input[name="${selectedContName}"]`);
+      let selections, oneLinerKeys = Object.keys(oneLiners);
+      // if clicked on a one-liner decoratorion, selections is null
+      if (oneLinerKeys.indexOf(this.name) !== -1) selections = null;
+      else selections = {start: window.getSelection().getRangeAt(0).startOffset, end: window.getSelection().getRangeAt(0).endOffset};
+      // pass in the current this to allow the decorate function to know which button was clicked
+      let decoratedCont = decorate.call(this, input.value, selectedCont.textContent, selections);
+      // fire an enter event to create a new textarea if a one-liner was added
+      if(decoratedCont.length > input.value.length && !selections) {
+          let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
+          selectedCont.dispatchEvent(enterEvent);
+      }
+      input.value = decoratedCont;
+      processText(decoratedCont).then(processedCont => selectedCont.innerHTML = processedCont);
+    });
+  }
+}
 
 function processText(decoratedCont){
   let body = {
@@ -61,32 +91,6 @@ function processText(decoratedCont){
     return res.contributions[0];
   })
   .catch(error => console.error("Fetch error:" + error.message))
-
-}
-
-// initialize the decoration event listeners
-function initDecorator(){
-  let buttons = document.getElementById('decorator').children;
-  for(let i = 0; i < buttons.length; i++){
-    buttons[i].addEventListener("click", function() {
-      let selectedCont = document.getElementsByClassName("selected")[0];
-      let selectedContName = selectedCont.attributes.getNamedItem('name').nodeValue;
-      let input = document.querySelector(`input[name="${selectedContName}"]`);
-      let selections, oneLinerKeys = Object.keys(oneLiners);
-      // if clicked on a one-liner decoratorion, selections is null
-      if (oneLinerKeys.indexOf(this.name) !== -1) selections = null;
-      else selections = {start: window.getSelection().getRangeAt(0).startOffset, end: window.getSelection().getRangeAt(0).endOffset};
-      // pass in the current this to allow the decorate function to know which button was clicked
-      let decoratedCont = decorate.call(this, input.value, selections);
-      // fire an enter event to create a new textarea if a one-liner was added
-      if(decoratedCont.length > selectedCont.innerText.length && !selections) {
-          let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
-          selectedCont.dispatchEvent(enterEvent);
-      }
-      input.value = decoratedCont;
-      processText(decoratedCont).then(processedCont => selectedCont.innerHTML = processedCont);
-    });
-  }
 }
 
 export default initDecorator;

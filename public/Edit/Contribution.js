@@ -1,3 +1,5 @@
+import {allTags} from "./tags.js";
+
 let contributionNum = 1;
 
 class Contribution {
@@ -41,7 +43,7 @@ class Contribution {
       while(paragraphArr.length > 0 || i < inputArr.length){
         let front = inputArr[i] + inputArr[i + 1];
         let back = inputArr[i] + inputArr[i - 1];
-        if(front !== "##" && back !== "##") newArr.push(paragraphArr.shift());
+        if(allTags.indexOf(front) === -1 && allTags.indexOf(back) === -1) newArr.push(paragraphArr.shift());
         else newArr.push(inputArr[i]);
         i++;
       }
