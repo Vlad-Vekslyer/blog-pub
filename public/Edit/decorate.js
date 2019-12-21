@@ -35,21 +35,42 @@ function manipulate(charList, decoration, selections){
   }
 }
 
-// returns the occurence of the selected substring inside of str
-function getoOccurrence(str, selections){
-  let selectedStr = new RegExp(`${str.substring(selections.start, selections.end)}`, 'g');
+function getSelection(occurrences, str, substr){
+  let subRegex = new RegExp(substr, 'g');
   let count = 0, index;
-  do {
-    selectedStr.test(str);
-    index = selectedStr.lastIndex;
-    if(index !== 0) count++;
-  } while (index !== 0 && index !== selections.start)
+  while(count !== occurrences){
+    let search = subRegex.exec(str);
+    if(!search) throw error("Provided an incorrect number of occurrences");
+    index = search.index;
+    count++;
+  }
+  return [index, index + substr.length];
+}
+
+// returns the occurence of the selected substring inside of str
+function getOccurrence(str, selections){
+  let selectionRegex = new RegExp(str.substring(selections.start, selections.end), 'g');
+  let count = 0, index;
+  while(index !== selections.start){
+    let search = selectionRegex.exec(str);
+    if(search) {
+      index = search.index;
+      count++;
+    }
+    else break;
+  }
   return count;
 }
 
+
+//testing
+let string = "hello hello hello";
+let occurance = getOccurrence(string, {start: 6, end: 11});
+console.log(getSelection(occurance, string, "hello"));
+
 // initialize the decoration event listeners
 function initDecorator(){
-  console.log(getoOccurrence("hello, this is vlad hello, hello again", {start: 20, end : 25}));
+
   let buttons = document.getElementById('decorator').children;
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function() {
