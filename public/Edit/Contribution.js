@@ -17,6 +17,7 @@ class Contribution {
       this.onSelection();
       this.createContributionEvent();
       this.updateForm();
+      this.updateChildNodes();
       contributions.appendChild(newParagraph);
       newParagraph.focus();
     } else {
@@ -51,11 +52,32 @@ class Contribution {
     })
   }
 
+  updateChildNodes(){
+    this.contribution.addEventListener("keyup", function() {
+      let prevLength, prevStart;
+      this.childNodes.forEach((node, index) => {
+        let startIndex;
+        if(index === 0) startIndex = 0;
+        else startIndex = prevLength + prevStart;
+        if(node.length){
+          prevLength = node.length;
+          node.startIndex = startIndex;
+        } else if(node.firstChild) {
+          prevLength = node.textContent.length;
+          node.firstChild.startIndex = startIndex;
+          node.startIndex = startIndex;
+        }
+        prevStart = node.startIndex;
+      });
+    });
+  }
+
   // control whether the user can submit the form
   buttonToggleEvent(){
     let button = document.getElementById('commit-btn');
+    button.disabled = true;
     this.contribution.addEventListener("input", () => {
-      if(this.contribution.value != "") button.disabled = false;
+      if(this.contribution.textContent != "") button.disabled = false;
       else button.disabled = true;
     });
   }

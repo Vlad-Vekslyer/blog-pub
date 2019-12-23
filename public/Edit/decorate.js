@@ -6,6 +6,8 @@ function decorate(formInput, paragraphInput, selections){
   // what tags to decorate with depends on the button that was clicked to call this function
   let decoration = this.name;
   let charList = formInput.split('');
+  let occurrence = getOccurrence(paragraphInput, selections);
+  selections = getSelection(occurrence, formInput, window.getSelection().toString());
   manipulate(charList, decoration, selections);
   return charList.join('');
 }
@@ -40,16 +42,16 @@ function getSelection(occurrences, str, substr){
   let count = 0, index;
   while(count !== occurrences){
     let search = subRegex.exec(str);
-    if(!search) throw error("Provided an incorrect number of occurrences");
+    if(!search) throw "Provided an incorrect number of occurrences";
     index = search.index;
     count++;
   }
-  return [index, index + substr.length];
+  return {start: index, end: index + substr.length};
 }
 
 // returns the occurence of the selected substring inside of str
 function getOccurrence(str, selections){
-  let selectionRegex = new RegExp(str.substring(selections.start, selections.end), 'g');
+  let selectionRegex = new RegExp(window.getSelection().toString(), 'g');
   let count = 0, index;
   while(index !== selections.start){
     let search = selectionRegex.exec(str);
@@ -62,15 +64,20 @@ function getOccurrence(str, selections){
   return count;
 }
 
-
-//testing
-let string = "hello hello hello";
-let occurance = getOccurrence(string, {start: 6, end: 11});
-console.log(getSelection(occurance, string, "hello"));
+function computeDOMSelection(selection){
+  let start, end;
+  if(selection.anchorNode.isSameNode(selection.focusNode)){
+    let startIndex = selection.anchorNode.startIndex;
+    let offsets = [selection.anchorOffset, selection.focusOffset]
+    start = startIndex + Math.min(...offsets);
+    end = startIndex + Math.max(...offsets);
+  }
+  console.log(start, end);
+  return {start, end};
+}
 
 // initialize the decoration event listeners
 function initDecorator(){
-
   let buttons = document.getElementById('decorator').children;
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function() {
@@ -80,7 +87,7 @@ function initDecorator(){
       let selections, oneLinerKeys = Object.keys(oneLiners);
       // if clicked on a one-liner decoratorion, selections is null
       if (oneLinerKeys.indexOf(this.name) !== -1) selections = null;
-      else selections = {start: window.getSelection().getRangeAt(0).startOffset, end: window.getSelection().getRangeAt(0).endOffset};
+      else selections = computeDOMSelection(window.getSelection());
       // pass in the current this to allow the decorate function to know which button was clicked
       let decoratedCont = decorate.call(this, input.value, selectedCont.textContent, selections);
       // fire an enter event to create a new textarea if a one-liner was added
@@ -89,9 +96,30 @@ function initDecorator(){
           selectedCont.dispatchEvent(enterEvent);
       }
       input.value = decoratedCont;
-      processText(decoratedCont).then(processedCont => selectedCont.innerHTML = processedCont);
+      processText(decoratedCont).then(processedCont => {
+        selectedCont.innerHTML = processedCont;
+        updateChildNodes(selectedCont);
+      });
     });
   }
+}
+
+function updateChildNodes(contribution){
+  let prevLength, prevStart;
+  contribution.childNodes.forEach((node, index) => {
+    let startIndex;
+    if(index === 0) startIndex = 0;
+    else startIndex = prevLength + prevStart;
+    if(node.length){
+      prevLength = node.length;
+      node.startIndex = startIndex;
+    } else {
+      prevLength = node.textContent.length;
+      node.firstChild.startIndex = startIndex;
+      node.startIndex = startIndex;
+    }
+    prevStart = node.startIndex;
+  });
 }
 
 function processText(decoratedCont){
