@@ -1,5 +1,5 @@
-import Contribution from './Contribution.js';
-import initDecorator from "./decorate.js";
+import Contribution from './js/Contribution.js';
+import initDecorator from "./js/decorate.js";
 new Contribution();
 initDecorator();
 

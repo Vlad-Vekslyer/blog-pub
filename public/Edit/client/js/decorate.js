@@ -97,7 +97,7 @@ function initDecorator(){
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function() {
       let selectedCont = document.getElementsByClassName("selected")[0];
-      let selectedContName = selectedCont.attributes.getNamedItem('name').nodeValue;
+      let selectedContName = selectedCont.attributes.name.nodeValue;
       let input = document.querySelector(`input[name="${selectedContName}"]`);
       let selections, oneLinerKeys = Object.keys(oneLiners);
       // if clicked on a one-liner decoratorion, selections is null
