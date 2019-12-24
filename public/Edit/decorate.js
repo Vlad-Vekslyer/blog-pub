@@ -37,19 +37,14 @@ function manipulate(charList, decoration, selections){
   }
 }
 
-let reduced = allTags.reduce((accumulator, currentValue) => {
-  if(currentValue !== "**") {return accumulator + currentValue.charAt(0);}
-  else {return accumulator + "\\*"}
-}, '');
-
 function getSelection(occurrences, str, substr){
+  let reduced = allTags.reduce((accumulator, currentValue) => accumulator + currentValue.charAt(0), '');
   let patt = '';
   for(let i = 0; i < substr.length; i++){
     if (i != substr.length - 1) patt = patt + `${substr.charAt(i)}[${reduced}]*`;
     else patt = patt + substr.charAt(i);
   }
   let subRegex = new RegExp(patt, 'g');
-  console.log(subRegex);
   let count = 0, index, length;
   while(count !== occurrences){
     let search = subRegex.exec(str);
@@ -58,7 +53,6 @@ function getSelection(occurrences, str, substr){
     length = search[0].length
     count++;
   }
-  console.log(index, index + length);
   return {start: index, end: index + length};
 }
 
@@ -119,30 +113,10 @@ function initDecorator(){
       input.value = decoratedCont;
       processText(decoratedCont).then(processedCont => {
         selectedCont.innerHTML = processedCont;
-        updateChildNodes(selectedCont);
+        selectedCont.dispatchEvent(new KeyboardEvent("keyup"))
       });
     });
   }
-}
-
-
-// updates the childnodes of the currently selected contribution to show their starting indexes in relation to the entire contribution
-function updateChildNodes(contribution){
-  let prevLength, prevStart;
-  contribution.childNodes.forEach((node, index) => {
-    let startIndex;
-    if(index === 0) startIndex = 0;
-    else startIndex = prevLength + prevStart;
-    if(node.length){
-      prevLength = node.length;
-      node.startIndex = startIndex;
-    } else {
-      prevLength = node.textContent.length;
-      node.firstChild.startIndex = startIndex;
-      node.startIndex = startIndex;
-    }
-    prevStart = node.startIndex;
-  });
 }
 
 function processText(decoratedCont){

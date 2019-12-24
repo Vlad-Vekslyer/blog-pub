@@ -7,7 +7,7 @@ const multiLiners = {
   "emphasis": "%%"
 }
 
-const allTags = ["##", "**", "%%"];
+const allTags = [...Object.values(oneLiners), ...Object.values(multiLiners)];
 
 const allTagsMap = {...oneLiners, ...multiLiners}
 
