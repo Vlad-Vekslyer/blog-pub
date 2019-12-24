@@ -1,6 +1,7 @@
 import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
 import {computeDOMSelection} from "/scripts/DOMHelper";
 import {occurrenceOf} from "/scripts/StringHelper";
+import {processText} from "./process";
 
 // returns a string decorated with tags
 // @selections are the indexes of a selected portion of text in the contribution(if any are selected)
@@ -8,7 +9,7 @@ function decorate(formInput, paragraphInput, selections){
   // what tags to decorate with depends on the button that was clicked to call this function
   let decoration = this.name;
   let occurrence = occurrenceOf(paragraphInput, selections);
-  selections = getSelection(occurrence, formInput, window.getSelection().toString(), decoration);
+  selections = getSelection(occurrence, formInput, window.getSelection().toString());
   let charList = formInput.split('');
   manipulate(charList, decoration, selections);
   return charList.join('');
@@ -84,21 +85,6 @@ function initDecorator(){
       });
     });
   }
-}
-
-function processText(decoratedCont){
-  let body = JSON.stringify({contributions : [decoratedCont]});
-  return fetch("/edit/process", {
-    method: 'POST',
-    mode: "same-origin",
-    body: body,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(res => res.json())
-  .then(res => res.contributions[0])
-  .catch(error => console.error("Fetch error:" + error.message))
 }
 
 export default initDecorator;
