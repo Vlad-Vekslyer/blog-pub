@@ -1,4 +1,4 @@
-import {allTags} from "./tags.js";
+import {allTags} from "/scripts/tags.js";
 
 let contributionNum = 1;
 

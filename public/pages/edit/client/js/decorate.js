@@ -1,11 +1,13 @@
-import {oneLiners, multiLiners, allTagsMap, allTags} from "./tags.js";
+import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
+import {computeDOMSelection} from "/scripts/DOMHelper";
+import {occurrenceOf} from "/scripts/StringHelper";
 
 // returns a string decorated with tags
 // @selections are the indexes of a selected portion of text in the contribution(if any are selected)
 function decorate(formInput, paragraphInput, selections){
   // what tags to decorate with depends on the button that was clicked to call this function
   let decoration = this.name;
-  let occurrence = getOccurrence(paragraphInput, selections);
+  let occurrence = occurrenceOf(paragraphInput, selections);
   selections = getSelection(occurrence, formInput, window.getSelection().toString(), decoration);
   let charList = formInput.split('');
   manipulate(charList, decoration, selections);
@@ -54,41 +56,6 @@ function getSelection(occurrences, str, substr){
     count++;
   }
   return {start: index, end: index + length};
-}
-
-// returns the occurence of the selected substring inside of str
-function getOccurrence(str, selections){
-  let selectionRegex = new RegExp(str.substring(selections.start, selections.end), 'g');
-  let count = 0, index;
-  while(index !== selections.start){
-    let search = selectionRegex.exec(str);
-    if(search) {
-      index = search.index;
-      count++;
-    }
-    else break;
-  }
-  return count;
-}
-
-// returns the index coordinates of the selected text in relation to the entire contribution
-function computeDOMSelection(selection){
-  let start, end;
-  if(selection.anchorNode.isSameNode(selection.focusNode)){
-    let startIndex = selection.anchorNode.startIndex;
-    let offsets = [selection.anchorOffset, selection.focusOffset]
-    start = startIndex + Math.min(...offsets);
-    end = startIndex + Math.max(...offsets);
-  } else {
-    // node with lowest startIndex is the leftmost one
-    let leftNode = selection.anchorNode.startIndex < selection.focusNode.startIndex ? selection.anchorNode : selection.focusNode;
-    let rightNode = selection.anchorNode.startIndex < selection.focusNode.startIndex ? selection.focusNode : selection.anchorNode;
-    let leftOffset = leftNode.isSameNode(selection.anchorNode) ? selection.anchorOffset : selection.focusOffset;
-    let rightOffset = rightNode.isSameNode(selection.focusNode) ? selection.focusOffset : selection.anchorOffset;
-    start = leftNode.startIndex + leftOffset;
-    end = rightNode.startIndex + rightOffset;
-  }
-  return {start, end};
 }
 
 // initialize the decoration event listeners
