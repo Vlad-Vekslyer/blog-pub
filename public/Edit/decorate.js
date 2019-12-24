@@ -1,13 +1,13 @@
-import {oneLiners, multiLiners} from "./tags.js";
+import {oneLiners, multiLiners, allTagsMap} from "./tags.js";
 
 // returns a string decorated with tags
 // @selections are the indexes of a selected portion of text in the contribution(if any are selected)
 function decorate(formInput, paragraphInput, selections){
   // what tags to decorate with depends on the button that was clicked to call this function
   let decoration = this.name;
-  let charList = formInput.split('');
   let occurrence = getOccurrence(paragraphInput, selections);
-  selections = getSelection(occurrence, formInput, window.getSelection().toString());
+  selections = getSelection(occurrence, formInput, window.getSelection().toString(), decoration);
+  let charList = formInput.split('');
   manipulate(charList, decoration, selections);
   return charList.join('');
 }
@@ -37,16 +37,23 @@ function manipulate(charList, decoration, selections){
   }
 }
 
-function getSelection(occurrences, str, substr){
-  let subRegex = new RegExp(substr, 'g');
-  let count = 0, index;
+function getSelection(occurrences, str, substr, decoration){
+  decoration = allTagsMap[decoration] != "**" ? allTagsMap[decoration].charAt(0) : "\\*";
+  let patt = '';
+  for(let i = 0; i < substr.length; i++){
+    if (i != substr.length - 1) patt = patt + `${substr.charAt(i)}${decoration}*`;
+    else patt = patt + substr.charAt(i);
+  }
+  let subRegex = new RegExp(patt, 'g');
+  let count = 0, index, length;
   while(count !== occurrences){
     let search = subRegex.exec(str);
     if(!search) throw "Provided an incorrect number of occurrences";
     index = search.index;
+    length = search[0].length
     count++;
   }
-  return {start: index, end: index + substr.length};
+  return {start: index, end: index + length};
 }
 
 // returns the occurence of the selected substring inside of str
@@ -65,7 +72,6 @@ function getOccurrence(str, selections){
 }
 
 // returns the index coordinates of the selected text in relation to the entire contribution
-// TODO: the selection should return coordinates even if the selection covers multiple nodes
 function computeDOMSelection(selection){
   let start, end;
   if(selection.anchorNode.isSameNode(selection.focusNode)){
@@ -82,7 +88,6 @@ function computeDOMSelection(selection){
     start = leftNode.startIndex + leftOffset;
     end = rightNode.startIndex + rightOffset;
   }
-  console.log(start, end);
   return {start, end};
 }
 
