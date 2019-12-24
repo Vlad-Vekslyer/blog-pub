@@ -13,11 +13,7 @@ class Contribution {
       newParagraph.setAttribute("name", `contribution-${contributionNum++}`);
       newParagraph.setAttribute("contenteditable", 'true');
       this.contribution = newParagraph;
-      this.buttonToggleEvent();
-      this.onSelection();
-      this.createContributionEvent();
-      this.updateForm();
-      this.updateChildNodes();
+      this.addEvents(this.toggleCommit, this.toggleSelection, this.createContribution, this.updateForm, this.updateChildNodes);
       contributions.appendChild(newParagraph);
       newParagraph.focus();
     } else {
@@ -25,8 +21,12 @@ class Contribution {
     }
   }
 
+  addEvents(...callbacks){
+    callbacks.forEach(callback => callback.call(this));
+  }
+
   // creates a new textarea when user presses enter
-  createContributionEvent(){
+  createContribution(){
     this.contribution.addEventListener("keydown", function(event) {
       if(event.key == "Enter"){
         event.preventDefault();
@@ -73,7 +73,7 @@ class Contribution {
   }
 
   // control whether the user can submit the form
-  buttonToggleEvent(){
+  toggleCommit(){
     let button = document.getElementById('commit-btn');
     button.disabled = true;
     this.contribution.addEventListener("input", () => {
@@ -82,7 +82,7 @@ class Contribution {
     });
   }
 
-  onSelection(){
+  toggleSelection(){
     let changeSelected = () => {
       let selectedElement = document.getElementsByClassName("selected")[0];
       if(selectedElement) selectedElement.classList.toggle("selected");

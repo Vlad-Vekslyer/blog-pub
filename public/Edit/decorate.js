@@ -58,7 +58,7 @@ function getSelection(occurrences, str, substr){
 
 // returns the occurence of the selected substring inside of str
 function getOccurrence(str, selections){
-  let selectionRegex = new RegExp(window.getSelection().toString(), 'g');
+  let selectionRegex = new RegExp(str.substring(selections.start, selections.end), 'g');
   let count = 0, index;
   while(index !== selections.start){
     let search = selectionRegex.exec(str);
@@ -120,10 +120,7 @@ function initDecorator(){
 }
 
 function processText(decoratedCont){
-  let body = {
-    contributions : [decoratedCont]
-  }
-  body = JSON.stringify(body);
+  let body = JSON.stringify({contributions : [decoratedCont]});
   return fetch("/edit/process", {
     method: 'POST',
     mode: "same-origin",
@@ -133,9 +130,7 @@ function processText(decoratedCont){
     }
   })
   .then(res => res.json())
-  .then(res => {
-    return res.contributions[0];
-  })
+  .then(res => res.contributions[0])
   .catch(error => console.error("Fetch error:" + error.message))
 }
 
