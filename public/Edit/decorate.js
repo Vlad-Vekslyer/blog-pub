@@ -1,4 +1,4 @@
-import {oneLiners, multiLiners, allTagsMap} from "./tags.js";
+import {oneLiners, multiLiners, allTagsMap, allTags} from "./tags.js";
 
 // returns a string decorated with tags
 // @selections are the indexes of a selected portion of text in the contribution(if any are selected)
@@ -37,14 +37,19 @@ function manipulate(charList, decoration, selections){
   }
 }
 
-function getSelection(occurrences, str, substr, decoration){
-  decoration = allTagsMap[decoration] != "**" ? allTagsMap[decoration].charAt(0) : "\\*";
+let reduced = allTags.reduce((accumulator, currentValue) => {
+  if(currentValue !== "**") {return accumulator + currentValue.charAt(0);}
+  else {return accumulator + "\\*"}
+}, '');
+
+function getSelection(occurrences, str, substr){
   let patt = '';
   for(let i = 0; i < substr.length; i++){
-    if (i != substr.length - 1) patt = patt + `${substr.charAt(i)}${decoration}*`;
+    if (i != substr.length - 1) patt = patt + `${substr.charAt(i)}[${reduced}]*`;
     else patt = patt + substr.charAt(i);
   }
   let subRegex = new RegExp(patt, 'g');
+  console.log(subRegex);
   let count = 0, index, length;
   while(count !== occurrences){
     let search = subRegex.exec(str);
@@ -53,6 +58,7 @@ function getSelection(occurrences, str, substr, decoration){
     length = search[0].length
     count++;
   }
+  console.log(index, index + length);
   return {start: index, end: index + length};
 }
 
