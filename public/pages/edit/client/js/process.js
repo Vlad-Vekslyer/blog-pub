@@ -1,5 +1,6 @@
-function processText(decoratedCont){
-  let body = JSON.stringify({contributions : [decoratedCont]});
+// sends decorated text to the backend for processing and returns the procesed text
+function processText(decoratedText){
+  let body = JSON.stringify({contributions : [decoratedText]});
   return fetch("/edit/process", {
     method: 'POST',
     mode: "same-origin",

@@ -1,15 +1,17 @@
 import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
 import {computeDOMSelection} from "/scripts/DOMHelper";
 import {occurrenceOf} from "/scripts/StringHelper";
-import {processText} from "./process";
+import {processText} from "./process.js";
 
 // returns a string decorated with tags
-// @selections are the indexes of a selected portion of text in the contribution(if any are selected)
-function decorate(formInput, paragraphInput, selections){
+function decorate(formInput, paragraphInput){
   // what tags to decorate with depends on the button that was clicked to call this function
-  let decoration = this.name;
-  let occurrence = occurrenceOf(paragraphInput, selections);
-  selections = getSelection(occurrence, formInput, window.getSelection().toString());
+  let decoration = this.name, selections;
+  if(Object.keys(oneLiners).indexOf(decoration) === -1){
+    let paragraphSelections = computeDOMSelection(window.getSelection());
+    let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
+    selections = getSelection(occurrence, formInput, window.getSelection().toString());
+  }
   let charList = formInput.split('');
   manipulate(charList, decoration, selections);
   return charList.join('');
@@ -17,7 +19,7 @@ function decorate(formInput, paragraphInput, selections){
 
 // Removes or adds tags from/to the charList
 function manipulate(charList, decoration, selections){
-  // undefined selection means the decoration is a one-liner
+  // undefined selections means the decoration is a oneliner
   if(!selections) {
     let start = charList.slice(0, 2);
     let oneLinerValues = Object.values(oneLiners);
@@ -67,24 +69,24 @@ function initDecorator(){
       let selectedCont = document.getElementsByClassName("selected")[0];
       let selectedContName = selectedCont.attributes.name.nodeValue;
       let input = document.querySelector(`input[name="${selectedContName}"]`);
-      let selections, oneLinerKeys = Object.keys(oneLiners);
-      // if clicked on a one-liner decoratorion, selections is null
-      if (oneLinerKeys.indexOf(this.name) !== -1) selections = null;
-      else selections = computeDOMSelection(window.getSelection());
       // pass in the current this to allow the decorate function to know which button was clicked
-      let decoratedCont = decorate.call(this, input.value, selectedCont.textContent, selections);
-      // fire an enter event to create a new textarea if a one-liner was added
-      if(decoratedCont.length > input.value.length && !selections) {
-          let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
-          selectedCont.dispatchEvent(enterEvent);
-      }
-      input.value = decoratedCont;
-      processText(decoratedCont).then(processedCont => {
-        selectedCont.innerHTML = processedCont;
-        selectedCont.dispatchEvent(new KeyboardEvent("keyup"))
-      });
+      let decoratedCont = decorate.call(this, input.value, selectedCont.textContent);
+      updateDOM(decoratedCont, selectedCont, input, this.name);
     });
   }
+}
+
+function updateDOM(decoratedCont, selectedCont, input, decoration){
+  // fire an enter event to create a new textarea if a one-liner was clicked and was added instead of removed
+  if(decoratedCont.length > input.value.length && Object.keys(oneLiners).indexOf(decoration) === -1) {
+      let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
+      selectedCont.dispatchEvent(enterEvent);
+  }
+  input.value = decoratedCont;
+  processText(decoratedCont).then(processedCont => {
+    selectedCont.innerHTML = processedCont;
+    selectedCont.dispatchEvent(new KeyboardEvent("keyup"))
+  });
 }
 
 export default initDecorator;
