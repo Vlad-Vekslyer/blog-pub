@@ -64,6 +64,8 @@ function getOccurrence(str, selections){
   return count;
 }
 
+// returns the index coordinates of the selected text in relation to the entire contribution
+// TODO: the selection should return coordinates even if the selection covers multiple nodes
 function computeDOMSelection(selection){
   let start, end;
   if(selection.anchorNode.isSameNode(selection.focusNode)){
@@ -71,6 +73,14 @@ function computeDOMSelection(selection){
     let offsets = [selection.anchorOffset, selection.focusOffset]
     start = startIndex + Math.min(...offsets);
     end = startIndex + Math.max(...offsets);
+  } else {
+    // node with lowest startIndex is the leftmost one
+    let leftNode = selection.anchorNode.startIndex < selection.focusNode.startIndex ? selection.anchorNode : selection.focusNode;
+    let rightNode = selection.anchorNode.startIndex < selection.focusNode.startIndex ? selection.focusNode : selection.anchorNode;
+    let leftOffset = leftNode.isSameNode(selection.anchorNode) ? selection.anchorOffset : selection.focusOffset;
+    let rightOffset = rightNode.isSameNode(selection.focusNode) ? selection.focusOffset : selection.anchorOffset;
+    start = leftNode.startIndex + leftOffset;
+    end = rightNode.startIndex + rightOffset;
   }
   console.log(start, end);
   return {start, end};
@@ -104,6 +114,8 @@ function initDecorator(){
   }
 }
 
+
+// updates the childnodes of the currently selected contribution to show their starting indexes in relation to the entire contribution
 function updateChildNodes(contribution){
   let prevLength, prevStart;
   contribution.childNodes.forEach((node, index) => {
