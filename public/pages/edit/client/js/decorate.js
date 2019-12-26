@@ -6,42 +6,67 @@ import {processText} from "./process.js";
 // returns a string decorated with tags
 function decorate(formInput, paragraphInput){
   // what tags to decorate with depends on the button that was clicked to call this function
-  let decoration = this.name, selections;
+  let decoration = this.name;
   if(Object.keys(oneLiners).indexOf(decoration) === -1){
     let paragraphSelections = computeDOMSelection(window.getSelection());
+    let action = getAction(paragraphSelections);
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
-    console.log(getAction(paragraphSelections));
-    selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    let selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    let pairs = getUnpairedTags(formInput, selections, multiLiners[decoration]);
     formInput = clean(formInput, selections);
+    selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    return manipulateMultiLiner(formInput, decoration, action, selections, pairs);
   }
-  let charList = formInput.split('');
-  manipulate(charList, decoration, selections);
+  return manipulateOneLiner(formInput, decoration);
+}
+
+function manipulateOneLiner(str, decoration){
+  let charList = str.split('');
+  let start = charList.slice(0, 2);
+  let oneLinerValues = Object.values(oneLiners);
+  // if a oneliner already exists, remove it
+  if(oneLinerValues.indexOf(start.join('')) !== -1) charList.splice(0, 2, '');
+  // otherwise, add it to the charList
+  else charList.splice(0, 0, oneLiners[decoration]);
   return charList.join('');
 }
 
-// Removes or adds tags from/to the charList
-function manipulate(charList, decoration, selections){
-  // undefined selections means the decoration is a oneliner
-  if(!selections) {
-    let start = charList.slice(0, 2);
-    let oneLinerValues = Object.values(oneLiners);
-    // if a oneliner already exists, remove it
-    if(oneLinerValues.indexOf(start.join('')) !== -1) charList.splice(0, 2, '');
-    // otherwise, add it to the charList
-    else charList.splice(0, 0, oneLiners[decoration]);
+function manipulateMultiLiner(str, decoration, action, selection, pairs){
+  let {start, end} = selection;
+  let tag = multiLiners[decoration];
+  let charList = str.split('');
+  if(str.substring(start - 2, start) === tag && str.substring(end, end + 2) === tag){
+    charList.splice(start - 2, 2, '');
+    charList.splice(end - 1, 2, '');
+    return charList.join('');
   }
-  else {
-    let start = charList.slice(selections.start - 2, selections.start);
-    let end = charList.slice(selections.end, selections.end + 2);
-    // if the same multliner already exists between the selected tags, remove it
-    if(multiLiners[decoration] === start.join('') && multiLiners[decoration] === end.join('')){
-      charList.splice(selections.start - 2, 2, '');
-      charList.splice(selections.end - 1, 2, '');
-    } else {
-      charList.splice(selections.start, 0, multiLiners[decoration]);
-      charList.splice(selections.end + 1, 0, multiLiners[decoration]);
+  switch(action){
+    case "add": {
+      if(!pairs.isLeftUnpaired) charList.splice(start, 0, tag);
+      if(!pairs.isRightUnpaired) charList.splice(end + 1, 0, tag);
+      break;
+    }
+    case "remove": {
+      if(pairs.isLeftUnpaired) charList.splice(start - 1, 0, tag);
+      if(pairs.isRightUnpaired) charList.splice(end + 1, 0, tag);
+      break;
     }
   }
+  return charList.join('');
+}
+
+// return an object that notifies whether any side of the selection contains an unpaired tag
+function getUnpairedTags(str, selection, tag){
+  if(selection){
+    let {start, end} = selection;
+    let decorRegex = tag !== "**" ? new RegExp(tag, 'g') : new RegExp('\*\*', 'g');
+    let isLeftUnpaired = false, isRightUnpaired = false;
+    let leftMatch = str.substring(0, start).match(decorRegex), rightMatch = str.substring(end).match(decorRegex);
+    if(leftMatch) isLeftUnpaired = (leftMatch.length % 2 == 1);
+    if(rightMatch) isRightUnpaired = (rightMatch.length % 2 == 1);
+    return {isLeftUnpaired, isRightUnpaired};
+  }
+  return undefined;
 }
 
 // get the selection inside of the form input based on the paragraph input
