@@ -10,7 +10,9 @@ function decorate(formInput, paragraphInput){
   if(Object.keys(oneLiners).indexOf(decoration) === -1){
     let paragraphSelections = computeDOMSelection(window.getSelection());
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
+    console.log(getAction(paragraphSelections));
     selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    formInput = clean(formInput, selections);
   }
   let charList = formInput.split('');
   manipulate(charList, decoration, selections);
@@ -42,6 +44,7 @@ function manipulate(charList, decoration, selections){
   }
 }
 
+// get the selection inside of the form input based on the paragraph input
 function getSelection(occurrences, str, substr){
   let reduced = allTags.reduce((accumulator, currentValue) => accumulator + currentValue.charAt(0), '');
   let patt = '';
@@ -61,6 +64,38 @@ function getSelection(occurrences, str, substr){
   return {start: index, end: index + length};
 }
 
+// remove any tags inside the selection, not including any tags wrapping the selection
+function clean(str, selection){
+  let {start, end} = selection;
+  let selectedStr = str.substring(start, end);
+  allTags.forEach(tag => {
+    if(tag === "**") tag = '\\*\\*';
+    let patt = new RegExp(tag, 'g');
+    selectedStr = selectedStr.replace(patt, '');
+  });
+  return str.slice(0, start) + selectedStr + str.slice(end);
+}
+
+// decide whether the current selection should be tagged or should its tags be removed instead
+function getAction(selection){
+  let {start, end} = selection;
+  let allNodes = document.getElementsByClassName("selected")[0].childNodes;
+  let selectedNodes = [];
+  allNodes.forEach(node => {
+    if(node.tagName !== "BR"){
+      // if the node starts, ends or covers the selection, push it
+      if((node.startIndex >= start && node.startIndex <= end) || (node.endIndex >= start && node.endIndex <= end) || (node.startIndex <= start && node.endIndex >= end)){
+        selectedNodes.push(node);
+      }
+    }
+  });
+  // if all selected text is wrapped in tags already, return "remove", otherwise return "add"
+  for(let node of selectedNodes){
+    if(node.nodeName === "#text") {return "add"}
+  }
+  return "remove";
+}
+
 // initialize the decoration event listeners
 function initDecorator(){
   let buttons = document.getElementById('decorator').children;
@@ -78,7 +113,7 @@ function initDecorator(){
 
 function updateDOM(decoratedCont, selectedCont, input, decoration){
   // fire an enter event to create a new textarea if a one-liner was clicked and was added instead of removed
-  if(decoratedCont.length > input.value.length && Object.keys(oneLiners).indexOf(decoration) === -1) {
+  if(decoratedCont.length > input.value.length && Object.keys(oneLiners).indexOf(decoration) !== -1) {
       let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
       selectedCont.dispatchEvent(enterEvent);
   }

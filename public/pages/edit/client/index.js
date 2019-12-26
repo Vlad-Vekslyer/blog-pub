@@ -4,6 +4,9 @@ new Contribution();
 initDecorator();
 
 const commitButton = document.getElementById("commit-btn");
+const contributions = document.querySelectorAll("input[type='hidden']");
+
+contributions.forEach(input => input.removeAttribute('value'));
 
 commitButton.addEventListener("click", () => {
   let form = document.getElementsByTagName("form")[0];

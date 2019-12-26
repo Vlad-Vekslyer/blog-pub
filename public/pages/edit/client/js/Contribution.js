@@ -59,14 +59,13 @@ class Contribution {
         let startIndex;
         if(index === 0) startIndex = 0;
         else startIndex = prevLength + prevStart;
-        if(node.length){
-          prevLength = node.length;
-          node.startIndex = startIndex;
-        } else if(node.firstChild) {
+        if(node.length) prevLength = node.length;
+        else if(node.firstChild) {
           prevLength = node.textContent.length;
           node.firstChild.startIndex = startIndex;
-          node.startIndex = startIndex;
         }
+        node.startIndex = startIndex;
+        node.endIndex = startIndex + prevLength;
         prevStart = node.startIndex;
       });
     });
