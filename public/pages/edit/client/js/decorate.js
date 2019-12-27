@@ -59,7 +59,7 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
 function getUnpairedTags(str, selection, tag){
   if(selection){
     let {start, end} = selection;
-    let decorRegex = tag !== "**" ? new RegExp(tag, 'g') : new RegExp('\*\*', 'g');
+    let decorRegex = tag !== "**" ? new RegExp(tag, 'g') : new RegExp('\\*\\*', 'g');
     let isLeftUnpaired = false, isRightUnpaired = false;
     let leftMatch = str.substring(0, start).match(decorRegex), rightMatch = str.substring(end).match(decorRegex);
     if(leftMatch) isLeftUnpaired = (leftMatch.length % 2 == 1);

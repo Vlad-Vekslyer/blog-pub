@@ -13,7 +13,7 @@ class Contribution {
       newParagraph.setAttribute("name", `contribution-${contributionNum++}`);
       newParagraph.setAttribute("contenteditable", 'true');
       this.contribution = newParagraph;
-      this.addEvents(this.toggleCommit, this.toggleSelection, this.createContribution, this.updateForm, this.updateChildNodes);
+      this.addEvents(this.toggleSelection, this.createContribution, this.updateForm, this.updateChildNodes);
       contributions.appendChild(newParagraph);
       newParagraph.focus();
     } else {
@@ -68,16 +68,6 @@ class Contribution {
         node.endIndex = startIndex + prevLength;
         prevStart = node.startIndex;
       });
-    });
-  }
-
-  // control whether the user can submit the form
-  toggleCommit(){
-    let button = document.getElementById('commit-btn');
-    button.disabled = true;
-    this.contribution.addEventListener("input", () => {
-      if(this.contribution.textContent != "") button.disabled = false;
-      else button.disabled = true;
     });
   }
 
