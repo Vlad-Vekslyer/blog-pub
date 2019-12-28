@@ -1,6 +1,6 @@
 import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
 import {computeDOMSelection} from "/scripts/DOMHelper";
-import {occurrenceOf} from "/scripts/StringHelper";
+import {occurrenceOf, linearMatchAll} from "/scripts/StringHelper";
 import {processText} from "./process.js";
 
 // returns a string decorated with tags
@@ -72,11 +72,10 @@ function getSelection(occurrences, str, substr){
     if(index != substr.length - 1) return accumulator + `${letter}[${reduced}]*`;
     else return accumulator + letter;
   }, '');
-  let subRegex = new RegExp(patt, 'g');
-  let foundSubstrings = Array.from(str.matchAll(subRegex));
+  let subRegex = new RegExp(patt);
+  let foundSubstrings = linearMatchAll(str, subRegex)
   let index = foundSubstrings[occurrences - 1].index;
-  let length = foundSubstrings[occurrences - 1][0].length;
-  return {start: index, end: index + length};
+  return {start: index, end: index + substr.length};
 }
 
 // remove any tags inside the selection, not including any tags wrapping the selection
