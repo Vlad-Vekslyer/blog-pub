@@ -38,14 +38,14 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
   switch(action){
     case "add":
       return charList.map((letter, index) => {
-        if(index === start && !pairs.isLeftUnpaired) {return tag + letter}
-        if(index === end && !pairs.isRightUnpaired) {return letter + tag}
+        if(index === start && pairs.isLeftUnpaired === false) {return tag + letter}
+        if(index === end - 1 && pairs.isRightUnpaired === false) {return letter + tag}
         return letter;
       }).join('');
     case "remove":
       return charList.map((letter, index) => {
-        if(index === start && pairs.isLeftUnpaired) {return tag + letter}
-        if(index === end && pairs.isRightUnpaired) {return letter + tag}
+        if(index === start && pairs.isLeftUnpaired === true) {return tag + letter}
+        if(index === end - 1 && pairs.isRightUnpaired === true) {return letter + tag}
         return letter;
       }).join('');
     default: throw "Incorrect action";
@@ -58,12 +58,13 @@ function getUnpairedTags(str, selection, tag){
     let {start, end} = selection;
     let decorRegex = tag !== "**" ? new RegExp(tag, 'g') : new RegExp('\\*\\*', 'g');
     let leftMatch = str.substring(0, start).match(decorRegex), rightMatch = str.substring(end).match(decorRegex);
-    let isLeftUnpaired = (leftMatch && leftMatch.length % 2 == 1);
-    let isRightUnpaired = (rightMatch && rightMatch.length % 2 == 1);
+    let isLeftUnpaired = leftMatch && leftMatch.length % 2 === 1 ? true : false;
+    let isRightUnpaired = rightMatch && rightMatch.length % 2 === 1 ? true : false;
     return {isLeftUnpaired, isRightUnpaired};
   }
   return undefined;
 }
+
 
 // get the selection inside of the form input based on the paragraph input
 function getSelection(occurrences, str, substr){
