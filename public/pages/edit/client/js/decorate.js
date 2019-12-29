@@ -10,9 +10,11 @@ function decorate(formInput, paragraphInput, decoration){
     let action = getAction(paragraphSelections, Array.from(document.getElementsByClassName("selected")[0].childNodes));
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
     let selections = getSelection(occurrence, formInput, window.getSelection().toString());
-    let pairs = getUnpairedTags(formInput, selections, multiLiners[decoration]);
-    formInput = clean(formInput, selections);
+    formInput = cleanSelection(formInput, selections);
     selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    formInput = cleanEdges(formInput, selections, multiLiners[decoration]);
+    selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    let pairs = getUnpairedTags(formInput, selections, multiLiners[decoration]);
     return manipulateMultiLiner(formInput, decoration, action, selections, pairs);
   }
   return manipulateOneLiner(formInput, oneLiners[decoration]);
@@ -80,7 +82,7 @@ function getSelection(occurrences, str, substr){
 }
 
 // remove any tags inside the selection, not including any tags wrapping the selection
-function clean(str, selection){
+function cleanSelection(str, selection){
   let {start, end} = selection;
   let selectedStr = str.substring(start, end);
   let cleanString = allTags.reduce((accumulator, tag) => {
@@ -89,6 +91,27 @@ function clean(str, selection){
     return accumulator.replace(patt, '');
   }, selectedStr);
   return str.slice(0, start) + cleanString + str.slice(end);
+}
+
+// clean the edges of the selection from tags that are not ignoreTag
+function cleanEdges(str, selection, ignoreTag){
+  let {start, end} = selection;
+  let filteredTags = allTags.filter(tag => tag !== ignoreTag);
+  let leftEdge = str.substring(start - 2, start), rightEdge = str.substring(end, end + 2);
+  // if either the text on the right edge or the left edge are an unnessecary tag
+  if(filteredTags.indexOf(rightEdge) !== -1 || filteredTags.indexOf(leftEdge) !== -1){
+    return str.split('').map((letter, index) => {
+      if((index === start - 2 || index === start - 1) && allTags.indexOf(leftEdge) !== -1){
+        let {isLeftUnpaired} = getUnpairedTags(str, selection, leftEdge);
+        return isLeftUnpaired ? '' : letter;
+      } else if((index === end || index === end + 1) && allTags.indexOf(rightEdge) !== -1){
+        let {isRightUnpaired} = getUnpairedTags(str,selection, rightEdge);
+        return isRightUnpaired ? '' : letter;
+      }
+      return letter;
+    }).join('');
+  }
+  return str;
 }
 
 // decide whether the current selection should be tagged or should its tags be removed instead
