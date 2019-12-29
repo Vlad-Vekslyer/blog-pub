@@ -10,21 +10,22 @@ function decorate(formInput, paragraphInput, decoration){
     let action = getAction(paragraphSelections, Array.from(document.getElementsByClassName("selected")[0].childNodes));
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
     let selections = getSelection(occurrence, formInput, window.getSelection().toString());
+    let pairs = getUnpairedTags(formInput, selections, multiLiners[decoration]);
     formInput = cleanSelection(formInput, selections);
     selections = getSelection(occurrence, formInput, window.getSelection().toString());
     formInput = cleanEdges(formInput, selections, multiLiners[decoration]);
     selections = getSelection(occurrence, formInput, window.getSelection().toString());
-    let pairs = getUnpairedTags(formInput, selections, multiLiners[decoration]);
-    return manipulateMultiLiner(formInput, decoration, action, selections, pairs);
+    let manipulatedInput = manipulateMultiLiner(formInput, decoration, action, selections, pairs);
+    return cleanEmptyTags(manipulatedInput);
   }
   return manipulateOneLiner(formInput, oneLiners[decoration]);
 }
 
-function manipulateOneLiner(str, decoration){
+function manipulateOneLiner(str, tag){
   let start = str.slice(0, 2);
   let oneLinerValues = Object.values(oneLiners);
   // if a oneliner already exists, remove it from return. otherwise, add it to the return
-  return (oneLinerValues.indexOf(start.join('')) !== -1) ? str.slice(2) : decoration + str;
+  return (oneLinerValues.indexOf(start.join('')) !== -1) ? str.slice(2) : tag + str;
 }
 
 function manipulateMultiLiner(str, decoration, action, selection, pairs){
@@ -37,6 +38,7 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }
+  console.log(action, pairs, selection)
   switch(action){
     case "add":
       return charList.map((letter, index) => {
@@ -101,10 +103,10 @@ function cleanEdges(str, selection, ignoreTag){
   // if either the text on the right edge or the left edge are an unnessecary tag
   if(filteredTags.indexOf(rightEdge) !== -1 || filteredTags.indexOf(leftEdge) !== -1){
     return str.split('').map((letter, index) => {
-      if((index === start - 2 || index === start - 1) && allTags.indexOf(leftEdge) !== -1){
+      if((index === start - 2 || index === start - 1) && filteredTags.indexOf(leftEdge) !== -1){
         let {isLeftUnpaired} = getUnpairedTags(str, selection, leftEdge);
         return isLeftUnpaired ? '' : letter;
-      } else if((index === end || index === end + 1) && allTags.indexOf(rightEdge) !== -1){
+      } else if((index === end || index === end + 1) && filteredTags.indexOf(rightEdge) !== -1){
         let {isRightUnpaired} = getUnpairedTags(str,selection, rightEdge);
         return isRightUnpaired ? '' : letter;
       }
@@ -128,9 +130,15 @@ function getAction(selection, allNodes){
   });
   // if all selected text is wrapped in tags already, return "remove", otherwise return "add"
   for(let node of selectedNodes){
-    if(node.nodeName === "#text") {return "add"}
+    if(node.nodeName === "#text" && node.data !== "\n") {return "add"}
   }
   return "remove";
+}
+
+function cleanEmptyTags(str){
+  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => accumulator + tag.charAt(0), '');
+  let regex = new RegExp(`[${allTagsStr}]{4}`, 'g');
+  return str.replace(regex, '');
 }
 
 // initialize the decoration event listeners
