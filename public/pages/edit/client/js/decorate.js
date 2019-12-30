@@ -6,6 +6,7 @@ import {processText} from "./process.js";
 // returns a string decorated with tags
 function decorate(formInput, paragraphInput, decoration){
   if(Object.keys(oneLiners).indexOf(decoration) === -1){
+    formInput = cleanEmptyTags(formInput);
     let paragraphSelections = computeDOMSelection(window.getSelection());
     let action = getAction(paragraphSelections, Array.from(document.getElementsByClassName("selected")[0].childNodes));
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
@@ -38,7 +39,7 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }
-  console.log(action, pairs, selection)
+  console.log(action, pairs, selection, tag)
   switch(action){
     case "add":
       return charList.map((letter, index) => {
@@ -48,8 +49,8 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
       }).join('');
     case "remove":
       return charList.map((letter, index) => {
-        if(index === start && pairs.isLeftUnpaired === true) {return tag + letter}
-        if(index === end - 1 && pairs.isRightUnpaired === true) {return letter + tag}
+        if(index === start && pairs.isLeftUnpaired === true) {return pairs.leftTag + letter}
+        if(index === end - 1 && pairs.isRightUnpaired === true) {return letter + pairs.rightTag}
         return letter;
       }).join('');
     default: throw "Incorrect action";
@@ -60,11 +61,14 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
 function getUnpairedTags(str, selection, tag){
   if(selection){
     let {start, end} = selection;
-    let decorRegex = tag !== "**" ? new RegExp(tag, 'g') : new RegExp('\\*\\*', 'g');
+    let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => accumulator + tag.charAt(0), '');
+    let decorRegex = new RegExp(`[${allTagsStr}]{2}`, 'g');
     let leftMatch = str.substring(0, start).match(decorRegex), rightMatch = str.substring(end).match(decorRegex);
     let isLeftUnpaired = leftMatch && leftMatch.length % 2 === 1 ? true : false;
     let isRightUnpaired = rightMatch && rightMatch.length % 2 === 1 ? true : false;
-    return {isLeftUnpaired, isRightUnpaired};
+    let leftTag = leftMatch ? leftMatch[0] : null;
+    let rightTag = rightMatch ? rightMatch[0] : null;
+    return {isLeftUnpaired, isRightUnpaired, leftTag, rightTag};
   }
   return undefined;
 }
@@ -136,10 +140,15 @@ function getAction(selection, allNodes){
 }
 
 function cleanEmptyTags(str){
-  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => accumulator + tag.charAt(0), '');
-  let regex = new RegExp(`[${allTagsStr}]{4}`, 'g');
+  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag, index, arr) => {
+    let char = tag.charAt(0) === '*' ? '\\*' : tag.charAt(0);
+    return accumulator + `(${char}{4})?`;
+  }, '');
+  let regex = new RegExp(allTagsStr, 'g');
   return str.replace(regex, '');
 }
+
+cleanEmptyTags('%%hello %%**hello**%% hello%%');
 
 // initialize the decoration event listeners
 function initDecorator(){
