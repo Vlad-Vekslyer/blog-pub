@@ -10,11 +10,11 @@ function decorate(formInput, paragraphInput, decoration){
     let paragraphSelections = computeDOMSelection(window.getSelection());
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
     let selection = getSelection(occurrence, formInput, window.getSelection().toString());
+    let action = getAction(formInput, selection);
     formInput = cleanSelection(formInput, selection);
-    // selection = getSelection(occurrence, formInput, window.getSelection().toString());
-    // formInput = cleanEdges(formInput, selection, multiLiners[decoration]);
+    selection = getSelection(occurrence, formInput, window.getSelection().toString());
+    formInput = action === 'add' ? cleanEdges(formInput, selection, multiLiners[decoration]) : formInput;
     let finalSelection = getSelection(occurrence, formInput, window.getSelection().toString());
-    let action = getAction(formInput, finalSelection);
     let pairs = getUnpairedTags(formInput, finalSelection, multiLiners[decoration]);
     let manipulatedInput = manipulateMultiLiner(formInput, decoration, action, finalSelection, pairs);
     return cleanEmptyTags(manipulatedInput);
@@ -41,11 +41,15 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }
-  // console.log(str,action, selection, pairs);
+  console.log(str,action, selection, pairs);
   switch(action){
     case "add":
+      // iterate through each letter, adding a closing/opening tag if nessecary
       return charList.map((letter, index) => {
-        if(index === start && pairs.isLeftUnpaired === false) {return tag + letter}
+        if(index === start && pairs.isLeftUnpaired === false) {
+          // if the selection is a single char, return the char surrounded by tags
+          return start === end - 1 ? tag + letter + tag : tag + letter
+        }
         if(index === end - 1 && pairs.isRightUnpaired === false) {return letter + tag}
         return letter;
       }).join('');
@@ -124,14 +128,16 @@ function cleanEdges(str, selection, ignoreTag){
 
 // decide whether the current selection should be tagged or should its tags be removed instead
 function getAction(str, selection){
-  console.log(str, selection);
   let {start, end} = selection;
   let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => {
     return accumulator + tag.charAt(0);
   }, '');
+  // this regex will match any text that's between an opening and closing tag
   let regex = new RegExp(`[${allTagsStr}]{2}[^${allTagsStr}]+[${allTagsStr}]{2}`, 'g');
   let matches = Array.from(str.matchAll(regex));
+  // get the selection of each match found
   let matchPositions = matches.map(match => {return {start: match.index, end: match.index + match[0].length}});
+  // link together selections that are closely adjacent to each other
   let linkedMatchPositions = matchPositions.reduce((accumulator, position, index, arr) => {
     if(index < arr.length - 1 && position.end === arr[index + 1].start) {
       return [...accumulator ,{start: position.start, end: arr[index + 1].end}]
@@ -144,11 +150,6 @@ function getAction(str, selection){
   }
   return "add";
 }
-
-// console.log(getAction2('hello %%hello%% hello', {start: 8, end: 13}));
-// console.log(getAction2('%%hi%% hi', {start: 2, end: 9}));
-// console.log(getAction2('%%hi%%**hi** hello', {start: 2, end: 10}));
-// console.log(getAction2('%%hi%%**hi** hello', {start: 10, end: 16}));
 
 function cleanEmptyTags(str){
   let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => {

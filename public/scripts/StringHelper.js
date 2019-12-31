@@ -14,9 +14,11 @@ function occurrenceOf(str, selections, count = 1){
   return occurrenceOf(slicedStr, {start: start - difference, end: end - difference}, count + 1);
 }
 
+let count = 1;
+
 // works similarily to String.matchAll except that it looks for matching substrings even in areas where matches were found already
 function linearMatchAll(str, regex, substr = null, resultArr = []){
-  let result = regex.exec(substr ? substr : str);
+  let result = regex.exec(substr !== null ? substr : str);
   if(!result) {return resultArr}
   // difference is used to account for the decreasing length of the substring when computing the index
   let difference = substr ? str.length - substr.length : 0;
@@ -26,6 +28,7 @@ function linearMatchAll(str, regex, substr = null, resultArr = []){
     index: result.index + (substr ? difference : 0),
     value: result[0]
   }
+  if(count++ < 3) console.log(slicedStr)
   return linearMatchAll(str, regex, slicedStr, [...resultArr, arrItem])
 }
 
