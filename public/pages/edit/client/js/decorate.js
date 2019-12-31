@@ -15,8 +15,8 @@ function decorate(formInput, paragraphInput, decoration){
     selection = getSelection(occurrence, formInput, window.getSelection().toString());
     formInput = action === 'add' ? cleanEdges(formInput, selection, multiLiners[decoration]) : formInput;
     let finalSelection = getSelection(occurrence, formInput, window.getSelection().toString());
-    let pairs = getUnpairedTags(formInput, finalSelection, multiLiners[decoration]);
-    let manipulatedInput = manipulateMultiLiner(formInput, decoration, action, finalSelection, pairs);
+    let pairs = getUnpairedTags(formInput, finalSelection);
+    let manipulatedInput = manipulateMultiLiner(formInput, multiLiners[decoration], action, finalSelection, pairs);
     return cleanEmptyTags(manipulatedInput);
   }
   return manipulateOneLiner(formInput, oneLiners[decoration]);
@@ -29,9 +29,8 @@ function manipulateOneLiner(str, tag){
   return (oneLinerValues.indexOf(start.join('')) !== -1) ? str.slice(2) : tag + str;
 }
 
-function manipulateMultiLiner(str, decoration, action, selection, pairs){
+function manipulateMultiLiner(str, tag, action, selection, pairs){
   let {start, end} = selection;
-  let tag = multiLiners[decoration];
   let multiVals = Object.values(multiLiners);
   let leftEdge = str.substring(start - 2, start), rightEdge = str.substring(end, end + 2);
   let charList = str.split('');
@@ -41,30 +40,37 @@ function manipulateMultiLiner(str, decoration, action, selection, pairs){
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }
-  console.log(str,action, selection, pairs);
-  switch(action){
-    case "add":
-      // iterate through each letter, adding a closing/opening tag if nessecary
-      return charList.map((letter, index) => {
-        if(index === start && pairs.isLeftUnpaired === false) {
-          // if the selection is a single char, return the char surrounded by tags
-          return start === end - 1 ? tag + letter + tag : tag + letter
-        }
-        if(index === end - 1 && pairs.isRightUnpaired === false) {return letter + tag}
-        return letter;
-      }).join('');
-    case "remove":
-      return charList.map((letter, index) => {
-        if(index === start && pairs.isLeftUnpaired === true) {return pairs.leftTag + letter}
-        if(index === end - 1 && pairs.isRightUnpaired === true) {return letter + pairs.rightTag}
-        return letter;
-      }).join('');
-    default: throw "Incorrect action";
+  // console.log(str,action, selection, pairs);
+  return charList.map(getManipulator(selection, pairs, action, tag)).join('');
+}
+
+// higher order function that will return the correct callback to manipulate the form input
+function getManipulator(selection, pairs, action, tag){
+  let {start, end} = selection;
+  let {isLeftUnpaired, isRightUnpaired, leftTag, rightTag} = pairs;
+  // iterate through each letter, adding a closing/opening tag if nessecary
+  if(action === "add"){
+    return function(letter, index) {
+      if(index === start && isLeftUnpaired === false) {
+        // if the selection is a single char, return the char surrounded by tags
+        return start === end - 1 ? tag + letter + tag : tag + letter
+      }
+      if(index === start && isLeftUnpaired === true && leftTag !== tag) {return leftTag + tag + letter}
+      if(index === end - 1 && isRightUnpaired === false) {return letter + tag}
+      if(index === end - 1 && isRightUnpaired === true && rightTag !== tag) {return letter + tag + rightTag}
+      return letter;
+    }
+  } else if (action === "remove"){
+    return function(letter, index){
+      if(index === start && isLeftUnpaired === true) {return leftTag + letter}
+      if(index === end - 1 && isRightUnpaired === true) {return letter + rightTag}
+      return letter;
+    }
   }
 }
 
 // return an object that notifies whether any side of the selection contains an unpaired tag
-function getUnpairedTags(str, selection, tag){
+function getUnpairedTags(str, selection){
   if(selection){
     let {start, end} = selection;
     let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => accumulator + tag.charAt(0), '');

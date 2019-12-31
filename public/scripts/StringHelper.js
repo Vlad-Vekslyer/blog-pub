@@ -28,7 +28,6 @@ function linearMatchAll(str, regex, substr = null, resultArr = []){
     index: result.index + (substr ? difference : 0),
     value: result[0]
   }
-  if(count++ < 3) console.log(slicedStr)
   return linearMatchAll(str, regex, slicedStr, [...resultArr, arrItem])
 }
 
