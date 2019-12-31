@@ -8,15 +8,15 @@ function decorate(formInput, paragraphInput, decoration){
   if(Object.keys(oneLiners).indexOf(decoration) === -1){
     formInput = cleanEmptyTags(formInput);
     let paragraphSelections = computeDOMSelection(window.getSelection());
-    let action = getAction(paragraphSelections, Array.from(document.getElementsByClassName("selected")[0].childNodes));
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
-    let selections = getSelection(occurrence, formInput, window.getSelection().toString());
-    let pairs = getUnpairedTags(formInput, selections, multiLiners[decoration]);
-    formInput = cleanSelection(formInput, selections);
-    selections = getSelection(occurrence, formInput, window.getSelection().toString());
-    formInput = cleanEdges(formInput, selections, multiLiners[decoration]);
-    selections = getSelection(occurrence, formInput, window.getSelection().toString());
-    let manipulatedInput = manipulateMultiLiner(formInput, decoration, action, selections, pairs);
+    let selection = getSelection(occurrence, formInput, window.getSelection().toString());
+    formInput = cleanSelection(formInput, selection);
+    // selection = getSelection(occurrence, formInput, window.getSelection().toString());
+    // formInput = cleanEdges(formInput, selection, multiLiners[decoration]);
+    let finalSelection = getSelection(occurrence, formInput, window.getSelection().toString());
+    let action = getAction(formInput, finalSelection);
+    let pairs = getUnpairedTags(formInput, finalSelection, multiLiners[decoration]);
+    let manipulatedInput = manipulateMultiLiner(formInput, decoration, action, finalSelection, pairs);
     return cleanEmptyTags(manipulatedInput);
   }
   return manipulateOneLiner(formInput, oneLiners[decoration]);
@@ -32,14 +32,16 @@ function manipulateOneLiner(str, tag){
 function manipulateMultiLiner(str, decoration, action, selection, pairs){
   let {start, end} = selection;
   let tag = multiLiners[decoration];
+  let multiVals = Object.values(multiLiners);
+  let leftEdge = str.substring(start - 2, start), rightEdge = str.substring(end, end + 2);
   let charList = str.split('');
-  // if tags exists around the selection, remove them
-  if(str.substring(start - 2, start) === tag && str.substring(end, end + 2) === tag){
+  // if two identical tags exist around the selection, remove them
+  if(multiVals.indexOf(leftEdge) !== -1 && multiVals.indexOf(rightEdge) !== -1 && leftEdge === rightEdge && action === "remove"){
     return charList.filter((letter, index) => {
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }
-  console.log(action, pairs, selection, tag)
+  // console.log(str,action, selection, pairs);
   switch(action){
     case "add":
       return charList.map((letter, index) => {
@@ -121,34 +123,41 @@ function cleanEdges(str, selection, ignoreTag){
 }
 
 // decide whether the current selection should be tagged or should its tags be removed instead
-function getAction(selection, allNodes){
+function getAction(str, selection){
+  console.log(str, selection);
   let {start, end} = selection;
-  let selectedNodes = allNodes.filter(node => {
-    if(node.tagName !== "BR"){
-      // if the node starts, ends or covers the selection, push it
-      if((node.startIndex >= start && node.startIndex <= end) || (node.endIndex >= start && node.endIndex <= end) || (node.startIndex <= start && node.endIndex >= end)){
-        return true;
-      }
+  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => {
+    return accumulator + tag.charAt(0);
+  }, '');
+  let regex = new RegExp(`[${allTagsStr}]{2}[^${allTagsStr}]+[${allTagsStr}]{2}`, 'g');
+  let matches = Array.from(str.matchAll(regex));
+  let matchPositions = matches.map(match => {return {start: match.index, end: match.index + match[0].length}});
+  let linkedMatchPositions = matchPositions.reduce((accumulator, position, index, arr) => {
+    if(index < arr.length - 1 && position.end === arr[index + 1].start) {
+      return [...accumulator ,{start: position.start, end: arr[index + 1].end}]
     }
-    return false;
-  });
-  // if all selected text is wrapped in tags already, return "remove", otherwise return "add"
-  for(let node of selectedNodes){
-    if(node.nodeName === "#text" && node.data !== "\n") {return "add"}
+    if(index > 0 && position.start === arr[index - 1].end) { return accumulator }
+    return [...accumulator, position];
+  }, [])
+  for(let position of linkedMatchPositions){
+    if(start >= position.start && end <= position.end) {return "remove"};
   }
-  return "remove";
+  return "add";
 }
 
+// console.log(getAction2('hello %%hello%% hello', {start: 8, end: 13}));
+// console.log(getAction2('%%hi%% hi', {start: 2, end: 9}));
+// console.log(getAction2('%%hi%%**hi** hello', {start: 2, end: 10}));
+// console.log(getAction2('%%hi%%**hi** hello', {start: 10, end: 16}));
+
 function cleanEmptyTags(str){
-  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag, index, arr) => {
+  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => {
     let char = tag.charAt(0) === '*' ? '\\*' : tag.charAt(0);
     return accumulator + `(${char}{4})?`;
   }, '');
   let regex = new RegExp(allTagsStr, 'g');
   return str.replace(regex, '');
 }
-
-cleanEmptyTags('%%hello %%**hello**%% hello%%');
 
 // initialize the decoration event listeners
 function initDecorator(){

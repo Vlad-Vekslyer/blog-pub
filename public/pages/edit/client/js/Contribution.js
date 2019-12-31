@@ -40,7 +40,7 @@ class Contribution {
       if(event.key == "Enter") return;
       let name = this.attributes.getNamedItem("name").nodeValue;
       let inputArr = document.querySelector(`input[name="${name}"]`).value.split('');
-      let newArr = [], i = 0, paragraphArr = this.innerText.split('');
+      let newArr = [], i = 0, paragraphArr = this.textContent.split('');
       while(paragraphArr.length > 0 || i < inputArr.length){
         let front = inputArr[i] + inputArr[i + 1];
         let back = inputArr[i] + inputArr[i - 1];
