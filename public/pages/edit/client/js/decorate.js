@@ -40,7 +40,6 @@ function manipulateMultiLiner(str, tag, action, selection, pairs){
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }
-  // console.log(str,action, selection, pairs);
   return charList.map(getManipulator(selection, pairs, action, tag)).join('');
 }
 
@@ -94,9 +93,9 @@ function getSelection(occurrences, str, substr){
     else return accumulator + letter;
   }, '');
   let subRegex = new RegExp(patt);
-  let foundSubstrings = linearMatchAll(str, subRegex)
-  let index = foundSubstrings[occurrences - 1].index;
-  return {start: index, end: index + substr.length};
+  let foundSubstrings = linearMatchAll(str, subRegex);
+  let {index, value} = foundSubstrings[occurrences - 1];
+  return {start: index, end: index + value.length};
 }
 
 // remove any tags inside the selection, not including any tags wrapping the selection
@@ -110,6 +109,8 @@ function cleanSelection(str, selection){
   }, selectedStr);
   return str.slice(0, start) + cleanString + str.slice(end);
 }
+
+// console.log(cleanSelection('hello %%hello%% hello', {start: 4, end: 14}))
 
 // clean the edges of the selection from tags that are not ignoreTag
 function cleanEdges(str, selection, ignoreTag){
