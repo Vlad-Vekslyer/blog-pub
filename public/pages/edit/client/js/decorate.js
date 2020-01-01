@@ -6,20 +6,25 @@ import {processText} from "./process.js";
 // returns a string decorated with tags
 function decorate(formInput, paragraphInput, decoration){
   if(Object.keys(oneLiners).indexOf(decoration) === -1){
-    formInput = cleanEmptyTags(formInput);
     let paragraphSelections = computeDOMSelection(window.getSelection());
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
-    let selection = getSelection(occurrence, formInput, window.getSelection().toString());
-    let action = getAction(formInput, selection);
-    formInput = cleanSelection(formInput, selection);
-    selection = getSelection(occurrence, formInput, window.getSelection().toString());
-    formInput = action === 'add' ? cleanEdges(formInput, selection, multiLiners[decoration]) : formInput;
-    let finalSelection = getSelection(occurrence, formInput, window.getSelection().toString());
-    let pairs = getUnpairedTags(formInput, finalSelection);
-    let manipulatedInput = manipulateMultiLiner(formInput, multiLiners[decoration], action, finalSelection, pairs);
+    let firstClean = clean(() => cleanEmptyTags(formInput), occurrence);
+    let action = getAction(firstClean);
+    let secondClean = clean(() => cleanSelection(firstClean), occurrence);
+    let lastClean = action === 'add' ? clean(() => cleanEdges(secondClean, multiLiners[decoration]), occurrence) : secondClean;
+    let pairs = getUnpairedTags(lastClean);
+    let manipulatedInput = manipulateMultiLiner(lastClean.input, multiLiners[decoration], action, lastClean.selection, pairs);
     return cleanEmptyTags(manipulatedInput);
   }
   return manipulateOneLiner(formInput, oneLiners[decoration]);
+}
+
+// higher order function that handles the different cleanings that need to be done
+// @cleaner is a callback that expects a cleaning function to be called inside of it. Don't pass in the cleaning function's name to the cleaner
+function clean(cleaner, occurence){
+  let cleanInput = cleaner();
+  let selection = getSelection(occurence, cleanInput, window.getSelection().toString());
+  return {input: cleanInput, selection: selection};
 }
 
 function manipulateOneLiner(str, tag){
@@ -69,12 +74,13 @@ function getManipulator(selection, pairs, action, tag){
 }
 
 // return an object that notifies whether any side of the selection contains an unpaired tag
-function getUnpairedTags(str, selection){
+function getUnpairedTags(obj){
+  let {input, selection} = obj;
   if(selection){
     let {start, end} = selection;
     let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => accumulator + tag.charAt(0), '');
     let decorRegex = new RegExp(`[${allTagsStr}]{2}`, 'g');
-    let leftMatch = str.substring(0, start).match(decorRegex), rightMatch = str.substring(end).match(decorRegex);
+    let leftMatch = input.substring(0, start).match(decorRegex), rightMatch = input.substring(end).match(decorRegex);
     let isLeftUnpaired = leftMatch && leftMatch.length % 2 === 1 ? true : false;
     let isRightUnpaired = rightMatch && rightMatch.length % 2 === 1 ? true : false;
     let leftTag = leftMatch ? leftMatch[0] : null;
@@ -99,49 +105,52 @@ function getSelection(occurrences, str, substr){
 }
 
 // remove any tags inside the selection, not including any tags wrapping the selection
-function cleanSelection(str, selection){
+function cleanSelection(obj){
+  let {input, selection} = obj;
   let {start, end} = selection;
-  let selectedStr = str.substring(start, end);
+  let selectedStr = input.substring(start, end);
   let cleanString = allTags.reduce((accumulator, tag) => {
     let tagPattern = tag === "**" ? '\\*\\*' : tag;
     let patt = new RegExp(tagPattern, 'g');
     return accumulator.replace(patt, '');
   }, selectedStr);
-  return str.slice(0, start) + cleanString + str.slice(end);
+  return input.slice(0, start) + cleanString + input.slice(end);
 }
 
 // console.log(cleanSelection('hello %%hello%% hello', {start: 4, end: 14}))
 
 // clean the edges of the selection from tags that are not ignoreTag
-function cleanEdges(str, selection, ignoreTag){
+function cleanEdges(obj, ignoreTag){
+  let {input, selection} = obj
   let {start, end} = selection;
   let filteredTags = allTags.filter(tag => tag !== ignoreTag);
-  let leftEdge = str.substring(start - 2, start), rightEdge = str.substring(end, end + 2);
+  let leftEdge = input.substring(start - 2, start), rightEdge = input.substring(end, end + 2);
   // if either the text on the right edge or the left edge are an unnessecary tag
   if(filteredTags.indexOf(rightEdge) !== -1 || filteredTags.indexOf(leftEdge) !== -1){
-    return str.split('').map((letter, index) => {
+    return input.split('').map((letter, index) => {
       if((index === start - 2 || index === start - 1) && filteredTags.indexOf(leftEdge) !== -1){
-        let {isLeftUnpaired} = getUnpairedTags(str, selection, leftEdge);
+        let {isLeftUnpaired} = getUnpairedTags(obj);
         return isLeftUnpaired ? '' : letter;
       } else if((index === end || index === end + 1) && filteredTags.indexOf(rightEdge) !== -1){
-        let {isRightUnpaired} = getUnpairedTags(str,selection, rightEdge);
+        let {isRightUnpaired} = getUnpairedTags(obj);
         return isRightUnpaired ? '' : letter;
       }
       return letter;
     }).join('');
   }
-  return str;
+  return input;
 }
 
 // decide whether the current selection should be tagged or should its tags be removed instead
-function getAction(str, selection){
+function getAction(obj){
+  let {input, selection} = obj;
   let {start, end} = selection;
   let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => {
     return accumulator + tag.charAt(0);
   }, '');
   // this regex will match any text that's between an opening and closing tag
   let regex = new RegExp(`[${allTagsStr}]{2}[^${allTagsStr}]+[${allTagsStr}]{2}`, 'g');
-  let matches = Array.from(str.matchAll(regex));
+  let matches = Array.from(input.matchAll(regex));
   // get the selection of each match found
   let matchPositions = matches.map(match => {return {start: match.index, end: match.index + match[0].length}});
   // link together selections that are closely adjacent to each other
@@ -175,7 +184,6 @@ function initDecorator(){
       let selectedCont = document.getElementsByClassName("selected")[0];
       let selectedContName = selectedCont.attributes.name.nodeValue;
       let input = document.querySelector(`input[name="${selectedContName}"]`);
-      // pass in the current this to allow the decorate function to know which button was clicked
       let decoratedCont = decorate(input.value, selectedCont.textContent, this.name);
       updateDOM(decoratedCont, selectedCont, input, this.name);
     });
