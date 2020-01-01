@@ -1,7 +1,6 @@
 import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
 import {computeDOMSelection} from "/scripts/DOMHelper";
 import {occurrenceOf, linearMatchAll} from "/scripts/StringHelper";
-import {processText} from "./process.js";
 
 // returns a string decorated with tags
 function decorate(formInput, paragraphInput, decoration){
@@ -176,31 +175,4 @@ function cleanEmptyTags(str){
   return str.replace(regex, '');
 }
 
-// initialize the decoration event listeners
-function initDecorator(){
-  let buttons = document.getElementById('decorator').children;
-  for(let i = 0; i < buttons.length; i++){
-    buttons[i].addEventListener("click", function() {
-      let selectedCont = document.getElementsByClassName("selected")[0];
-      let selectedContName = selectedCont.attributes.name.nodeValue;
-      let input = document.querySelector(`input[name="${selectedContName}"]`);
-      let decoratedCont = decorate(input.value, selectedCont.textContent, this.name);
-      updateDOM(decoratedCont, selectedCont, input, this.name);
-    });
-  }
-}
-
-function updateDOM(decoratedCont, selectedCont, input, decoration){
-  // fire an enter event to create a new textarea if a one-liner was clicked and was added instead of removed
-  if(decoratedCont.length > input.value.length && Object.keys(oneLiners).indexOf(decoration) !== -1) {
-      let enterEvent = new KeyboardEvent("keydown", {key: "Enter"});
-      selectedCont.dispatchEvent(enterEvent);
-  }
-  input.value = decoratedCont;
-  processText(decoratedCont).then(processedCont => {
-    selectedCont.innerHTML = processedCont;
-    selectedCont.dispatchEvent(new KeyboardEvent("keyup"))
-  });
-}
-
-export default initDecorator;
+export default decorate;
