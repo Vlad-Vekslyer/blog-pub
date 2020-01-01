@@ -30,7 +30,7 @@ function manipulateOneLiner(str, tag){
   let start = str.slice(0, 2);
   let oneLinerValues = Object.values(oneLiners);
   // if a oneliner already exists, remove it from return. otherwise, add it to the return
-  return (oneLinerValues.indexOf(start.join('')) !== -1) ? str.slice(2) : tag + str;
+  return (oneLinerValues.indexOf(start) !== -1) ? str.slice(2) : tag + str;
 }
 
 function manipulateMultiLiner(str, tag, action, selection, pairs){
