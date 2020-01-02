@@ -1,9 +1,9 @@
 import Contribution from './js/Contribution.js';
 import decorate from "./js/decorate.js";
 import {updateInputs} from '/scripts/DOMHelper.js';
-
 new Contribution();
 
+// initialize decorators
 const decoratorBtns = document.getElementById('decorator').children;
 
 for(let i = 0; i < decoratorBtns.length; i++){
@@ -16,6 +16,7 @@ for(let i = 0; i < decoratorBtns.length; i++){
   });
 }
 
+// initialize hidden form
 const commitButton = document.getElementById("commit-btn");
 const contributions = document.querySelectorAll("input[type='hidden']");
 
