@@ -1,4 +1,5 @@
 <?php
+
   // the initialize function takes an array of functions and calls each function
   function initialize($initializers = array('initAutoloaderClasses', 'initAutoloaderComposer', 'initTwig','initEnv')){
     foreach ($initializers as $initializer)
