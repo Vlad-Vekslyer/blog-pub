@@ -13,7 +13,7 @@
       $statement->bind_param('ss', $username, $hash);
       $statement->execute() or die($this->connection->error);
       $statement->close();
-      $this->authenticate();
+      $this->authenticate($username);
     }
 
     public function login($username, $password) {
@@ -23,13 +23,19 @@
       $dbPasswordStm->bind_result($dbPassword);
       $dbPasswordStm->fetch();
       if (password_verify($password, $dbPassword))
-        $this->authenticate();
+        $this->authenticate($username);
       else
         echo 'Invalid Password';
     }
 
-    private function authenticate(){
-      echo 'This is the authenticate function';
+    public function logout() {
+      session_unset();
+      session_destroy();
+    }
+
+    private function authenticate($username){
+      session_start();
+      $_SESSION['username'] = $username;
     }
   }
 ?>
