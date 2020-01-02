@@ -23,9 +23,9 @@
       $dbPasswordStm->bind_result($dbPassword);
       $dbPasswordStm->fetch();
       if (password_verify($password, $dbPassword))
-        $this->authenticate($username);
+        return $this->authenticate($username);
       else
-        echo 'Invalid Password';
+        return ['code' => 'failure', 'msg' => 'Invalid Password'];
     }
 
     public function logout() {
@@ -36,6 +36,7 @@
     private function authenticate($username){
       session_start();
       $_SESSION['username'] = $username;
+      return ['code' => 'success', 'msg' => 'Successfully logged in'];
     }
   }
 ?>
