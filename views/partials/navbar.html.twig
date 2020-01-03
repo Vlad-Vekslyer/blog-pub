@@ -1,0 +1,17 @@
+<nav>
+  <li>Home</li>
+  <li>Latest</li>
+  <li>Contribute</li>
+  {% if username == null %}
+    <li>
+      <button>Login</button>
+      <div class="nav-form hidden">
+        {{ include ('/partials/login.html.twig') }}
+      </div>
+    </li>
+    <li>Register</li>
+  {% else %}
+    <li>Hello {{username}}</li>
+    <li><a href='/auth/logout'>Logout</a></li>
+  {% endif %}
+</nav>

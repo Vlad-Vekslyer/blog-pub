@@ -1,8 +1,10 @@
     {{ include('partials/header.html.twig') }}
     <link rel='stylesheet' href='/stylesheets/edit.css'>
     <link rel="stylesheet" href="/stylesheets/sidebar.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
   </head>
   <body>
+    {{ include('partials/navbar.html.twig') }}
     {{ include('partials/sidebar.html.twig') }}
     <div class="container">
       <section id="edit">
@@ -33,7 +35,7 @@
         <div class="contributions">
           <!-- contribution textareas go here -->
         </div>
-        <button disabled type="button" id="commit-btn">Commit</button>
+        <button type="button" id="commit-btn">Commit</button>
         <form action="/edit/" method="post">
           <input type="hidden" name="contribution-1"/>
           <input type="hidden" name="contribution-2"/>

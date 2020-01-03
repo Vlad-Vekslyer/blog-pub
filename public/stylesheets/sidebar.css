@@ -1,5 +1,7 @@
 aside {
-  float: right;
+  position: absolute;
+  right: 0;
+  top: 250px;
   padding: 10px 25px;
   box-sizing: border-box;
   width: 15%;

@@ -1,5 +1,6 @@
 <?php
   namespace Blog;
+  session_start();
   require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
@@ -22,6 +23,7 @@
     $contributions = $article->getContributions($articleData['id']);
     $pastArticles = $article->getPastArticles();
     $edit = new \Blog\Template\Template('edit.html.twig', [
+      'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL,
       'contributions'=>$contributions,
       'article'=>$articleData,
       'pastArticles'=>$pastArticles]);
