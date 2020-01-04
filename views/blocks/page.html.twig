@@ -1,0 +1,13 @@
+    {{ include('/partials/header.html.twig') }}
+
+    {% block links %}
+      <link rel="stylesheet" href="/stylesheets/sidebar.css">
+      <link rel="stylesheet" href="/stylesheets/navbar.css">
+    {% endblock %}
+  </head>
+  <body>
+    {{ include('/partials/navbar.html.twig') }}
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

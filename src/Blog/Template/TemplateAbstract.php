@@ -1,7 +1,7 @@
 <?php
   namespace Blog\Template;
 
-  abstract class TemplaceAbstract{
+  abstract class TemplateAbstract{
     protected $template;
     protected $varlist;
 
