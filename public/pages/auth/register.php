@@ -7,6 +7,12 @@
     $auth = new \Blog\Database\Authentication();
     $result = $auth->register($_POST['username'], $_POST['password']);
     $auth->closeConnection();
+
+    if($result['code'] == 'success'){
+      session_start();
+      $_SESSION['username'] = $_POST['username'];
+    }
+    
     $encodedResult = json_encode($result);
     echo $encodedResult;
   }

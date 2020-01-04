@@ -2,7 +2,7 @@
   namespace Blog\Template;
   require_once 'TemplateAbstract.php';
 
-  class Template extends TemplateConstructor {
+  class Template extends TemplateAbstract {
     public function output(){
       $twig = $GLOBALS['twig'];
       if($this->varlist)

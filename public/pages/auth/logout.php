@@ -3,8 +3,7 @@
   session_start();
   require_once '../../../src/Initializer.php';
   initialize();
-  $auth = new \Blog\Database\Authentication();
-
-  $auth->logout($_SESSION['username']);
-  $auth->closeConnection();
+  
+  session_unset();
+  session_destroy();
 ?>

@@ -19,10 +19,16 @@
   }
 
   $article->getLatestArticle(function($articleData){
+    if(isset($_SESSION['flash'])){
+      $flash = new \Blog\Flash\Flash($_SESSION['flash']['code'], $_SESSION['flash']['msg']);
+      unset($_SESSION['flash']);
+    }
+
     global $article;
     $contributions = $article->getContributions($articleData['id']);
     $pastArticles = $article->getPastArticles();
     $edit = new \Blog\Template\Template('edit.html.twig', [
+      'flash' => isset($flash) ? $flash->produceMarkup() : NULL,
       'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL,
       'contributions'=>$contributions,
       'article'=>$articleData,

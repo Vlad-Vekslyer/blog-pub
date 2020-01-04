@@ -13,7 +13,6 @@
       $statement->bind_param('ss', $username, $hash);
       $statement->execute() or die($this->connection->error);
       $statement->close();
-      $this->authenticate($username);
       return ['code' => 'success','msg' => 'Successfully Registered'];
     }
 
@@ -24,20 +23,9 @@
       $dbPasswordStm->bind_result($dbPassword);
       $dbPasswordStm->fetch();
       if (password_verify($password, $dbPassword))
-        return $this->authenticate($username);
+        return ['code' => 'success', 'msg' => 'Successfully logged in'];
       else
         return ['code' => 'failure', 'msg' => 'Invalid Password'];
-    }
-
-    public function logout() {
-      session_unset();
-      session_destroy();
-    }
-
-    private function authenticate($username){
-      session_start();
-      $_SESSION['username'] = $username;
-      return ['code' => 'success', 'msg' => 'Successfully logged in'];
     }
   }
 ?>
