@@ -8,7 +8,7 @@
     }
 
     public function produceMarkup(){
-      return "<p class='$className'>$text</p>";
+      return "<p class='$this->className'>$this->text</p>";
     }
   }
 

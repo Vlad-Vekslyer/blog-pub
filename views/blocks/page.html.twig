@@ -6,8 +6,12 @@
     {% endblock %}
   </head>
   <body>
+    {% if flash %}
+      {{ flash | raw}}
+    {% endif %}
     {{ include('/partials/navbar.html.twig') }}
     {% block content %}
     {% endblock %}
+    <script type="module" src="/scripts/nav.js"></script>
   </body>
 </html>

@@ -4,13 +4,13 @@
   <li>Contribute</li>
   {% if username == null %}
     <li>
-      <button>Login</button>
+      <button id='login-btn'>Login</button>
       <div class="nav-form-hidden">
         {{ include ('/partials/login.html.twig') }}
       </div>
     </li>
     <li>
-      <button>Register</button>
+      <button id='register-btn'>Register</button>
       <div class="nav-form-hidden">
         {{ include ('/partials/register.html.twig') }}
       </div>

@@ -4,17 +4,16 @@
   initialize();
 
   if(isset($_POST['username']) && isset($_POST['password'])){
+    session_start();
     $auth = new \Blog\Database\Authentication();
     $result = $auth->login($_POST['username'], $_POST['password']);
     $auth->closeConnection();
 
     if($result['code'] == 'success'){
-      session_start();
       $_SESSION['username'] = $_POST['username'];
     }
-    
-    $encodedResult = json_encode($result) or die('unable to encode json');
-    echo $encodedResult;
+
+    $_SESSION['flash'] = $result;
   }
 
 ?>

@@ -12,8 +12,7 @@
       session_start();
       $_SESSION['username'] = $_POST['username'];
     }
-    
-    $encodedResult = json_encode($result);
-    echo $encodedResult;
+
+    $_SESSION['flash'] = $result;
   }
  ?>
