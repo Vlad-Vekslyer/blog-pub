@@ -5,11 +5,16 @@
   {% if username == null %}
     <li>
       <button>Login</button>
-      <div class="nav-form hidden">
+      <div class="nav-form-hidden">
         {{ include ('/partials/login.html.twig') }}
       </div>
     </li>
-    <li>Register</li>
+    <li>
+      <button>Register</button>
+      <div class="nav-form-hidden">
+        {{ include ('/partials/register.html.twig') }}
+      </div>
+    </li>
   {% else %}
     <li>Hello {{username}}</li>
     <li><a href='/auth/logout'>Logout</a></li>

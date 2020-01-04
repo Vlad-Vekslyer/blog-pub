@@ -14,6 +14,7 @@
       $statement->execute() or die($this->connection->error);
       $statement->close();
       $this->authenticate($username);
+      return ['code' => 'success','msg' => 'Successfully Registered'];
     }
 
     public function login($username, $password) {
