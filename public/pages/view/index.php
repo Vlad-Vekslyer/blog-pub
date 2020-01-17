@@ -1,6 +1,6 @@
 <?php
   namespace Blog;
-  require_once "../../src/Initializer.php";
+  require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
 
@@ -14,6 +14,7 @@
       global $article;
       $contributions = $article->getContributions($articleData['id']);
       $view = new \Blog\Template\Template('view.html.twig', [
+        'page' => 'latest',
         'contributions' => $contributions,
         'latest' => TRUE
       ]);

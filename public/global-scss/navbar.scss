@@ -40,5 +40,23 @@ nav {
       background-color: #2A8E3A;
       margin: auto;
     }
+
+    .current:after {
+      content: "";
+      display: block;
+      animation: current 500ms;
+      animation-fill-mode: forwards;
+      padding-top: 2px;
+      border-bottom: 1px solid black;
+      margin: 0 auto;
+    }
+  }
+}
+
+@keyframes current {
+  from {
+    width: 0;
+  } to {
+    width: 50%;
   }
 }

@@ -41,6 +41,7 @@ function manipulateMultiLiner(str, tag, action, selection, pairs){
   // if two identical tags exist around the selection, remove them
   if(multiVals.indexOf(leftEdge) !== -1 && multiVals.indexOf(rightEdge) !== -1 && leftEdge === rightEdge && action === "remove"){
     return charList.filter((letter, index) => {
+      // filter out any characters who's index is located in the array below
       return [start - 2, start - 1, end, end + 1].indexOf(index) === -1;
     }).join('');
   }

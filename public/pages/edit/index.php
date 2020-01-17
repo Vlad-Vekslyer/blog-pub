@@ -22,6 +22,7 @@
     $contributions = $article->getContributions($articleData['id']);
     $pastArticles = $article->getPastArticles();
     $edit = new \Blog\Template\Template('edit.html.twig', [
+      'page' => 'edit',
       'flash' => isset($_SESSION['flash']) ? $_SESSION['flash'] : NULL,
       'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL,
       'contributions'=>$contributions,

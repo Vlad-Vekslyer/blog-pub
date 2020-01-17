@@ -14,13 +14,15 @@ if(flashClose){
 
 loginBtn.addEventListener('click', formReveal('login'));
 registerBtn.addEventListener('click', formReveal('register'));
-
 loginForm.addEventListener('submit', submission('login'));
 registerForm.addEventListener('submit', submission('register'));
 
 // higher order function that will handle form revealing after user clicks login/register on nav
 function formReveal(type) {
   return function(){
+    const secondButton = type === 'login' ? registerBtn : loginBtn;
+    secondButton.classList.remove('current');
+    this.classList.toggle('current');
     const form = document.getElementById(`${type}-form`);
     const prevForm = type === 'login' ? registerForm : loginForm;
     form.classList.toggle('hidden');
