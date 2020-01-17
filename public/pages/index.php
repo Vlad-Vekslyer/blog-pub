@@ -2,17 +2,10 @@
   namespace Blog;
   require_once "../../src/Initializer.php";
   initialize();
-
-  // flash messages testing block
-  session_start();
-  $_SESSION['flash'] = [
-      'code' => 'success',
-      'msg' => 'Successfully logged in'
-  ];
-  //
+  $flash = getFlash();
 
   $landing = new \Blog\Template\Template('landing.html.twig', [
-    'flash' => isset($_SESSION['flash']) ? $_SESSION['flash'] : NULL,
+    'flash' => isset($flash) ? $flash : NULL,
     'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL
   ]);
   $landing->output();

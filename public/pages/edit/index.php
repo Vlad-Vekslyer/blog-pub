@@ -1,6 +1,5 @@
 <?php
   namespace Blog;
-  session_start();
   require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();

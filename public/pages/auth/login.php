@@ -8,7 +8,6 @@
     $auth = new \Blog\Database\Authentication();
     $result = $auth->login($_POST['username'], $_POST['password']);
     $auth->closeConnection();
-
     if($result['code'] == 'success'){
       $_SESSION['username'] = $_POST['username'];
     }

@@ -9,6 +9,7 @@
 #nav-footer {
   background-color: rgba(255, 255, 255, 0.95);
   position: absolute;
+  width: 100%;
 }
 #nav-footer .flash {
   display: flex;
@@ -36,6 +37,41 @@
 #nav-footer .flash-failure {
   stroke: #1A5824;
   color: #1A5824;
+}
+#nav-footer .nav-form {
+  fill: #2A8E3A;
+  fill-opacity: 0.4;
+  font-family: "Merriweather Sans";
+  font-weight: 400;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 160px 160px 40px;
+  float: right;
+  position: relative;
+  right: 30px;
+  font-size: 20px;
+}
+#nav-footer .nav-form button {
+  width: 40px;
+  height: 30px;
+  background-color: #F4F4F4;
+  border: 1px solid #2A8E3A;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 2;
+}
+#nav-footer .nav-form input {
+  width: 150px;
+  height: 30px;
+  padding: 0 3px;
+  border: 1px solid #2A8E3A;
+  grid-row-start: 2;
+  font-size: 20px;
+}
+#nav-footer form.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=navbar-footer.css.map */
