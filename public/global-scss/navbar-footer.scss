@@ -1,0 +1,38 @@
+@use 'global';
+
+#nav-footer {
+  background-color: rgba(255,255,255, 0.95);
+
+  .flash {
+    display: flex;
+    align-items: center;
+    padding: global.$headerPaddings;
+    font-size: global.$headerFontSize;
+
+    p {
+      display: inline-block;
+      padding-right: 30px;
+      font-family: 'Merriweather Sans';
+      font-weight: 400;
+    }
+
+    .close-btn {
+      position: relative;
+      top: 2px;
+    }
+
+    .close-btn:hover {
+      cursor: pointer;
+    }
+  }
+
+  .flash-success {
+    stroke: #2A983C;
+    color: #2A983C;
+  }
+
+  .flash-failure {
+    stroke: #1A5824;
+    color: #1A5824;
+  }
+}

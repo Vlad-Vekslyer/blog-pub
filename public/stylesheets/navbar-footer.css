@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+#nav-footer {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+#nav-footer .flash {
+  display: flex;
+  align-items: center;
+  padding: 7px 20px;
+  font-size: 20px;
+}
+#nav-footer .flash p {
+  display: inline-block;
+  padding-right: 30px;
+  font-family: "Merriweather Sans";
+  font-weight: 400;
+}
+#nav-footer .flash .close-btn {
+  position: relative;
+  top: 2px;
+}
+#nav-footer .flash .close-btn:hover {
+  cursor: pointer;
+}
+#nav-footer .flash-success {
+  stroke: #2A983C;
+  color: #2A983C;
+}
+#nav-footer .flash-failure {
+  stroke: #1A5824;
+  color: #1A5824;
+}
+
+/*# sourceMappingURL=navbar-footer.css.map */

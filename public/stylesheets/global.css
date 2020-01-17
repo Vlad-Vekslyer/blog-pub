@@ -2,33 +2,6 @@
   margin: 0;
 }
 
-.flash {
-  display: flex;
-  align-items: center;
-  padding: 7px 20px;
-  font-size: 20px;
-}
-.flash p {
-  display: inline-block;
-  padding-right: 30px;
-  font-family: "Merriweather Sans";
-  font-weight: 400;
-}
-.flash .close-btn {
-  position: relative;
-  top: 2px;
-}
-
-.flash-success {
-  stroke: #2A983C;
-  color: #2A983C;
-}
-
-.flash-failure {
-  stroke: #1A5824;
-  color: #1A5824;
-}
-
 .hidden {
   display: none;
 }
