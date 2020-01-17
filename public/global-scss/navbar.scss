@@ -1,7 +1,42 @@
 nav {
-  list-style: none;
-  justify-content: space-around;
+  font-size: 20px;
   display: flex;
-  flex-direction: row;
-  margin-top: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px;
+
+  #brand {
+    width: 120px;
+    font-family: 'Merriweather';
+    font-weight: 900;
+
+    h3 {
+      margin: 0;
+      font-size: 1.3em;
+    }
+  }
+
+  #menu {
+    list-style: none;
+    display: flex;
+    font-family: 'Merriweather Sans';
+    font-weight: 300;
+
+    li {
+      padding: 0 10px;
+    }
+
+    li:hover {
+      color: #2A8E3A;
+      cursor: pointer;
+    }
+
+    .line {
+      display: inline-block;
+      width: 1.5px;
+      height: 12px;
+      background-color: #2A8E3A;
+      margin: auto;
+    }
+  }
 }

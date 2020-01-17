@@ -1,29 +1,4 @@
-@use 'global';
-
-img {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
-}
-
-ul {
-  list-style: none;
-}
-
-li {
-  font-size: 1.4em;
-}
-
-h1 {
-  font-size: 3.5em;
-  text-align: center;
-}
-
-button {
-  margin-top: 25px;
-  font-size: 1.4em;
-  padding: 5px;
-}
+@use '../global-scss/global';
 
 .container {
   @extend %container;

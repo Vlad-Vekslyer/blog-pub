@@ -1,24 +1,20 @@
 <nav>
-  <li>Home</li>
-  <li>Latest</li>
-  <li>Contribute</li>
-  {% if username == null %}
-    <li>
-      <button id='login-btn'>Login</button>
-      <div class="nav-form-hidden">
-        {{ include ('/partials/login.html.twig') }}
-      </div>
-    </li>
-    <li>
-      <button id='register-btn'>Register</button>
-      <div class="nav-form-hidden">
-        {{ include ('/partials/register.html.twig') }}
-      </div>
-    </li>
-  {% else %}
-    <li>Hello {{username}}</li>
-    <li>
-      <button id='logout-btn'>Logout</button>
-    </li>
-  {% endif %}
+  <div id="brand">
+    <h3>Blog Pub</h3>
+  </div>
+  <ul id="menu">
+    <li>Latest</li>
+    <span class='line'></span>
+    <li>Contribute</li>
+    <span class='line'></span>
+    {% if username != null %}
+      <li>Hello {{username}}</li>
+      <span class='line'></span>
+      <li><button id='logout-btn'>Logout</button></li>
+    {% else %}
+      <li>Login</li>
+      <span class='line'></span>
+      <li>Register</li>
+    {% endif %}
+  </ul>
 </nav>

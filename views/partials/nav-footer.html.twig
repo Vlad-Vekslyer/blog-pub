@@ -1,0 +1,11 @@
+<section id="nav-footer hidden">
+  {% if flash %}
+    <div class='{{ flash.code }}'>{{ flash.msg }}</div>
+  {% endif %}
+  <div class="nav-form hidden">
+    {{ include ('/partials/login.html.twig') }}
+  </div>
+  <div class="nav-form hidden">
+    {{ include ('/partials/register.html.twig') }}
+  </div>
+</section>

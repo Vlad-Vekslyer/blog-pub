@@ -1,14 +1,18 @@
-    <link rel='stylesheet' href='stylesheets/index.css'>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Help Build a Community-Sourced Newsletter</h1>
-      <ul>
-        <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">Contribute to on-going articles</li>
-        <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">New article publication every week</li>
-        <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">Be the first to select a weekly topic</li>
-      </ul>
-      <button type="button" name="button">Sign Up</button>
-    </div>
-  </body>
-</html>
+{% extends '/blocks/page.html.twig' %}
+
+{% block links %}
+  {{ parent() }}
+  <link rel='stylesheet' href='stylesheets/index.css'>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>Help Build a Community-Sourced Newsletter</h1>
+    <ul>
+      <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">Contribute to on-going articles</li>
+      <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">New article publication every week</li>
+      <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">Be the first to select a weekly topic</li>
+    </ul>
+    <button type="button" name="button">Sign Up</button>
+  </div>
+{% endblock %}
