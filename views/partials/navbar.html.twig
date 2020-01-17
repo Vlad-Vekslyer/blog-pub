@@ -3,9 +3,9 @@
     <h3>Blog Pub</h3>
   </div>
   <ul id="menu">
-    <li>Latest</li>
+    <li class="{{ page == 'latest' ? 'current' : '' }}">Latest</li>
     <span class='line'></span>
-    <li>Contribute</li>
+    <li class="{{ page == 'edit' ? 'current' : '' }}">Contribute</li>
     <span class='line'></span>
     {% if username != null %}
       <li>Hello {{username}}</li>
