@@ -8,6 +8,7 @@
 
 #nav-footer {
   background-color: rgba(255, 255, 255, 0.95);
+  position: absolute;
 }
 #nav-footer .flash {
   display: flex;
@@ -21,11 +22,11 @@
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
-#nav-footer .flash .close-btn {
+#nav-footer .flash #close-btn {
   position: relative;
   top: 2px;
 }
-#nav-footer .flash .close-btn:hover {
+#nav-footer .flash #close-btn:hover {
   cursor: pointer;
 }
 #nav-footer .flash-success {

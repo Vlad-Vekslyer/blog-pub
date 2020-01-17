@@ -1,15 +1,12 @@
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
+const flashClose = document.getElementById('close-btn');
 
-if(loginForm && registerForm) {
-  loginForm.addEventListener('submit', submission('login'));
-  registerForm.addEventListener('submit', submission('register'));
-}
+flashClose.addEventListener('click', function() {
+    const parent = this.parentElement;
+    const grandparent = parent.parentElement;
+    grandparent.removeChild(parent);
+})
 
-
-const logoutBtn = document.getElementById('logout-btn');
-logoutBtn.addEventListener('click', () => fetch('/auth/logout').then(() => location.reload()))
-
+// higher-order function that will handle the form submission of the login and register form
 function submission(type){
   return function(event){
     event.preventDefault();

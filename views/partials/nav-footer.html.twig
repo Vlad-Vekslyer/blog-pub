@@ -2,7 +2,7 @@
   {% if flash %}
     <div class='flash flash-{{ flash.code }}'>
       <p>{{ flash.msg }}</p>
-      <span class="close-btn">{{ include ('/svg/close.svg') }}</span>
+      <span id="close-btn">{{ include ('/svg/close.svg') }}</span>
     </div>
   {% endif %}
   <div class="nav-form hidden">
