@@ -44,4 +44,14 @@
 
     });
   }
+
+  function getFlash(){
+    session_start();
+    if(isset($_SESSION['flash'])) {
+      $flash = $_SESSION['flash'];
+      unset($_SESSION['flash']);
+      return $flash;
+    }
+    return NULL;
+  }
  ?>
