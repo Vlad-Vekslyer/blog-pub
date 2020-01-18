@@ -1,11 +1,15 @@
 <nav>
   <div id="brand">
-    <h3>Blog Pub</h3>
+    <h3><a href="/">Blog Pub</a></h3>
   </div>
   <ul id="menu">
-    <li class="{{ page == 'latest' ? 'current' : '' }}">Latest</li>
+    <li class="{{ page == 'latest' ? 'current' : '' }}">
+      <a href="/view">Latest</a>
+    </li>
     <span class='line'></span>
-    <li class="{{ page == 'edit' ? 'current' : '' }}">Contribute</li>
+    <li class="{{ page == 'edit' ? 'current' : '' }}">
+      <a href="/edit">Contribute</a>
+    </li>
     <span class='line'></span>
     {% if username != null %}
       <li>Hello {{username}}</li>

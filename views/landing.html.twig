@@ -3,16 +3,18 @@
 {% block links %}
   {{ parent() }}
   <link rel='stylesheet' href='stylesheets/index.css'>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400i&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
   <div class="container">
     <h1>Help Build a Community-Sourced Newsletter</h1>
     <ul>
-      <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">Contribute to on-going articles</li>
-      <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">New article publication every week</li>
-      <li><img src="http://www.clker.com/cliparts/e/3/9/7/1245686792938124914raemi_Check_mark.svg.hi.png" alt="checkmark">Be the first to select a weekly topic</li>
+      <li>"Contribute to on-going articles"</li>
+      <li>"New article publication every week"</li>
+      <li>"Be the first to select a weekly topic"</li>
     </ul>
-    <button type="button" name="button">Sign Up</button>
+    <button type="button" name="button">Enter</button>
+    {{ include ('/svg/background.svg') }}
   </div>
 {% endblock %}

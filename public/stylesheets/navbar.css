@@ -2,6 +2,20 @@
   margin: 0;
 }
 
+body, html {
+  height: 100%;
+}
+
+a {
+  color: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
 }

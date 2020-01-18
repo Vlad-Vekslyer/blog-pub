@@ -1,8 +1,53 @@
 @use '../global-scss/global';
 
+body {
+  display: grid;
+  grid-template-rows: 47px auto;
+}
+
 .container {
   @extend %container;
   display: flex;
+  position: relative;
   align-items: center;
   flex-direction: column;
+  font-size: 22px;
+  font-family: 'Merriweather Sans';
+
+  h1 {
+    margin: 15px 0;
+    width: 50%;
+    font-family: 'Merriweather';
+    font-weight: 900;
+    text-align: center;
+  }
+
+  ul {
+    font-style: italic;
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 17px 0;
+    }
+  }
+
+  button {
+    margin-top: 40px;
+    border: 2px solid black;
+    background-color: global.$btnBG;
+    font-weight: 400;
+    font-family: inherit;
+    padding: 10px 35px;
+    font-size: 1.1em;
+  }
+
+  button:hover {
+    background-color: global.$btnHover;
+  }
+
+  #background {
+    position: absolute;
+    z-index: -1;
+  }
 }

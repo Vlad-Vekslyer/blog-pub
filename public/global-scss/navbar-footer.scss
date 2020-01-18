@@ -6,6 +6,7 @@ $form-border: 1px solid #2A8E3A;
   background-color: rgba(255,255,255, 0.95);
   position: absolute;
   width: 100%;
+  top: 47px;
 
   .flash {
     display: flex;
@@ -57,7 +58,7 @@ $form-border: 1px solid #2A8E3A;
     button {
       width: 40px;
       height: 30px;
-      background-color: #F4F4F4;
+      background-color: global.$btnBG;
       border: $form-border;
       padding: 0;
       display: inline-flex;

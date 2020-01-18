@@ -1,8 +1,24 @@
 $headerPaddings: 7px 20px;
 $headerFontSize: 20px;
+$btnBG: #F4F4F4;
+$btnHover: #ECECEC;
 
 * {
   margin: 0;
+}
+
+body,html {
+  height: 100%;
+}
+
+a {
+  color: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .hidden {
@@ -10,7 +26,6 @@ $headerFontSize: 20px;
 }
 
 %container {
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
-  margin-top: 250px;
 }
