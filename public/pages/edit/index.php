@@ -21,7 +21,7 @@
   }
 
   // display the view
-  $article->getLatestArticle(function($articleData){
+  $article->getArticle(NULL, function($articleData){
     global $article;
     global $flash;
     $contributions = $article->getContributions($articleData['id']);

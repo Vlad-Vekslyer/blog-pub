@@ -43,9 +43,17 @@
       return $contributions;
     }
 
-    // get data of the latest article
-    public function getLatestArticle($cb = null){
-      $result = $this->connection->query("SELECT * FROM articles ORDER BY date_created DESC LIMIT 1") or die($this->connection->error);
+    // get data of an article
+    public function getArticle($id = null, $cb = null){
+      // get latest article if no id is provided
+      if($id == null)
+        $result = $this->connection->query("SELECT * FROM articles ORDER BY date_created DESC LIMIT 1") or die($this->connection->error);
+      else {
+        $statement = $this->connection->prepare("SELECT * FROM articles WHERE id = ?");
+        $statement->bind_param('i', $id);
+        $statement->execute() or die($this->connection->error);
+        $result = $statement->get_result();
+      }
       if($cb == null)
         return $result->fetch_array(MYSQLI_ASSOC);
       else
@@ -53,7 +61,7 @@
     }
 
     public function getPastArticles($cb = null){
-      $latestArticle = $this->getLatestArticle();
+      $latestArticle = $this->getArticle();
       $result = $this->connection->query("SELECT * FROM articles WHERE date_created
         BETWEEN '2019-11-25' AND DATE('{$latestArticle['date_created']}') ") or die($this->connection->error);
       if($cb == null)
