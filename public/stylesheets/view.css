@@ -2,10 +2,38 @@
   margin: 0;
 }
 
+body, html {
+  height: 100%;
+}
+
+a {
+  color: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
 .container {
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
-  margin-top: 10%;
+}
+.container h1 {
+  margin: 15px 0;
+  width: 50%;
+  font-family: "Merriweather";
+  font-weight: 900;
+  text-align: center;
+}
+
+.container h1 {
+  margin: 15px auto;
 }
 
 /*# sourceMappingURL=view.css.map */

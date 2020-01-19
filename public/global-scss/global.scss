@@ -28,4 +28,12 @@ button:hover {
 %container {
   width: 90%;
   margin: 0 auto;
+
+  h1 {
+    margin: 15px 0;
+    width: 50%;
+    font-family: 'Merriweather';
+    font-weight: 900;
+    text-align: center;
+  }
 }

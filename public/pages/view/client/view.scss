@@ -1,5 +1,9 @@
-@use '../global-scss/global.scss';
+@use '../../../global-scss/global.scss';
 
 .container {
   @extend %container;
+
+  h1 {
+    margin: 15px auto;
+  }
 }
