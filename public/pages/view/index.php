@@ -19,7 +19,8 @@
         'author' => $articleData['username'],
         'page' => 'latest',
         'contributions' => $contributions,
-        'latest' => TRUE
+        'latest' => TRUE,
+        'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL
       ]);
       $view->output();
     });

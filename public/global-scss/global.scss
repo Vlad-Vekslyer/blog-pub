@@ -1,7 +1,5 @@
 $headerPaddings: 7px 20px;
 $headerFontSize: 20px;
-$btnBG: #F4F4F4;
-$btnHover: #ECECEC;
 
 * {
   margin: 0;
@@ -17,8 +15,13 @@ a {
   color: inherit;
 }
 
+button {
+  background-color: #F4F4F4;
+}
+
 button:hover {
   cursor: pointer;
+  background-color: #ECECEC;
 }
 
 .hidden {

@@ -27,15 +27,10 @@ body {
   button {
     margin-top: 40px;
     border: 2px solid black;
-    background-color: global.$btnBG;
     font-weight: 400;
     font-family: inherit;
     padding: 10px 35px;
     font-size: 1.1em;
-  }
-
-  button:hover {
-    background-color: global.$btnHover;
   }
 
   #background {

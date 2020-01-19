@@ -12,8 +12,13 @@ a {
   color: inherit;
 }
 
+button {
+  background-color: #F4F4F4;
+}
+
 button:hover {
   cursor: pointer;
+  background-color: #ECECEC;
 }
 
 .hidden {
@@ -34,6 +39,7 @@ button:hover {
 
 .container {
   font-family: "Merriweather Sans";
+  width: 65%;
 }
 .container h1 {
   margin: 15px auto 5px auto;
@@ -46,10 +52,35 @@ button:hover {
   font-style: italic;
   font-weight: 300;
 }
+.container button {
+  border: 2px solid #2A8E3A;
+  font-family: inherit;
+  color: #2A8E3A;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  position: relative;
+  left: 10px;
+}
 .container #contributions {
   font-size: 20px;
   margin-top: 45px;
   font-weight: 300;
+}
+.container #contributions p {
+  padding: 10px 13px;
+}
+.container #contributions p:hover {
+  animation: p-hover 300ms linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes p-hover {
+  from {
+    background-color: rgba(196, 196, 196, 0);
+  }
+  to {
+    background-color: rgba(196, 196, 196, 0.2);
+  }
 }
 
 /*# sourceMappingURL=view.css.map */
