@@ -8,7 +8,7 @@
     }
 
     // commit the user's contribution to the database
-    public function commit($body, $title){
+    public function commit($body, $title, $author){
       $latestArticle = $this->getLatestArticle();
       // has the current article hasn't received its first contribution yet?
       if(!isset($latestArticle['title'])){
@@ -16,22 +16,23 @@
           // insert title of article and overwrite the dat  e_created value
           $statement = $this->connection->prepare("UPDATE articles SET
             title = ?,
-            date_created = NOW()
+            date_created = NOW(),
+            username = ?
             WHERE id = {$latestArticle['id']}");
-          $statement->bind_param('s', $title);
+          $statement->bind_param('ss', $title, $author);
           $statement->execute() or die($this->connection->error);
           $statement->close();
         } else die("Must include a title");
       }
-      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, 1, {$latestArticle['id']}, NOW())");
-      $statement->bind_param('s', $body);
+      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, ?, {$latestArticle['id']}, NOW())");
+      $statement->bind_param('ss', $body, $author);
       $statement->execute() or die($this->connection->error);
       $statement->close();
     }
 
     // get all the user contributions of a specific article
     public function getContributions($articleId){
-      $statement = $this->connection->prepare("SELECT body,author FROM contributions WHERE article = ? ORDER BY date_created ASC");
+      $statement = $this->connection->prepare("SELECT body,username FROM contributions WHERE article = ? ORDER BY date_created ASC");
       $statement->bind_param('i', $articleId);
       $statement->execute() or die($this->connection->error);
       $statement->bind_result($body, $author);

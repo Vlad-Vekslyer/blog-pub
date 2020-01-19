@@ -15,6 +15,7 @@
       $contributions = $article->getContributions($articleData['id']);
       $view = new \Blog\Template\Template('view.html.twig', [
         'title' => $articleData['title'],
+        'author' => $articleData['username'],
         'page' => 'latest',
         'contributions' => $contributions,
         'latest' => TRUE
