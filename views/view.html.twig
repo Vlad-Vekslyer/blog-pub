@@ -14,8 +14,11 @@
     <h2>{{ author }}</h2>
     <div id="contributions">
       {% for contribution in contributions %}
-        <p>{{contribution.body | raw}}</p>
-        <br/>
+        <div class="contribution">
+          <p>{{contribution.body | raw}}</p>
+          <span class="contributor">{{ contribution.author }}</span>
+          <br/>
+        </div>
       {% endfor %}
     </div>
     {% if latest %}

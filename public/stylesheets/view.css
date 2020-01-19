@@ -73,6 +73,30 @@ button:hover {
   animation: p-hover 300ms linear;
   animation-fill-mode: forwards;
 }
+.container #contributions .contribution {
+  position: relative;
+}
+.container #contributions .contributor {
+  top: 50%;
+  transform: translateY(-100%);
+  left: -180px;
+  position: absolute;
+  font-size: 0.8em;
+  font-family: "Merriweather";
+  display: none;
+  padding: 4px 35px 4px 25px;
+  background-image: url("/assets/contributor-bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.container #contributions p:hover + .contributor {
+  opacity: 0;
+  display: inline-block;
+  animation: contributor-hover 300ms linear;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
 
 @keyframes p-hover {
   from {
@@ -80,6 +104,16 @@ button:hover {
   }
   to {
     background-color: rgba(196, 196, 196, 0.2);
+  }
+}
+@keyframes contributor-hover {
+  from {
+    left: -200px;
+    opacity: 0;
+  }
+  to {
+    left: -180px;
+    opacity: 1;
   }
 }
 
