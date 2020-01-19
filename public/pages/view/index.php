@@ -12,6 +12,7 @@
   } else {
     $article->getLatestArticle(function($articleData) {
       global $article;
+      $pastArticles = $article->getPastArticles();
       $contributions = $article->getContributions($articleData['id']);
       $view = new \Blog\Template\Template('view.html.twig', [
         'flash' => isset($flash) ? $flash : NULL,
@@ -20,7 +21,8 @@
         'page' => 'latest',
         'contributions' => $contributions,
         'latest' => TRUE,
-        'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL
+        'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL,
+        'pastArticles' => $pastArticles
       ]);
       $view->output();
     });

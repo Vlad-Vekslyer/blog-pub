@@ -2,7 +2,12 @@
   <h3>Past Articles</h3>
   <ul>
     {% for article in pastArticles %}
-      <a href="/view?id={{article.id}}">{{ article.title }}</a>
+      <div class='article'>
+      <a href="/view?id={{article.id}}">
+        {{ article.title }}
+        <p>- {{ article.username }}</p>
+      </a>
+      </div>
     {% endfor %}
   </ul>
 </aside>

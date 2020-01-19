@@ -12,8 +12,13 @@ a {
   color: inherit;
 }
 
+button {
+  background-color: #F4F4F4;
+}
+
 button:hover {
   cursor: pointer;
+  background-color: #ECECEC;
 }
 
 .hidden {

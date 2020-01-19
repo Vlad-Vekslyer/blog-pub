@@ -14,7 +14,7 @@
     {% if username != null %}
       <li>Hello {{username}}</li>
       <span class='line'></span>
-      <li><button id='logout-btn'>Logout</button></li>
+      <li><a href='/auth/logout'>Logout</a></li>
     {% else %}
       <li id="login-btn">Login</li>
       <span class='line'></span>

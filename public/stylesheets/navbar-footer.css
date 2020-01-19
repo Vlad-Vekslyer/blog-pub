@@ -12,8 +12,13 @@ a {
   color: inherit;
 }
 
+button {
+  background-color: #F4F4F4;
+}
+
 button:hover {
   cursor: pointer;
+  background-color: #ECECEC;
 }
 
 .hidden {
@@ -69,7 +74,6 @@ button:hover {
 #nav-footer .nav-form button {
   width: 40px;
   height: 30px;
-  background-color: #F4F4F4;
   border: 1px solid #2A8E3A;
   padding: 0;
   display: inline-flex;
