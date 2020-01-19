@@ -4,6 +4,7 @@
   {{ parent() }}
   <link rel='stylesheet' href='/stylesheets/view.css'>
   <link rel="stylesheet" href="/stylesheets/sidebar.css">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300i&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -11,10 +12,12 @@
   <div class="container">
     <h1>{{ title }}</h1>
     <h2>{{ author }}</h2>
-    {% for contribution in contributions %}
-      <p>{{contribution.body | raw}}</p>
-      <br/>
-    {% endfor %}
+    <div id="contributions">
+      {% for contribution in contributions %}
+        <p>{{contribution.body | raw}}</p>
+        <br/>
+      {% endfor %}
+    </div
     {% if latest %}
       <a href="/edit">Contribute</a>
     {% endif %}

@@ -3,7 +3,7 @@
   require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
-
+  $flash = getFlash();
 
   if(isset($_GET['id'])){
     $contributions = $article->getContributions($_GET['id']);
@@ -14,6 +14,7 @@
       global $article;
       $contributions = $article->getContributions($articleData['id']);
       $view = new \Blog\Template\Template('view.html.twig', [
+        'flash' => isset($flash) ? $flash : NULL,
         'title' => $articleData['title'],
         'author' => $articleData['username'],
         'page' => 'latest',

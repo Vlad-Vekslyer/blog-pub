@@ -32,8 +32,24 @@ button:hover {
   text-align: center;
 }
 
+.container {
+  font-family: "Merriweather Sans";
+}
 .container h1 {
-  margin: 15px auto;
+  margin: 15px auto 5px auto;
+}
+.container h2 {
+  margin: 0 auto;
+  width: 30%;
+  text-align: center;
+  font-family: "Merriweather";
+  font-style: italic;
+  font-weight: 300;
+}
+.container #contributions {
+  font-size: 20px;
+  margin-top: 45px;
+  font-weight: 300;
 }
 
 /*# sourceMappingURL=view.css.map */

@@ -24,7 +24,7 @@
           $statement->close();
         } else die("Must include a title");
       }
-      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, ?, {$latestArticle['id']}, NOW())");
+      $statement = $this->connection->prepare("INSERT INTO contributions VALUES(NULL, ?, {$latestArticle['id']}, NOW(), ?)");
       $statement->bind_param('ss', $body, $author);
       $statement->execute() or die($this->connection->error);
       $statement->close();

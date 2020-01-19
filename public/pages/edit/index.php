@@ -3,6 +3,7 @@
   require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
+  $flash = getFlash();
 
   // update the database if a logged in user sent a contribution
   if (isset($_POST['contribution-1']) && isset($_SESSION['username'])){
@@ -22,11 +23,12 @@
   // display the view
   $article->getLatestArticle(function($articleData){
     global $article;
+    global $flash;
     $contributions = $article->getContributions($articleData['id']);
     $pastArticles = $article->getPastArticles();
     $edit = new \Blog\Template\Template('edit.html.twig', [
       'page' => 'edit',
-      'flash' => isset($_SESSION['flash']) ? $_SESSION['flash'] : NULL,
+      'flash' => isset($flash) ? $flash : NULL,
       'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL,
       'contributions'=>$contributions,
       'article'=>$articleData,
