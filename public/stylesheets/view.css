@@ -39,7 +39,7 @@ button:hover {
 
 .container {
   font-family: "Merriweather Sans";
-  width: 70%;
+  width: 68%;
 }
 .container h1 {
   margin: 15px auto 5px auto;
@@ -87,7 +87,7 @@ button:hover {
   padding: 4px 35px 4px 25px;
   background-image: url("/assets/contributor-bg.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
 }
 .container #contributions p:hover + .contributor {

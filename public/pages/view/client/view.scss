@@ -3,7 +3,7 @@
 .container {
   @extend %container;
   font-family: 'Merriweather Sans';
-  width: 70%;
+  width: 68%;
 
 
   h1 {
@@ -58,7 +58,7 @@
       padding: 4px 35px 4px 25px;
       background-image: url('/assets/contributor-bg.svg');
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: contain;
       background-position: center;
     }
 
