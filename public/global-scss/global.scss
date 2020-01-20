@@ -15,18 +15,20 @@ a {
   color: inherit;
 }
 
-button {
+%button {
   padding: 10px 20px;
   border: 2px solid black;
   background-color: #F4F4F4;
   font-family: 'Merriweather Sans';
   font-weight: 400;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ECECEC;
+  }
 }
 
-button:hover {
-  cursor: pointer;
-  background-color: #ECECEC;
-}
+
 
 .hidden {
   display: none;

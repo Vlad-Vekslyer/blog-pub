@@ -12,15 +12,14 @@ a {
   color: inherit;
 }
 
-button {
+#edit button {
   padding: 10px 20px;
   border: 2px solid black;
   background-color: #F4F4F4;
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
-
-button:hover {
+#edit button:hover {
   cursor: pointer;
   background-color: #ECECEC;
 }
@@ -34,7 +33,7 @@ button:hover {
   margin: 0 auto;
 }
 .container h1 {
-  margin: 15px auto;
+  margin: 15px auto 5px auto;
   width: 50%;
   font-family: "Merriweather";
   font-weight: 900;
@@ -56,19 +55,44 @@ button:hover {
   font-size: 2.5em;
   font-style: bold;
 }
-#edit .contribution {
+#edit .contributions {
+  margin: 20px 0;
+}
+#edit .contributions .contribution {
   width: 100%;
   min-height: 20px;
   overflow-wrap: anywhere;
   resize: none;
 }
-#edit .contributions {
-  margin: 20px 0;
-}
 #edit .contributions #decorator {
+  font-family: "Merriweather";
+  background-color: #1B1B1B;
+  border-radius: 3px 3px 0px 0px;
+  color: #F4F4F4;
   opacity: 0;
   display: none;
   position: absolute;
+  padding: 8px 8px;
+}
+#edit .contributions #decorator button {
+  text-align: center;
+  width: 35px;
+  padding: 0 5px;
+  background-color: rgba(0, 0, 0, 0);
+  color: inherit;
+  border: none;
+  font-family: inherit;
+}
+#edit .contributions #decorator button[name=header] {
+  font-size: 1.4em;
+}
+#edit .contributions #decorator .line {
+  display: inline-block;
+  background-color: #2A8E3A;
+  height: 15px;
+  width: 1px;
+  position: relative;
+  bottom: 4px;
 }
 #edit .contributions #decorator.show {
   display: block;
@@ -105,6 +129,10 @@ button:hover {
 }
 #edit #article {
   margin-top: 45px;
+}
+#edit #commit-btn {
+  color: #237831;
+  border-color: #237831;
 }
 
 @keyframes decorator-show {

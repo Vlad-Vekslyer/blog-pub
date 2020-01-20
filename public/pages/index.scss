@@ -26,9 +26,8 @@ body {
   }
 
   button {
+    @extend %button;
     margin-top: 40px;
-    font-weight: 400;
-    font-family: inherit;
     padding: 10px 35px;
     font-size: 1.1em;
   }
