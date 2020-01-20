@@ -4,25 +4,31 @@
   {{ parent() }}
   <link rel="stylesheet" href="/stylesheets/sidebar.css">
   <link rel='stylesheet' href='/stylesheets/edit.css'>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300i&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
   {{ include('partials/sidebar.html.twig') }}
   <div class="container">
     <section id="edit">
-      <div class="header">
+      <div id="header">
         <button type="button">Back</button>
         {% if article.title == null %}
           <input id="title-input" placeholder="Enter title...." type="text" name="title"/>
         {% else %}
           <h1>{{article.title}}</h1>
+          <h2>{{article.username}}</h2>
         {% endif %}
       </div>
 
-      {% for contribution in contributions %}
-        <p>{{contribution.body | raw}}</p>
-        <br/>
-      {% endfor %}
+      <div id="article">
+        {% for contribution in contributions %}
+          <p>{{contribution.body | raw}}</p>
+          <br/>
+        {% endfor %}
+      </div>
+
+      <hr/>
 
       <div id="decorator">
         <button type="button" name="header">T</button>

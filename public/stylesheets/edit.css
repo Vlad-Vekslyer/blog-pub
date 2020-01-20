@@ -2,30 +2,54 @@
   margin: 0;
 }
 
+body, html {
+  height: 100%;
+}
+
+a {
+  color: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  padding: 10px 20px;
+  border: 2px solid black;
+  background-color: #F4F4F4;
+  font-family: "Merriweather Sans";
+  font-weight: 400;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #ECECEC;
+}
+
+.hidden {
+  display: none;
+}
+
 .container {
-  width: 70%;
+  width: 68%;
   margin: 0 auto;
-  margin-top: 10%;
+}
+.container h1 {
+  margin: 15px auto;
+  width: 50%;
+  font-family: "Merriweather";
+  font-weight: 900;
+  text-align: center;
 }
 
 #edit {
   display: flex;
   flex-direction: column;
-}
-#edit .header h1 {
-  text-align: center;
-  position: relative;
-  width: auto;
-}
-#edit .header button {
-  float: left;
-  position: relative;
-  z-index: 1;
-}
-#edit .header button:nth-of-type(2) {
-  float: right;
+  font-size: 20px;
+  font-weight: 300;
+  font-family: "Merriweather Sans";
 }
 #edit button {
+  font-size: 1.1em;
   align-self: flex-start;
 }
 #edit input {
@@ -37,6 +61,42 @@
   min-height: 20px;
   overflow-wrap: anywhere;
   resize: none;
+}
+#edit .contributions {
+  margin: 20px 0;
+}
+#edit #header {
+  position: relative;
+}
+#edit #header h1 {
+  font-size: 32px;
+  text-align: center;
+  position: relative;
+}
+#edit #header h2 {
+  font-size: 24px;
+  margin: 0 auto;
+  width: 30%;
+  text-align: center;
+  font-family: "Merriweather";
+  font-style: italic;
+  font-weight: 300;
+}
+#edit #header button {
+  bottom: 0;
+  padding: 7px 30px;
+  position: absolute;
+  z-index: 1;
+  border: 2px solid black;
+}
+#edit #header button:nth-of-type(2) {
+  float: right;
+}
+#edit #decorator {
+  display: none;
+}
+#edit #article {
+  margin-top: 45px;
 }
 
 /*# sourceMappingURL=edit.css.map */

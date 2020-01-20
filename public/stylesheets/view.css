@@ -13,7 +13,11 @@ a {
 }
 
 button {
+  padding: 10px 20px;
+  border: 2px solid black;
   background-color: #F4F4F4;
+  font-family: "Merriweather Sans";
+  font-weight: 400;
 }
 
 button:hover {
@@ -26,11 +30,11 @@ button:hover {
 }
 
 .container {
-  width: 90%;
+  width: 68%;
   margin: 0 auto;
 }
 .container h1 {
-  margin: 15px 0;
+  margin: 15px auto 5px auto;
   width: 50%;
   font-family: "Merriweather";
   font-weight: 900;
@@ -39,10 +43,6 @@ button:hover {
 
 .container {
   font-family: "Merriweather Sans";
-  width: 68%;
-}
-.container h1 {
-  margin: 15px auto 5px auto;
 }
 .container h2 {
   margin: 0 auto;
@@ -54,9 +54,7 @@ button:hover {
 }
 .container button {
   border: 2px solid #2A8E3A;
-  font-family: inherit;
   color: #2A8E3A;
-  padding: 10px 20px;
   font-size: 1.1em;
   position: relative;
   left: 10px;

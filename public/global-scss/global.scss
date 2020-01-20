@@ -16,7 +16,11 @@ a {
 }
 
 button {
+  padding: 10px 20px;
+  border: 2px solid black;
   background-color: #F4F4F4;
+  font-family: 'Merriweather Sans';
+  font-weight: 400;
 }
 
 button:hover {
@@ -29,11 +33,11 @@ button:hover {
 }
 
 %container {
-  width: 90%;
+  width: 68%;
   margin: 0 auto;
 
   h1 {
-    margin: 15px 0;
+    margin: 15px auto 5px auto;
     width: 50%;
     font-family: 'Merriweather';
     font-weight: 900;
