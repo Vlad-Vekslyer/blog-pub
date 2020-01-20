@@ -65,6 +65,17 @@ button:hover {
 #edit .contributions {
   margin: 20px 0;
 }
+#edit .contributions #decorator {
+  opacity: 0;
+  display: none;
+  position: absolute;
+}
+#edit .contributions #decorator.show {
+  display: block;
+  animation: decorator-show 300ms linear;
+  animation-fill-mode: forwards;
+  animation-delay: 300ms;
+}
 #edit #header {
   position: relative;
 }
@@ -92,11 +103,19 @@ button:hover {
 #edit #header button:nth-of-type(2) {
   float: right;
 }
-#edit #decorator {
-  display: none;
-}
 #edit #article {
   margin-top: 45px;
+}
+
+@keyframes decorator-show {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /*# sourceMappingURL=edit.css.map */

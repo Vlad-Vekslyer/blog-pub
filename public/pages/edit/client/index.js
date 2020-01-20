@@ -16,11 +16,27 @@ for(let i = 0; i < decoratorBtns.length; i++){
   });
 }
 
+document.addEventListener('selectionchange', () => {
+  const selection = window.getSelection();
+  const isContribution = document.activeElement.classList.contains('selected');
+  const decorator = document.getElementById('decorator');
+  if(!selection.isCollapsed && isContribution){
+    const domRect = selection.getRangeAt(0).getBoundingClientRect();
+    decorator.classList.add('show');
+    if(domRect.height > 26) {
+      decorator.style.left = `${domRect.x + (domRect.width * 0.40)}px`;
+    } else {
+      decorator.style.left = `${domRect.x}px`;
+    }
+    decorator.style.top = `${domRect.y - 50}px`;
+  } else if(selection.isCollapsed) decorator.classList.remove('show');
+})
+
 // initialize hidden form
 const commitButton = document.getElementById("commit-btn");
-const contributions = document.querySelectorAll("input[type='hidden']");
+const inputs = document.querySelectorAll("input[type='hidden']");
 
-contributions.forEach(input => input.removeAttribute('value'));
+inputs.forEach(input => input.removeAttribute('value'));
 
 commitButton.addEventListener("click", () => {
   let form = document.getElementById("contribution-form");

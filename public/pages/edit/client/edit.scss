@@ -25,7 +25,20 @@
   }
 
   .contributions {
-    margin: 20px 0; 
+    margin: 20px 0;
+
+    #decorator {
+      opacity: 0;
+      display: none;
+      position: absolute;
+    }
+
+    #decorator.show {
+      display: block;
+      animation: decorator-show 300ms linear;
+      animation-fill-mode: forwards;
+      animation-delay: 300ms;
+    }
   }
 
   #header {
@@ -60,10 +73,6 @@
     }
   }
 
-  #decorator {
-    display: none;
-  }
-
   #article {
     margin-top: 45px;
   }
@@ -71,4 +80,14 @@
 
 .container {
   @extend %container;
+}
+
+@keyframes decorator-show {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  } to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
