@@ -1,6 +1,6 @@
 import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
 import {computeDOMSelection} from "/scripts/DOMHelper";
-import {occurrenceOf, linearMatchAll} from "/scripts/StringHelper";
+import {occurrenceOf, searchAll} from "/scripts/StringHelper";
 
 // returns a string decorated with tags
 function decorate(formInput, paragraphInput, decoration){
@@ -93,15 +93,48 @@ function getUnpairedTags(obj){
 
 // get the selection inside of the form input based on the paragraph input
 function getSelection(occurrences, str, substr){
-  let reduced = allTags.reduce((accumulator, currentValue) => accumulator + currentValue.charAt(0), '');
-  let patt = substr.split('').reduce((accumulator, letter, index) => {
-    if(index != substr.length - 1) return accumulator + `${letter}[${reduced}]*`;
-    else return accumulator + letter;
-  }, '');
-  let subRegex = new RegExp(patt);
-  let foundSubstrings = linearMatchAll(str, subRegex);
-  let {index, value} = foundSubstrings[occurrences - 1];
-  return {start: index, end: index + value.length};
+  const patt = allTags.reduce((acc, tag) => acc + tag);
+  const tagRegex = new RegExp(`[${patt}]{2}`, 'g');
+
+  // diffArr is a 2D array that separates groups of letters' indexes by tags
+  // example: "he%%llo" will be separated into [[0,1],[2,3,4]]
+  const diffArr = str.split('').reduce((acc, letter, index) => {
+    // firstChars and prevChars will be used to check if we are currently iterating over tags
+    const firstChars = letter + str.charAt(index + 1);
+    const prevChars = str.charAt(index - 1) + letter;
+    const match = firstChars.match(tagRegex) || prevChars.match(tagRegex);
+    // the more tags we passed through, the bigger currentDiff is
+    const currentDiff = (acc.length - 1) * 2;
+    // if we're not iterating over tags, add the current index to the last array in the accumulator
+    if(!match) {
+      const currentArr = acc[acc.length - 1];
+      const prevArrs = acc.filter((val, index) => index !== acc.length - 1);
+      return [...prevArrs, [...currentArr, index - currentDiff]];
+    // upon reaching a tag, push a new empty array into the accumulator
+    // this means that we have will now start tracking the characters that are beyond the tag we just encountered in this new array
+  } else if(firstChars.match(tagRegex)) {
+      return [...acc, []];
+    }
+    return acc;
+  }, [[]]);
+
+  const cleanStr = str.replace(tagRegex, '');
+  // get the indexes of all the duplicates of substr inside of str
+  const foundSubstrings = searchAll(cleanStr, substr);
+  // index of the substr we're looking for
+  const searchIndex = foundSubstrings[occurrences - 1];
+  // look at diffArr to figure out how many tags are after searchIndex
+  const start = diffArr.reduce((acc, arr, arrIndex) => {
+    const search = arr.indexOf(searchIndex);
+    return search === -1 ? acc : searchIndex + (arrIndex * 2);
+  }, null);
+
+  const end = diffArr.reduce((acc, arr, arrIndex) => {
+    const endSearchIndex = searchIndex + substr.length - 1;
+    const search = arr.indexOf(endSearchIndex);
+    return search === -1 ? acc : endSearchIndex + (arrIndex * 2);
+  }, null) + 1;
+  return {start, end};
 }
 
 // remove any tags inside the selection, not including any tags wrapping the selection

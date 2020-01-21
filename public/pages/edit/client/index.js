@@ -1,6 +1,6 @@
 import Contribution from './js/Contribution.js';
 import decorate from "./js/decorate.js";
-import {updateInputs} from '/scripts/DOMHelper.js';
+import {updateInputs} from './js/process.js';
 new Contribution();
 
 // initialize decorators
@@ -16,6 +16,7 @@ for(let i = 0; i < decoratorBtns.length; i++){
   });
 }
 
+// show the decorator over the selected text
 document.addEventListener('selectionchange', () => {
   const selection = window.getSelection();
   const isContribution = document.activeElement.classList.contains('selected');
@@ -30,7 +31,7 @@ document.addEventListener('selectionchange', () => {
     }
     decorator.style.top = `${domRect.y - 50}px`;
   } else if(selection.isCollapsed) decorator.classList.remove('show');
-})
+});
 
 // initialize hidden form
 const commitButton = document.getElementById("commit-btn");
