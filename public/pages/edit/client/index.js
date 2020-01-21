@@ -11,7 +11,7 @@ for(let i = 0; i < decoratorBtns.length; i++){
     let selectedCont = document.getElementsByClassName("selected")[0];
     let selectedContName = selectedCont.attributes.name.nodeValue;
     let input = document.querySelector(`input[name="${selectedContName}"]`);
-    let decoratedCont = decorate(input.value, selectedCont.textContent, this.name);
+    let decoratedCont = decorate(input.value.replace(/\n/g, ''), selectedCont.textContent, this.name);
     updateInputs(decoratedCont, selectedCont, input, this.name);
   });
 }

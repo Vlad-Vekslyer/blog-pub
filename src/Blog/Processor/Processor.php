@@ -3,7 +3,7 @@
 
   class Processor {
     static $linerDictionary = array(
-        "##" => array("<h1>", "</h1>"),
+        "##" => array("<h2>", "</h2>"),
         "%%" => array("<em>", "</em>"),
         "**" => array("<b>", "</b>"));
 
