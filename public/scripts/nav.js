@@ -1,8 +1,11 @@
 const flashClose = document.getElementById('close-btn');
-const loginBtn = document.getElementById('login-btn');
-const registerBtn = document.getElementById('register-btn');
+const loginBtn = document.querySelector('nav #login-btn');
+const registerBtn = document.querySelector('#nav-footer #register-btn');
+const loginBtnMobile = document.querySelector('#nav-footer #login-btn');
+const registerBtnMobile = document.querySelector('nav #register-btn');
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
+const hamburger = document.getElementById('hamburger');
 
 if(flashClose){
   flashClose.addEventListener('click', function() {
@@ -12,8 +15,12 @@ if(flashClose){
   })
 }
 
+hamburger.addEventListener('click', () => document.querySelector('#nav-footer .menu').classList.toggle('drop'));
+
 loginBtn.addEventListener('click', formReveal('login'));
 registerBtn.addEventListener('click', formReveal('register'));
+loginBtnMobile.addEventListener('click', formReveal('login'));
+registerBtnMobile.addEventListener('click', formReveal('register'));
 loginForm.addEventListener('submit', submission('login'));
 registerForm.addEventListener('submit', submission('register'));
 

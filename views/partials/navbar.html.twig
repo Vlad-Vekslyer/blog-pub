@@ -2,23 +2,8 @@
   <div id="brand">
     <h3><a href="/">Blog Pub</a></h3>
   </div>
-  <ul id="menu">
-    <li class="{{ page == 'latest' ? 'current' : '' }}">
-      <a href="/view">Latest</a>
-    </li>
-    <span class='line'></span>
-    <li class="{{ page == 'edit' ? 'current' : '' }}">
-      <a href="/edit">Contribute</a>
-    </li>
-    <span class='line'></span>
-    {% if username != null %}
-      <li>Hello {{username}}</li>
-      <span class='line'></span>
-      <li><a href='/auth/logout'>Logout</a></li>
-    {% else %}
-      <li id="login-btn">Login</li>
-      <span class='line'></span>
-      <li id="register-btn">Register</li>
-    {% endif %}
-  </ul>
+  {{ include ('/partials/menu.html.twig') }}
+  <div id="hamburger">
+    {{ include ('/svg/hamburger.svg') }}
+  </div>
 </nav>

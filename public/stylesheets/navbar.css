@@ -7,18 +7,36 @@ body, html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
 }
 
-button:hover {
-  cursor: pointer;
-  background-color: #ECECEC;
-}
-
 .hidden {
   display: none;
+}
+
+nav .menu {
+  list-style: none;
+  display: flex;
+  font-family: "Merriweather Sans";
+  font-weight: 300;
+}
+nav .menu li:hover {
+  color: #2A8E3A;
+  cursor: pointer;
+}
+nav .menu .line {
+  display: inline-block;
+  background-color: #2A8E3A;
+  margin: auto 0;
+}
+nav .menu .mobile {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  nav .menu .mobile {
+    display: initial;
+  }
 }
 
 nav {
@@ -28,36 +46,14 @@ nav {
   justify-content: space-between;
   padding: 7px 20px;
 }
-nav #brand {
-  width: 120px;
-  font-family: "Merriweather";
-  font-weight: 900;
-}
-nav #brand h3 {
-  margin: 0;
-  font-size: 1.3em;
-}
-nav #menu {
-  list-style: none;
-  display: flex;
-  font-family: "Merriweather Sans";
-  font-weight: 300;
-}
-nav #menu li {
+nav .menu li {
   padding: 0 10px;
 }
-nav #menu li:hover {
-  color: #2A8E3A;
-  cursor: pointer;
-}
-nav #menu .line {
-  display: inline-block;
+nav .menu .line {
   width: 1.5px;
   height: 12px;
-  background-color: #2A8E3A;
-  margin: auto;
 }
-nav #menu .current:after {
+nav .menu .current:after {
   content: "";
   display: block;
   animation: current 500ms;
@@ -65,6 +61,32 @@ nav #menu .current:after {
   padding-top: 2px;
   border-bottom: 1px solid black;
   margin: 0 auto;
+}
+nav .menu #brand {
+  width: 120px;
+  font-family: "Merriweather";
+  font-weight: 900;
+}
+nav .menu #brand h3 {
+  margin: 0;
+  font-size: 1.3em;
+}
+nav #hamburger {
+  display: none;
+}
+nav #hamburger:hover {
+  cursor: pointer;
+}
+@media only screen and (max-width: 768px) {
+  nav {
+    font-size: 22px;
+  }
+  nav .menu {
+    display: none;
+  }
+  nav #hamburger {
+    display: block;
+  }
 }
 
 @keyframes current {

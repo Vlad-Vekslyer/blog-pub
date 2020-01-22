@@ -7,38 +7,16 @@ nav {
   justify-content: space-between;
   padding: global.$headerPaddings;
 
-  #brand {
-    width: 120px;
-    font-family: 'Merriweather';
-    font-weight: 900;
-
-    h3 {
-      margin: 0;
-      font-size: 1.3em;
-    }
-  }
-
-  #menu {
-    list-style: none;
-    display: flex;
-    font-family: 'Merriweather Sans';
-    font-weight: 300;
+  .menu {
+    @extend %menu;
 
     li {
       padding: 0 10px;
     }
 
-    li:hover {
-      color: #2A8E3A;
-      cursor: pointer;
-    }
-
     .line {
-      display: inline-block;
       width: 1.5px;
       height: 12px;
-      background-color: #2A8E3A;
-      margin: auto;
     }
 
     .current:after {
@@ -50,8 +28,41 @@ nav {
       border-bottom: 1px solid black;
       margin: 0 auto;
     }
+
+    #brand {
+      width: 120px;
+      font-family: 'Merriweather';
+      font-weight: 900;
+
+      h3 {
+        margin: 0;
+        font-size: 1.3em;
+      }
+    }
+  }
+
+  #hamburger {
+    display: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @include global.medium(){
+    font-size: global.$headerFontSizeMobile;
+
+    .menu {
+      display: none;
+    }
+
+    #hamburger {
+      display: block;
+    }
   }
 }
+
+
 
 @keyframes current {
   from {

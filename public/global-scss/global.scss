@@ -1,5 +1,12 @@
 $headerPaddings: 7px 20px;
 $headerFontSize: 20px;
+$headerFontSizeMobile: 22px;
+
+@mixin medium(){
+  @media only screen and (max-width: 768px){
+    @content;
+  }
+}
 
 * {
   margin: 0;
@@ -10,9 +17,12 @@ body,html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
+}
+
+.hidden {
+  display: none;
 }
 
 %button {
@@ -28,12 +38,6 @@ a {
   }
 }
 
-
-
-.hidden {
-  display: none;
-}
-
 %container {
   width: 68%;
   margin: 0 auto;
@@ -44,5 +48,33 @@ a {
     font-family: 'Merriweather';
     font-weight: 900;
     text-align: center;
+  }
+}
+
+%menu {
+  list-style: none;
+  display: flex;
+  font-family: 'Merriweather Sans';
+  font-weight: 300;
+
+  li:hover {
+    color: #2A8E3A;
+    cursor: pointer;
+  }
+
+  .line {
+    display: inline-block;
+    background-color: #2A8E3A;
+    margin: auto 0;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  @include medium(){
+    .mobile {
+      display: initial;
+    }
   }
 }

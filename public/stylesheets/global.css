@@ -7,14 +7,8 @@ body, html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
-}
-
-button:hover {
-  cursor: pointer;
-  background-color: #ECECEC;
 }
 
 .hidden {

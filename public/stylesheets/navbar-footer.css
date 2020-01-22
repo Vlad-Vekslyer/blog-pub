@@ -7,9 +7,12 @@ body, html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
+}
+
+.hidden {
+  display: none;
 }
 
 #nav-footer .nav-form button {
@@ -19,21 +22,50 @@ a {
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
-
-button:hover {
+#nav-footer .nav-form button:hover {
   cursor: pointer;
   background-color: #ECECEC;
 }
 
-.hidden {
+#nav-footer .menu {
+  list-style: none;
+  display: flex;
+  font-family: "Merriweather Sans";
+  font-weight: 300;
+}
+#nav-footer .menu li:hover {
+  color: #2A8E3A;
+  cursor: pointer;
+}
+#nav-footer .menu .line {
+  display: inline-block;
+  background-color: #2A8E3A;
+  margin: auto 0;
+}
+#nav-footer .menu .mobile {
   display: none;
+}
+@media only screen and (max-width: 768px) {
+  #nav-footer .menu .mobile {
+    display: initial;
+  }
 }
 
 #nav-footer {
   background-color: rgba(255, 255, 255, 0.95);
   position: absolute;
+  z-index: 1;
   width: 100%;
   top: 47px;
+}
+#nav-footer .menu {
+  font-size: 20px;
+  display: none;
+  padding: 0 20px;
+}
+#nav-footer .menu .line {
+  height: 1.5px;
+  width: 40px;
 }
 #nav-footer .flash {
   display: flex;
@@ -95,6 +127,21 @@ button:hover {
 }
 #nav-footer form.hidden {
   display: none;
+}
+@media only screen and (max-width: 768px) {
+  #nav-footer {
+    font-size: 22px;
+  }
+  #nav-footer .drop {
+    display: flex;
+  }
+  #nav-footer .menu {
+    font-size: 1.1em;
+    height: 200px;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
 }
 
 /*# sourceMappingURL=navbar-footer.css.map */
