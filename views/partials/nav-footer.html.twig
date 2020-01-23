@@ -12,14 +12,22 @@
       <input type="text" name="username" min='4'>
       <label for="password">Password:</label>
       <input type="password" name="password" min='8'>
-      <button type='submit'>{{ include ('/svg/arrow.svg') }}</button>
+      <div class="form-buttons">
+        <button type='submit' class="desktop-btn">{{ include ('/svg/arrow.svg') }}</button>
+        <button class="mobile-btn">{{ include ('/svg/arrow-slim.svg') }}Back</button>
+        <button class="mobile-btn">Login {{ include ('/svg/arrow-slim.svg') }}</button>
+      </div>
     </form>
     <form class="nav-form hidden" id='register-form' action="/auth/register" method="post">
       <label for="username">Username:</label>
       <input type="text" name="username">
       <label for="password">Password:</label>
       <input type="password" name="password">
-      <button type="submit">{{ include ('/svg/arrow.svg') }}</button>
+      <div class="form-buttons">
+        <button type="submit" class="desktop-btn">{{ include ('/svg/arrow.svg') }}</button>
+        <button class="mobile-btn">{{ include ('/svg/arrow-slim.svg') }}Back</button>
+        <button type="submit" class="mobile-btn">Signup {{ include ('/svg/arrow-slim.svg') }}</button>
+      </div>
     </form>
   </div>
 </section>
