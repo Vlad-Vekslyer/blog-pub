@@ -1,8 +1,8 @@
 const flashClose = document.getElementById('close-btn');
 const loginBtn = document.querySelector('nav #login-btn');
-const registerBtn = document.querySelector('#nav-footer #register-btn');
+const registerBtn = document.querySelector('nav #register-btn');
 const loginBtnMobile = document.querySelector('#nav-footer #login-btn');
-const registerBtnMobile = document.querySelector('nav #register-btn');
+const registerBtnMobile = document.querySelector('#nav-footer #register-btn');
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const hamburger = document.getElementById('hamburger');
@@ -19,18 +19,22 @@ hamburger.addEventListener('click', () => document.querySelector('#nav-footer .m
 
 loginBtn.addEventListener('click', formReveal('login'));
 registerBtn.addEventListener('click', formReveal('register'));
-loginBtnMobile.addEventListener('click', formReveal('login'));
-registerBtnMobile.addEventListener('click', formReveal('register'));
+loginBtnMobile.addEventListener('click', formReveal('login', true));
+registerBtnMobile.addEventListener('click', formReveal('register', true));
 loginForm.addEventListener('submit', submission('login'));
 registerForm.addEventListener('submit', submission('register'));
 
 // higher order function that will handle form revealing after user clicks login/register on nav
-function formReveal(type) {
+function formReveal(type, isMobile = false) {
   return function(){
-    const secondButton = type === 'login' ? registerBtn : loginBtn;
-    secondButton.classList.remove('current');
-    this.classList.toggle('current');
+    if(isMobile === true) document.getElementById('bottom').classList.toggle('slide');
+    else {
+      const secondButton = type === 'login' ? registerBtn : loginBtn;
+      secondButton.classList.remove('current');
+      this.classList.toggle('current');
+    }
     const form = document.getElementById(`${type}-form`);
+    console.log(form);
     const prevForm = type === 'login' ? registerForm : loginForm;
     form.classList.toggle('hidden');
     prevForm.classList.add('hidden');

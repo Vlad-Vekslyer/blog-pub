@@ -136,11 +136,28 @@ a {
     display: flex;
   }
   #nav-footer .menu {
+    box-sizing: border-box;
+    width: 100%;
     font-size: 1.1em;
     height: 200px;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+  }
+  #nav-footer .nav-form {
+    right: 0;
+    padding: 7px 20px;
+  }
+  #nav-footer #bottom {
+    display: flex;
+    left: 0;
+    overflow: hidden;
+    position: relative;
+    transition: left 300ms;
+  }
+  #nav-footer #bottom.slide {
+    left: -100%;
+    width: 200%;
   }
 }
 

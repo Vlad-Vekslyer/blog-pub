@@ -102,11 +102,31 @@ $form-border: 1px solid #2A8E3A;
     }
 
     .menu {
+      box-sizing: border-box;
+      width: 100%;
       font-size: 1.1em;
       height: 200px;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
+    }
+
+    .nav-form {
+      right: 0;
+      padding: global.$headerPaddings;
+    }
+
+    #bottom {
+      display: flex;
+      left: 0;
+      overflow: hidden;
+      position: relative;
+      transition: left 300ms;
+
+      &.slide {
+        left: -100%;
+        width: 200%;
+      }
     }
   }
 }

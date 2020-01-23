@@ -5,19 +5,21 @@
       <span id="close-btn">{{ include ('/svg/close.svg') }}</span>
     </div>
   {% endif %}
-  {{ include ('/partials/menu.html.twig') }}
-  <form class="nav-form hidden" id="login-form" action="/auth/login" method="post">
-    <label for="username">Username:</label>
-    <input type="text" name="username" min='4'>
-    <label for="password">Password:</label>
-    <input type="password" name="password" min='8'>
-    <button type='submit'>{{ include ('/svg/arrow.svg') }}</button>
-  </form>
-  <form class="nav-form hidden" id='register-form' action="/auth/register" method="post">
-    <label for="username">Username:</label>
-    <input type="text" name="username">
-    <label for="password">Password:</label>
-    <input type="password" name="password">
-    <button type="submit">{{ include ('/svg/arrow.svg') }}</button>
-  </form>
+  <div class="" id="bottom">
+    {{ include ('/partials/menu.html.twig') }}
+    <form class="nav-form hidden" id="login-form" action="/auth/login" method="post">
+      <label for="username">Username:</label>
+      <input type="text" name="username" min='4'>
+      <label for="password">Password:</label>
+      <input type="password" name="password" min='8'>
+      <button type='submit'>{{ include ('/svg/arrow.svg') }}</button>
+    </form>
+    <form class="nav-form hidden" id='register-form' action="/auth/register" method="post">
+      <label for="username">Username:</label>
+      <input type="text" name="username">
+      <label for="password">Password:</label>
+      <input type="password" name="password">
+      <button type="submit">{{ include ('/svg/arrow.svg') }}</button>
+    </form>
+  </div>
 </section>
