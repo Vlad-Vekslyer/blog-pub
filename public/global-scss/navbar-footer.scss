@@ -156,12 +156,16 @@ $form-border: 1px solid #2A8E3A;
           border: 0;
         }
 
-        .mobile-btn:last-child {
+        .mobile-btn:last-child svg {
+          transform: rotate(180deg);
+        }
+
+        #login-btn-mobile {
           width: 65px;
         }
 
-        .mobile-btn:last-child svg {
-          transform: rotate(180deg);
+        #register-btn-mobile {
+          width: 90px;
         }
       }
 

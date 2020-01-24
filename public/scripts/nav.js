@@ -1,5 +1,5 @@
 // GENERIC INITIALIZATION
-const flashClose = document.getElementById('close-btn');
+const flashCloseBtn = document.getElementById('close-btn');
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 
@@ -12,10 +12,13 @@ const registerBackMobile = document.querySelector("#register-form .mobile-btn:nt
 
 // DESKTOP INITIALIZATION
 const loginBtn = document.querySelector('nav #login-btn');
+const logoutBtns = Array.from(document.getElementsByClassName('logout-btn'));
 const registerBtn = document.querySelector('nav #register-btn');
 
-if(flashClose){
-  flashClose.addEventListener('click', function() {
+// EVENT LISTENERS
+
+if(flashCloseBtn){
+  flashCloseBtn.addEventListener('click', function() {
     const parent = this.parentElement;
     const grandparent = parent.parentElement;
     grandparent.removeChild(parent);
@@ -27,12 +30,18 @@ registerBackMobile.addEventListener('click', formBack('register'));
 
 hamburger.addEventListener('click', () => document.querySelector('#nav-footer .menu').classList.toggle('drop'));
 
+logoutBtns.forEach(button => {
+  button.addEventListener('click', () => fetch('/auth/logout').then(() => location.reload()));
+});
 loginBtn.addEventListener('click', formReveal('login'));
 registerBtn.addEventListener('click', formReveal('register'));
 loginBtnMobile.addEventListener('click', formReveal('login', true));
 registerBtnMobile.addEventListener('click', formReveal('register', true));
+
 loginForm.addEventListener('submit', submission('login'));
 registerForm.addEventListener('submit', submission('register'));
+
+// FUNCTION DEFINITIONS
 
 function formBack(type) {
   return function(event) {

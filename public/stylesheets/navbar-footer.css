@@ -182,11 +182,14 @@ a {
     background: none;
     border: 0;
   }
-  #nav-footer .nav-form .form-buttons .mobile-btn:last-child {
-    width: 65px;
-  }
   #nav-footer .nav-form .form-buttons .mobile-btn:last-child svg {
     transform: rotate(180deg);
+  }
+  #nav-footer .nav-form .form-buttons #login-btn-mobile {
+    width: 65px;
+  }
+  #nav-footer .nav-form .form-buttons #register-btn-mobile {
+    width: 90px;
   }
   #nav-footer .nav-form input, #nav-footer .nav-form label, #nav-footer .nav-form .form-buttons {
     width: 100%;

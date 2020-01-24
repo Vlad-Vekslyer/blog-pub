@@ -15,7 +15,7 @@
       <div class="form-buttons">
         <button type='submit' class="desktop-btn">{{ include ('/svg/arrow.svg') }}</button>
         <button class="mobile-btn">{{ include ('/svg/arrow-slim.svg') }}Back</button>
-        <button class="mobile-btn">Login {{ include ('/svg/arrow-slim.svg') }}</button>
+        <button id="login-btn-mobile" class="mobile-btn">Login {{ include ('/svg/arrow-slim.svg') }}</button>
       </div>
     </form>
     <form class="nav-form hidden" id='register-form' action="/auth/register" method="post">
@@ -26,7 +26,7 @@
       <div class="form-buttons">
         <button type="submit" class="desktop-btn">{{ include ('/svg/arrow.svg') }}</button>
         <button class="mobile-btn">{{ include ('/svg/arrow-slim.svg') }}Back</button>
-        <button type="submit" class="mobile-btn">Signup {{ include ('/svg/arrow-slim.svg') }}</button>
+        <button id="register-btn-mobile" type="submit" class="mobile-btn">Register {{ include ('/svg/arrow-slim.svg') }}</button>
       </div>
     </form>
   </div>

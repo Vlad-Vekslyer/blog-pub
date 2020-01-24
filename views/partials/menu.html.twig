@@ -7,17 +7,17 @@
     <a href="/edit">Contribute</a>
   </li>
   <span class='line'></span>
+  <li class="mobile">
+    <span>Latest Articles</span>
+  </li>
+  <span class='line mobile'></span>
   {% if username != null %}
-    <li>Hello {{username}}</li>
+    <li>{{username}}</li>
     <span class='line'></span>
-    <li><a href='/auth/logout'>Logout</a></li>
+    <li class="logout-btn">Logout</li>
   {% else %}
     <li id="login-btn">Login</li>
     <span class='line'></span>
     <li id="register-btn">Register</li>
   {% endif %}
-  <span class='line mobile'></span>
-  <li class="mobile">
-    <span>Latest Articles</span>
-  </li>
 </ul>
