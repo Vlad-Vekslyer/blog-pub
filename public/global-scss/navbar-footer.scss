@@ -142,6 +142,10 @@ $form-border: 1px solid #2A8E3A;
       ul {
         padding: 0;
       }
+
+      &.reveal {
+        display: initial;
+      }
     }
 
     .drop {

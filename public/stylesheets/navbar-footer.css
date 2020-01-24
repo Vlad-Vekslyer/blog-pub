@@ -169,6 +169,9 @@ a {
   #nav-footer aside ul {
     padding: 0;
   }
+  #nav-footer aside.reveal {
+    display: initial;
+  }
   #nav-footer .drop {
     display: flex;
   }

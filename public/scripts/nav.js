@@ -5,7 +5,8 @@ const registerForm = document.getElementById('register-form');
 
 // MOBILE INITIALIZATION
 const hamburger = document.getElementById('hamburger');
-const latestArticlesBtn = document.getElementById('latestArticlesBtn');
+const latestArtBtn = document.querySelector('#nav-footer #latest-articles-btn');
+const latestArtBackBtn = document.querySelector('#nav-footer aside button');
 const loginBtnMobile = document.querySelector('#nav-footer #login-btn');
 const registerBtnMobile = document.querySelector('#nav-footer #register-btn');
 const loginBackMobile = document.querySelector('#login-form .mobile-btn:nth-of-type(2)');
@@ -25,22 +26,37 @@ if(flashCloseBtn){
   })
 }
 
-loginBackMobile.addEventListener('click', formBack('login'));
-registerBackMobile.addEventListener('click', formBack('register'));
-
 hamburger.addEventListener('click', () => document.querySelector('#nav-footer .menu').classList.toggle('drop'));
-
 logoutBtns.forEach(button => {
   button.addEventListener('click', () => fetch('/auth/logout').then(() => location.reload()));
 });
+
+loginBackMobile.addEventListener('click', formBack('login'));
+registerBackMobile.addEventListener('click', formBack('register'));
 loginBtn.addEventListener('click', formReveal('login'));
 registerBtn.addEventListener('click', formReveal('register'));
 loginBtnMobile.addEventListener('click', formReveal('login', true));
 registerBtnMobile.addEventListener('click', formReveal('register', true));
+latestArtBtn.addEventListener('click', moveLatest('reveal'));
+latestArtBackBtn.addEventListener('click', moveLatest('hide'));
 loginForm.addEventListener('submit', submission('login'));
 registerForm.addEventListener('submit', submission('register'));
 
 // FUNCTION DEFINITIONS
+function moveLatest(type){
+  const bottomList = document.getElementById('bottom').classList;
+  const sidebarList = document.querySelector('#nav-footer aside').classList;
+  return function(){
+    if(type === 'reveal') {
+      bottomList.add('slide');
+      sidebarList.add('reveal');
+    } else if(type === 'hide'){
+      bottomList.remove('slide');
+      sidebarList.remove('reveal');
+    }
+  }
+}
+
 function formBack(type) {
   return function(event) {
     event.preventDefault();
