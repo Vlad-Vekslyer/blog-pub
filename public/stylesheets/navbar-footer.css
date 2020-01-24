@@ -58,6 +58,12 @@ a {
   width: 100%;
   top: 47px;
 }
+#nav-footer aside {
+  display: none;
+}
+#nav-footer .mobile-btn {
+  display: none;
+}
 #nav-footer .menu {
   font-size: 20px;
   display: none;
@@ -115,9 +121,6 @@ a {
   width: 40px;
   height: 30px;
 }
-#nav-footer .nav-form .form-buttons .mobile-btn {
-  display: none;
-}
 #nav-footer .nav-form button {
   padding: 0;
   display: inline-flex;
@@ -138,6 +141,33 @@ a {
 @media only screen and (max-width: 768px) {
   #nav-footer {
     font-size: 22px;
+  }
+  #nav-footer .nav-form .form-buttons .mobile-btn, #nav-footer aside button {
+    display: inline-flex;
+    align-items: center;
+    width: 60px;
+    justify-content: space-between;
+    background: none;
+    border: 0;
+    font-size: 18px;
+  }
+  #nav-footer aside {
+    font-size: 0.9em;
+    padding: 7px 20px;
+    height: 220px;
+    width: 100%;
+    position: static;
+  }
+  #nav-footer aside h3 {
+    display: none;
+  }
+  #nav-footer aside button {
+    font-family: "Merriweather Sans";
+    font-weight: 400;
+    padding: 0;
+  }
+  #nav-footer aside ul {
+    padding: 0;
   }
   #nav-footer .drop {
     display: flex;
@@ -168,19 +198,9 @@ a {
     display: flex;
     justify-content: space-between;
   }
-  #nav-footer .nav-form .form-buttons .desktop-btn, #nav-footer .nav-form .form-buttons .mobile-btn {
-    font-size: 18px;
-  }
   #nav-footer .nav-form .form-buttons .desktop-btn {
+    font-size: 18px;
     display: none;
-  }
-  #nav-footer .nav-form .form-buttons .mobile-btn {
-    display: inline-flex;
-    align-items: center;
-    width: 60px;
-    justify-content: space-between;
-    background: none;
-    border: 0;
   }
   #nav-footer .nav-form .form-buttons .mobile-btn:last-child svg {
     transform: rotate(180deg);

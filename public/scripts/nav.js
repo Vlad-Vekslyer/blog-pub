@@ -5,6 +5,7 @@ const registerForm = document.getElementById('register-form');
 
 // MOBILE INITIALIZATION
 const hamburger = document.getElementById('hamburger');
+const latestArticlesBtn = document.getElementById('latestArticlesBtn');
 const loginBtnMobile = document.querySelector('#nav-footer #login-btn');
 const registerBtnMobile = document.querySelector('#nav-footer #register-btn');
 const loginBackMobile = document.querySelector('#login-form .mobile-btn:nth-of-type(2)');
@@ -16,7 +17,6 @@ const logoutBtns = Array.from(document.getElementsByClassName('logout-btn'));
 const registerBtn = document.querySelector('nav #register-btn');
 
 // EVENT LISTENERS
-
 if(flashCloseBtn){
   flashCloseBtn.addEventListener('click', function() {
     const parent = this.parentElement;
@@ -37,12 +37,10 @@ loginBtn.addEventListener('click', formReveal('login'));
 registerBtn.addEventListener('click', formReveal('register'));
 loginBtnMobile.addEventListener('click', formReveal('login', true));
 registerBtnMobile.addEventListener('click', formReveal('register', true));
-
 loginForm.addEventListener('submit', submission('login'));
 registerForm.addEventListener('submit', submission('register'));
 
 // FUNCTION DEFINITIONS
-
 function formBack(type) {
   return function(event) {
     event.preventDefault();

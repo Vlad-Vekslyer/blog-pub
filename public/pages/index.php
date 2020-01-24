@@ -2,12 +2,16 @@
   namespace Blog;
   require_once "../../src/Initializer.php";
   initialize();
+  $article = new \Blog\Database\Article();
   $flash = getFlash();
 
-  $landing = new \Blog\Template\Template('landing.html.twig', [
-    'page' => 'landing',
-    'flash' => isset($flash) ? $flash : NULL,
-    'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL
-  ]);
-  $landing->output();
+  $article->getPastArticles(function ($pastArticles) {
+    $landing = new \Blog\Template\Template('landing.html.twig', [
+      'page' => 'landing',
+      'flash' => isset($flash) ? $flash : NULL,
+      'pastArticles' => $pastArticles,
+      'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL
+    ]);
+    $landing->output();
+  })
 ?>

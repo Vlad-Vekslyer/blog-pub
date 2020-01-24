@@ -7,6 +7,9 @@ aside {
   width: 15%;
   font-size: 18px;
 }
+aside button {
+  display: none;
+}
 aside ul {
   margin-top: 10px;
   display: flex;

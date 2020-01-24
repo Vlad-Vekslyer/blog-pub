@@ -2,9 +2,7 @@
 
 {% block links %}
   {{ parent() }}
-  <link rel="stylesheet" href="/stylesheets/sidebar.css">
   <link rel='stylesheet' href='/stylesheets/edit.css'>
-  <link href="https://fonts.googleapis.com/css?family=Merriweather:300i&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -43,7 +41,7 @@
       </div>
 
       <button type="button" id="commit-btn">Commit</button>
-      
+
       <form id="contribution-form" action="/edit/" method="post">
         <input type="hidden" name="contribution-1"/>
         <input type="hidden" name="contribution-2"/>

@@ -9,6 +9,14 @@ $form-border: 1px solid #2A8E3A;
   width: 100%;
   top: 47px;
 
+  aside {
+    display: none;
+  }
+
+  .mobile-btn {
+    display: none;
+  }
+
   .menu {
     @extend %menu;
     font-size: global.$headerFontSize;
@@ -76,10 +84,6 @@ $form-border: 1px solid #2A8E3A;
         width: 40px;
         height: 30px;
       }
-
-      .mobile-btn {
-        display: none;
-      }
     }
 
     button {
@@ -106,6 +110,39 @@ $form-border: 1px solid #2A8E3A;
 
   @include global.medium(){
     font-size: global.$headerFontSizeMobile;
+
+    %mobile-btn {
+      display: inline-flex;
+      align-items: center;
+      width: 60px;
+      justify-content: space-between;
+      background: none;
+      border: 0;
+      font-size: 18px;
+    }
+
+    aside {
+      font-size: 0.9em;
+      padding: global.$headerPaddings;
+      height: 220px;
+      width: 100%;
+      position: static;
+
+      h3 {
+        display: none;
+      }
+
+      button {
+        @extend %mobile-btn;
+        font-family: 'Merriweather Sans';
+        font-weight: 400;
+        padding: 0;
+      }
+
+      ul {
+        padding: 0;
+      }
+    }
 
     .drop {
       display: flex;
@@ -139,21 +176,13 @@ $form-border: 1px solid #2A8E3A;
         display: flex;
         justify-content: space-between;
 
-        .desktop-btn, .mobile-btn {
-          font-size: 18px;
-        }
-
         .desktop-btn {
+          font-size: 18px;
           display: none;
         }
 
         .mobile-btn {
-          display: inline-flex;
-          align-items: center;
-          width: 60px;
-          justify-content: space-between;
-          background: none;
-          border: 0;
+          @extend %mobile-btn;
         }
 
         .mobile-btn:last-child svg {
