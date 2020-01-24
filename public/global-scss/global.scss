@@ -2,8 +2,20 @@ $headerPaddings: 7px 20px;
 $headerFontSize: 20px;
 $headerFontSizeMobile: 22px;
 
+@mixin small(){
+  @media only screen and (max-width: 530px){
+    @content;
+  }
+}
+
 @mixin medium(){
   @media only screen and (max-width: 768px){
+    @content;
+  }
+}
+
+@mixin large(){
+  @media only screen and (max-width: 1040px){
     @content;
   }
 }

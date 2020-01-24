@@ -7,22 +7,36 @@ body, html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
-}
-
-button:hover {
-  cursor: pointer;
 }
 
 .hidden {
   display: none;
 }
 
+.container button {
+  padding: 10px 20px;
+  border: 2px solid black;
+  background-color: #F4F4F4;
+  font-family: "Merriweather Sans";
+  font-weight: 400;
+}
+.container button:hover {
+  cursor: pointer;
+  background-color: #ECECEC;
+}
+
 .container {
-  width: 90%;
+  width: 68%;
   margin: 0 auto;
+}
+.container h1 {
+  margin: 15px auto 5px auto;
+  width: 50%;
+  font-family: "Merriweather";
+  font-weight: 900;
+  text-align: center;
 }
 
 body {
@@ -31,19 +45,13 @@ body {
 }
 
 .container {
+  width: 90%;
   display: flex;
   position: relative;
   align-items: center;
   flex-direction: column;
   font-size: 22px;
   font-family: "Merriweather Sans";
-}
-.container h1 {
-  margin: 15px 0;
-  width: 50%;
-  font-family: "Merriweather";
-  font-weight: 900;
-  text-align: center;
 }
 .container ul {
   font-style: italic;
@@ -55,19 +63,38 @@ body {
 }
 .container button {
   margin-top: 40px;
-  border: 2px solid black;
-  background-color: #F4F4F4;
-  font-weight: 400;
-  font-family: inherit;
   padding: 10px 35px;
   font-size: 1.1em;
 }
-.container button:hover {
-  background-color: #ECECEC;
-}
-.container #background {
+.container .background {
   position: absolute;
   z-index: -1;
+}
+.container .background.mobile {
+  display: none;
+}
+@media only screen and (max-width: 1040px) {
+  .container {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .container h1 {
+    width: 75%;
+  }
+  .container .background {
+    display: none;
+  }
+  .container .background.mobile {
+    display: initial;
+  }
+}
+@media only screen and (max-width: 530px) {
+  .container h1 {
+    font-size: 1.8em;
+    width: 100%;
+    margin-top: 40px;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */
