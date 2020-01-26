@@ -29,7 +29,7 @@ document.addEventListener('selectionchange', () => {
     } else {
       decorator.style.left = `${domRect.x}px`;
     }
-    decorator.style.top = `${domRect.y - 50}px`;
+    decorator.style.top = `${domRect.y - 50 + window.scrollY}px`;
   } else if(selection.isCollapsed) decorator.classList.remove('show');
 });
 
