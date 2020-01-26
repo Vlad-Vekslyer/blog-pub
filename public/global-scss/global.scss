@@ -44,16 +44,36 @@ a {
   font-family: 'Merriweather Sans';
   font-weight: 400;
 
+  // need to remove padding from parent button and add it to the anchor if using an anchor
   a {
     display: inline-block;
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
   }
 
   &:hover {
     cursor: pointer;
     background-color: #ECECEC;
   }
+}
+
+%mobile-btn {
+  display: none;
+
+  @include medium(){
+    display: inline-flex;
+    align-items: center;
+    width: 60px;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-family: 'Merriweather Sans';
+    font-weight: 400;
+    padding: 0;
+  }
+
 }
 
 %container {

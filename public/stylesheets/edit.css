@@ -7,9 +7,12 @@ body, html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
+}
+
+.hidden {
+  display: none;
 }
 
 #edit button {
@@ -19,13 +22,33 @@ a {
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
+#edit button a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
 #edit button:hover {
   cursor: pointer;
   background-color: #ECECEC;
 }
 
-.hidden {
+#edit #header .mobile-btn {
   display: none;
+}
+@media only screen and (max-width: 768px) {
+  #edit #header .mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    width: 60px;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-family: "Merriweather Sans";
+    font-weight: 400;
+    padding: 0;
+  }
 }
 
 .container {
@@ -102,6 +125,7 @@ a {
 }
 #edit #header {
   position: relative;
+  font-size: 1rem;
 }
 #edit #header h1 {
   font-size: 32px;
@@ -124,8 +148,16 @@ a {
   z-index: 1;
   border: 2px solid black;
 }
-#edit #header button:nth-of-type(2) {
-  float: right;
+#edit #header .mobile-btn {
+  font-size: 22px;
+  width: 70px;
+  z-index: 0;
+  bottom: -30px;
+}
+#edit #header .mobile-btn a {
+  display: inline-flex;
+  justify-content: inherit;
+  align-items: inherit;
 }
 #edit #article {
   margin-top: 45px;
@@ -135,6 +167,43 @@ a {
   border-color: #237831;
 }
 
+@media only screen and (max-width: 1040px) {
+  .container h1 {
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  body > aside {
+    display: none;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+  #edit .desktop-btn {
+    display: none;
+  }
+  #edit #commit-btn {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 530px) {
+  .container {
+    width: 90%;
+  }
+
+  #edit #header {
+    font-size: 17px;
+  }
+  #edit #header h1 {
+    width: 100%;
+    font-size: 1.7em;
+  }
+  #edit #header h2 {
+    font-size: 25.5px;
+  }
+}
 @keyframes decorator-show {
   from {
     opacity: 0;

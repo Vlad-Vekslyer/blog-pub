@@ -72,6 +72,7 @@
 
   #header {
     position: relative;
+    font-size: 1rem;
 
     h1 {
       font-size: 32px;
@@ -97,8 +98,18 @@
       border: 2px solid black;
     }
 
-    button:nth-of-type(2){
-      float: right;
+    .mobile-btn {
+      @extend %mobile-btn;
+      font-size: 22px;
+      width: 70px;
+      z-index: 0;
+      bottom: -30px;
+
+      a {
+        display: inline-flex;
+        justify-content: inherit;
+        align-items: inherit;
+      }
     }
   }
 
@@ -114,6 +125,55 @@
 
 .container {
   @extend %container;
+}
+
+@include global.large(){
+  .container {
+    h1 {
+      width: 75%;
+    }
+  }
+}
+
+@include global.medium(){
+   body > aside {
+    display: none;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+  #edit {
+    .desktop-btn {
+      display: none;
+    }
+
+    #commit-btn {
+      width: 100%;
+    }
+  }
+}
+
+@include global.small(){
+  .container {
+    width: 90%;
+  }
+
+  #edit {
+    #header {
+      font-size: 17px;
+
+      h1 {
+        width: 100%;
+        font-size: 1.7em;
+      }
+
+      h2 {
+        font-size: 25.5px;
+      }
+    }
+  }
 }
 
 @keyframes decorator-show {

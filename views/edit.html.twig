@@ -10,7 +10,8 @@
   <div class="container">
     <section id="edit">
       <div id="header">
-        <button type="button">Back</button>
+        <button class="desktop-btn" ><a href="/view">Back</a></button>
+        <button class="mobile-btn"><a href="/view">{{ include('/svg/arrow-slim.svg') }}Back</a></button>
         {% if article.title == null %}
           <input id="title-input" placeholder="Enter title...." type="text" name="title"/>
         {% else %}

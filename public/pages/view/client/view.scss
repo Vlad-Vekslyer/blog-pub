@@ -17,9 +17,14 @@
     @extend %button;
     border: 2px solid #2A8E3A;
     color: #2A8E3A;
+    padding: 0;
     font-size: 1.1em;
     position: relative;
     left: 10px;
+
+    a {
+      padding: 10px 20px;
+    }
   }
 
   #contributions {
@@ -119,9 +124,22 @@
 @include global.small(){
   .container {
     width: 90%;
+    font-size: 17px;
 
     h1 {
       width: 100%;
+      font-size: 1.7em;
+    }
+
+    #contributions {
+      font-size: inherit;
+      .contribution {
+        padding-top: 50px;
+      }
+
+      .contributor {
+        padding: 15px 20px 25px 20px;
+      }
     }
   }
 }
