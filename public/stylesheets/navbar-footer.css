@@ -3,7 +3,7 @@
 }
 
 body, html {
-  height: 100%;
+  height: auto;
 }
 
 a {
@@ -15,20 +15,40 @@ a {
   display: none;
 }
 
-#nav-footer .nav-form button {
+#nav-footer .nav-form .form-buttons .desktop-btn {
   padding: 10px 20px;
   border: 2px solid black;
   background-color: #F4F4F4;
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
-#nav-footer .nav-form button a {
+#nav-footer .nav-form .form-buttons .desktop-btn a {
+  display: inline-block;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 }
-#nav-footer .nav-form button:hover {
+#nav-footer .nav-form .form-buttons .desktop-btn:hover {
   cursor: pointer;
   background-color: #ECECEC;
+}
+
+#nav-footer .mobile-btn {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  #nav-footer .mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    width: 60px;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-family: "Merriweather Sans";
+    font-weight: 400;
+    padding: 0;
+  }
 }
 
 #nav-footer .menu {
@@ -63,9 +83,6 @@ a {
   top: 47px;
 }
 #nav-footer aside {
-  display: none;
-}
-#nav-footer .mobile-btn {
   display: none;
 }
 #nav-footer .menu {
@@ -124,8 +141,6 @@ a {
   border: 1px solid #2A8E3A;
   width: 40px;
   height: 30px;
-}
-#nav-footer .nav-form button {
   padding: 0;
   display: inline-flex;
   justify-content: center;
@@ -145,15 +160,6 @@ a {
 @media only screen and (max-width: 768px) {
   #nav-footer {
     font-size: 22px;
-  }
-  #nav-footer .nav-form .form-buttons .mobile-btn, #nav-footer aside button {
-    display: inline-flex;
-    align-items: center;
-    width: 60px;
-    justify-content: space-between;
-    background: none;
-    border: 0;
-    font-size: 18px;
   }
   #nav-footer aside {
     font-size: 0.9em;

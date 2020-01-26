@@ -14,7 +14,7 @@ $form-border: 1px solid #2A8E3A;
   }
 
   .mobile-btn {
-    display: none;
+    @extend %mobile-btn;
   }
 
   .menu {
@@ -80,18 +80,15 @@ $form-border: 1px solid #2A8E3A;
       grid-row-start: 2;
 
       .desktop-btn {
+        @extend %button;
         border: $form-border;
         width: 40px;
         height: 30px;
+        padding: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
       }
-    }
-
-    button {
-      @extend %button;
-      padding: 0;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
     }
 
     input {
@@ -111,16 +108,6 @@ $form-border: 1px solid #2A8E3A;
   @include global.medium(){
     font-size: global.$headerFontSizeMobile;
 
-    %mobile-btn {
-      display: inline-flex;
-      align-items: center;
-      width: 60px;
-      justify-content: space-between;
-      background: none;
-      border: 0;
-      font-size: 18px;
-    }
-
     aside {
       font-size: 0.9em;
       padding: global.$headerPaddings;
@@ -133,7 +120,6 @@ $form-border: 1px solid #2A8E3A;
       }
 
       button {
-        @extend %mobile-btn;
         font-family: 'Merriweather Sans';
         font-weight: 400;
         padding: 0;
@@ -183,10 +169,6 @@ $form-border: 1px solid #2A8E3A;
         .desktop-btn {
           font-size: 18px;
           display: none;
-        }
-
-        .mobile-btn {
-          @extend %mobile-btn;
         }
 
         .mobile-btn:last-child svg {

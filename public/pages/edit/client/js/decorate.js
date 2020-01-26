@@ -112,7 +112,6 @@ function getSelection(occurrences, str, substr){
     return search === -1 ? acc : endSearchIndex + (arrIndex * 2);
   }, null) + 1;
 
-  console.log({start, end})
   return {start, end};
 }
 
