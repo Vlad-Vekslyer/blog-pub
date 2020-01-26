@@ -7,26 +7,29 @@ body, html {
 }
 
 a {
-  color: none;
   text-decoration: none;
   color: inherit;
 }
 
-button {
+.hidden {
+  display: none;
+}
+
+.container button {
   padding: 10px 20px;
   border: 2px solid black;
   background-color: #F4F4F4;
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
-
-button:hover {
+.container button a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.container button:hover {
   cursor: pointer;
   background-color: #ECECEC;
-}
-
-.hidden {
-  display: none;
 }
 
 .container {
@@ -96,6 +99,55 @@ button:hover {
   animation-fill-mode: forwards;
 }
 
+@media only screen and (max-width: 1040px) {
+  .container h1 {
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  aside {
+    display: none;
+  }
+
+  .container {
+    width: 80%;
+  }
+  .container br {
+    display: none;
+  }
+  .container > button {
+    left: 0;
+    width: 100%;
+    margin: 50px 0;
+  }
+  .container #contributions {
+    margin-top: 0;
+  }
+  .container #contributions .contribution {
+    padding-top: 70px;
+  }
+  .container #contributions .contributor {
+    background-image: url("/assets/contributor-bg-mobile.svg");
+    padding: 20px 30px 35px 30px;
+    left: 50%;
+    top: 0px;
+    transform: none;
+    transform: translateX(-50%);
+  }
+  .container #contributions p:hover + .contributor {
+    animation: contributor-hover-mobile 300ms linear;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+  }
+}
+@media only screen and (max-width: 530px) {
+  .container {
+    width: 90%;
+  }
+  .container h1 {
+    width: 100%;
+  }
+}
 @keyframes p-hover {
   from {
     background-color: rgba(196, 196, 196, 0);
@@ -111,6 +163,14 @@ button:hover {
   }
   to {
     left: -180px;
+    opacity: 1;
+  }
+}
+@keyframes contributor-hover-mobile {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
 }

@@ -44,6 +44,12 @@ a {
   font-family: 'Merriweather Sans';
   font-weight: 400;
 
+  a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+
   &:hover {
     cursor: pointer;
     background-color: #ECECEC;
