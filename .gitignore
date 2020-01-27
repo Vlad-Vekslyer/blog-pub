@@ -1,6 +1,7 @@
 /vendor/
 /logs/
 /conf/ssl
+node_modules/
 logs/
 vendor/
 .env
