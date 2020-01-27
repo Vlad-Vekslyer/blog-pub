@@ -23,6 +23,7 @@
   } else {
     $article->getArticle(NULL, function($articleData) {
       global $article;
+      global $flash;
       $pastArticles = $article->getPastArticles();
       $contributions = $article->getContributions($articleData['id']);
       $view = new \Blog\Template\Template('view.html.twig', [

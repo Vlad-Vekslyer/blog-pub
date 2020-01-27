@@ -6,6 +6,7 @@
   $flash = getFlash();
 
   $article->getPastArticles(function ($pastArticles) {
+    global $flash;
     $landing = new \Blog\Template\Template('landing.html.twig', [
       'page' => 'landing',
       'flash' => isset($flash) ? $flash : NULL,
