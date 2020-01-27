@@ -1,5 +1,9 @@
 @use '../global-scss/global';
 
+html, body {
+  height: 100%;
+}
+
 body {
   display: grid;
   grid-template-rows: 47px auto;
@@ -28,8 +32,12 @@ body {
   button {
     @extend %button;
     margin-top: 40px;
-    padding: 10px 35px;
     font-size: 1.1em;
+    padding: 0;
+
+    a {
+      padding: 10px 35px;
+    }
   }
 
   .background {

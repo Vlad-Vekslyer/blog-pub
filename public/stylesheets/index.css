@@ -3,7 +3,7 @@
 }
 
 body, html {
-  height: 100%;
+  height: auto;
 }
 
 a {
@@ -22,6 +22,12 @@ a {
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
+.container button a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
 .container button:hover {
   cursor: pointer;
   background-color: #ECECEC;
@@ -37,6 +43,10 @@ a {
   font-family: "Merriweather";
   font-weight: 900;
   text-align: center;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
@@ -63,8 +73,11 @@ body {
 }
 .container button {
   margin-top: 40px;
-  padding: 10px 35px;
   font-size: 1.1em;
+  padding: 0;
+}
+.container button a {
+  padding: 10px 35px;
 }
 .container .background {
   position: absolute;
