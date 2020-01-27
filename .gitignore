@@ -1,5 +1,6 @@
 /vendor/
 /logs/
+/conf/ssl
 logs/
 vendor/
 .env
