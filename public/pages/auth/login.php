@@ -8,11 +8,14 @@
     $auth = new \Blog\Database\Authentication();
     $result = $auth->login($_POST['username'], $_POST['password']);
     $auth->closeConnection();
+
     if($result['code'] == 'success'){
       $_SESSION['username'] = $_POST['username'];
     }
 
-    $_SESSION['flash'] = $result;
+    $flash = new \Blog\Session\Flash($result['code'], $result['msg']);
+    $flash->serialize();
+    print_r($_SESSION);
   }
 
 ?>

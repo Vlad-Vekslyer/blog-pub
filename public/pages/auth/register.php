@@ -13,6 +13,7 @@
       $_SESSION['username'] = $_POST['username'];
     }
 
-    $_SESSION['flash'] = $result;
+    $flash = new \Blog\Session\Flash($result['code'], $result['msg']);
+    $flash->serialize();
   }
  ?>

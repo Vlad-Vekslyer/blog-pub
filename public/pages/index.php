@@ -3,7 +3,7 @@
   require_once "../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
-  $flash = getFlash();
+  $flash = \Blog\Session\Flash::deserialize();
 
   $article->getPastArticles(function ($pastArticles) {
     global $flash;

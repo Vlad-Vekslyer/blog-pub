@@ -3,7 +3,7 @@
   require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
-  $flash = getFlash();
+  $flash = \Blog\Session\Flash::deserialize();
 
   if(isset($_GET['id'])){
     $contributions = $article->getContributions($_GET['id']);
