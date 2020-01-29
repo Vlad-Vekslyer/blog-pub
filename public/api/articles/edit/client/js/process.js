@@ -3,7 +3,7 @@ import {oneLiners} from '/scripts/tags.js';
 // sends decorated text to the backend for processing and returns the procesed text
 function processText(decoratedText){
   let body = JSON.stringify({contributions : [decoratedText]});
-  return fetch("/edit/process", {
+  return fetch("/articles/edit/process", {
     method: 'POST',
     mode: "same-origin",
     body: body,

@@ -115,8 +115,6 @@ function getSelection(occurrences, str, substr){
   return {start, end};
 }
 
-getSelection(1, "Pellentesque eget yippiyo. Sed erizzle. Own yo' at dolizzle dapibizzle pizzle tempus mammasay mammasa mamma oo sa. Maurizzle gangster nibh izzle turpis. Sheezy izzle owned.", "tempus");
-
 // remove any tags inside the selection, not including any tags wrapping the selection
 function cleanSelection(obj){
   let {input, selection} = obj;
@@ -129,8 +127,6 @@ function cleanSelection(obj){
   }, selectedStr);
   return input.slice(0, start) + cleanString + input.slice(end);
 }
-
-// console.log(cleanSelection('hello %%hello%% hello', {start: 4, end: 14}))
 
 // clean the edges of the selection from tags that are not ignoreTag
 function cleanEdges(obj, ignoreTag){

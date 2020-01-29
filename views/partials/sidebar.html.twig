@@ -4,7 +4,7 @@
   <ul>
     {% for article in pastArticles %}
       <div class='article'>
-      <a href="/view?id={{article.id}}">
+      <a href="/articles/view?id={{article.id}}">
         {{ article.title }}
         <p>- {{ article.username }}</p>
       </a>

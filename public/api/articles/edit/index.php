@@ -1,6 +1,6 @@
 <?php
   namespace Blog;
-  require_once "../../../src/Initializer.php";
+  require_once "../../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
   $flash = \Blog\Session\Flash::deserialize();
@@ -27,7 +27,7 @@
       $flash->serialize();
       http_response_code(401);
     }
-    header('Location: /view');
+    header('Location: /articles/view');
     exit();
   }
 
