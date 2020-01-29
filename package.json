@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/Vlad-Vekslyer/blog-pub#readme",
   "dependencies": {
+    "@tensorflow-models/universal-sentence-encoder": "^1.2.2",
+    "@tensorflow/tfjs": "^1.5.1",
+    "@tensorflow/tfjs-node": "^1.5.1",
     "express": "^4.17.1"
   },
   "devDependencies": {

@@ -15,7 +15,6 @@
 
     $flash = new \Blog\Session\Flash($result['code'], $result['msg']);
     $flash->serialize();
-    print_r($_SESSION);
   }
 
 ?>
