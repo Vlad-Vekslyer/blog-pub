@@ -19,16 +19,16 @@
       foreach ($contributions as $contribution) {
         $article->commit($contribution, $title, $_SESSION['username']);
       }
-      header('Location: /');
-      exit();
+      $flash = new \Blog\Session\Flash('success', 'Successfully contributed!');
+      $flash->serialize();
+      http_response_code(201);
     } else {
-      $_SESSION['flash'] = [
-        'code' => 'failure',
-        'msg' => 'Must be logged in to do that'
-      ];
-      header('Location: /view');
-      exit();
+      $flash = new \Blog\Session/Flash('failure', 'Must be logged in to do that');
+      $flash->serialize();
+      http_response_code(401);
     }
+    header('Location: /view');
+    exit();
   }
 
   // display the view

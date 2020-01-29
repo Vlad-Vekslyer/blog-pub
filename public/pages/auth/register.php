@@ -11,6 +11,9 @@
     if($result['code'] == 'success'){
       session_start();
       $_SESSION['username'] = $_POST['username'];
+      http_response_code(201);
+    } else {
+      http_response_code(401);
     }
 
     $flash = new \Blog\Session\Flash($result['code'], $result['msg']);
