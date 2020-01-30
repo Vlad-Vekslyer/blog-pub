@@ -27,6 +27,15 @@ class Sentence {
       throw e;
     }
   }
+
+  average(scores) {
+    const length = scores.length * scores[0].length;
+    const sum = scores.reduce((acc, val) => {
+      const innerSum = val.reduce((innerAcc, innerVal) => innerAcc + innerVal[0], 0);
+      return acc + innerSum;
+    }, 0);
+    return sum / length;
+  }
 }
 
 module.exports = Sentence;
