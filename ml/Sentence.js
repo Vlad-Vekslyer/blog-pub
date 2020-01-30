@@ -28,7 +28,7 @@ class Sentence {
     }
   }
 
-  average(scores) {
+  static average(scores) {
     const length = scores.length * scores[0].length;
     const sum = scores.reduce((acc, val) => {
       const innerSum = val.reduce((innerAcc, innerVal) => innerAcc + innerVal[0], 0);
