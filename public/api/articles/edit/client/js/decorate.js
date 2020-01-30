@@ -1,29 +1,26 @@
-import {oneLiners, multiLiners, allTags} from "/scripts/tags.js";
+import {oneLiners, multiLiners} from "/scripts/tags.js";
 import {computeDOMSelection} from "/scripts/DOMHelper";
-import {occurrenceOf, searchAll, getDiffArray} from "/scripts/StringHelper";
+import {occurrenceOf} from "/scripts/StringHelper";
+import clean from "./clean.js";
 
-// returns a string decorated with tags
+// cleans a string of unnessecarry tags and decorates the string according to the action and text that was selected by the user
+// @formInput is the value of the hidden form in the edit page
+// @paragraphInput is the value of the of the <p> tag that the user wrote in
+// @decoration is the styling that the user chose to apply
+// @return a decorated string, ready to be sent for processing to the server
 function decorate(formInput, paragraphInput, decoration){
   if(Object.keys(oneLiners).indexOf(decoration) === -1){
     let paragraphSelections = computeDOMSelection(window.getSelection());
     let occurrence = occurrenceOf(paragraphInput, paragraphSelections);
-    let firstClean = clean(() => cleanEmptyTags(formInput), occurrence);
+    let firstClean = clean('empty-tags', occurrence, formInput);
     let action = getAction(firstClean);
-    let secondClean = clean(() => cleanSelection(firstClean), occurrence);
-    let lastClean = action === 'add' ? clean(() => cleanEdges(secondClean, multiLiners[decoration]), occurrence) : secondClean;
+    let secondClean = clean('selection', occurrence, firstClean);
+    let lastClean = action === 'add' ? clean('edges', occurrence, secondClean, multiLiners[decoration]) : secondClean;
     let pairs = getUnpairedTags(lastClean);
     let manipulatedInput = manipulateMultiLiner(lastClean.input, multiLiners[decoration], action, lastClean.selection, pairs);
-    return cleanEmptyTags(manipulatedInput);
+    return clean('empty-tags', 0, manipulatedInput);
   }
   return manipulateOneLiner(formInput, oneLiners[decoration]);
-}
-
-// higher order function that handles the different cleanings that need to be done
-// @cleaner is a callback that expects a cleaning function to be called inside of it. Don't pass in the cleaning function's name to the cleaner
-function clean(cleaner, occurence){
-  let cleanInput = cleaner();
-  let selection = getSelection(occurence, cleanInput, window.getSelection().toString());
-  return {input: cleanInput, selection: selection};
 }
 
 function manipulateOneLiner(str, tag){
@@ -90,66 +87,6 @@ function getUnpairedTags(obj){
   return undefined;
 }
 
-
-// get the selection inside of the form input based on the paragraph input
-function getSelection(occurrences, str, substr){
-  const patt = allTags.reduce((acc, tag) => acc + tag);
-  const tagRegex = new RegExp(`[${patt}]{2}`, 'g');
-  const cleanStr = str.replace(tagRegex, '');
-  const diffArr = getDiffArray(str, tagRegex);
-  // get the indexes of all the duplicates of substr inside of str
-  const foundSubstrings = searchAll(cleanStr, substr);
-  // index of the substr we're looking for
-  const searchIndex = foundSubstrings[occurrences - 1];
-  // look at diffArr to figure out how many tags are after searchIndex
-  const start = diffArr.reduce((acc, arr, arrIndex) => {
-    const search = arr.indexOf(searchIndex);
-    return search === -1 ? acc : searchIndex + (arrIndex * 2);
-  }, null);
-  const end = diffArr.reduce((acc, arr, arrIndex) => {
-    const endSearchIndex = searchIndex + substr.length - 1;
-    const search = arr.indexOf(endSearchIndex);
-    return search === -1 ? acc : endSearchIndex + (arrIndex * 2);
-  }, null) + 1;
-
-  return {start, end};
-}
-
-// remove any tags inside the selection, not including any tags wrapping the selection
-function cleanSelection(obj){
-  let {input, selection} = obj;
-  let {start, end} = selection;
-  let selectedStr = input.substring(start, end);
-  let cleanString = allTags.reduce((accumulator, tag) => {
-    let tagPattern = tag === "**" ? '\\*\\*' : tag;
-    let patt = new RegExp(tagPattern, 'g');
-    return accumulator.replace(patt, '');
-  }, selectedStr);
-  return input.slice(0, start) + cleanString + input.slice(end);
-}
-
-// clean the edges of the selection from tags that are not ignoreTag
-function cleanEdges(obj, ignoreTag){
-  let {input, selection} = obj
-  let {start, end} = selection;
-  let filteredTags = allTags.filter(tag => tag !== ignoreTag);
-  let leftEdge = input.substring(start - 2, start), rightEdge = input.substring(end, end + 2);
-  // if either the text on the right edge or the left edge are an unnessecary tag
-  if(filteredTags.indexOf(rightEdge) !== -1 || filteredTags.indexOf(leftEdge) !== -1){
-    return input.split('').map((letter, index) => {
-      if((index === start - 2 || index === start - 1) && filteredTags.indexOf(leftEdge) !== -1){
-        let {isLeftUnpaired} = getUnpairedTags(obj);
-        return isLeftUnpaired ? '' : letter;
-      } else if((index === end || index === end + 1) && filteredTags.indexOf(rightEdge) !== -1){
-        let {isRightUnpaired} = getUnpairedTags(obj);
-        return isRightUnpaired ? '' : letter;
-      }
-      return letter;
-    }).join('');
-  }
-  return input;
-}
-
 // decide whether the current selection should be tagged or should its tags be removed instead
 function getAction(obj){
   let {input, selection} = obj;
@@ -174,15 +111,6 @@ function getAction(obj){
     if(start >= position.start && end <= position.end) {return "remove"};
   }
   return "add";
-}
-
-function cleanEmptyTags(str){
-  let allTagsStr = Object.values(multiLiners).reduce((accumulator, tag) => {
-    let char = tag.charAt(0) === '*' ? '\\*' : tag.charAt(0);
-    return accumulator + `(${char}{4})?`;
-  }, '');
-  let regex = new RegExp(allTagsStr, 'g');
-  return str.replace(regex, '');
 }
 
 export default decorate;
