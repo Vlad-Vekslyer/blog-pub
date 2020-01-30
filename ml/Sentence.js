@@ -4,15 +4,25 @@ const use = require('@tensorflow-models/universal-sentence-encoder');
 class Sentence {
   constructor() {
     this.encoder = use.load();
+    this.lr = 0.5;
   }
 
-  async compare(str1, str2) {
+  // @currentS is an array of the sentences from the latest contribution
+  // @incomingS is an array of the sentences from the incoming contribution
+  // @return a 2D array of scores between 0 and 1 that represent how close each incoming sentence is to each current sentence
+  async compare(currentS, incomingS) {
     try {
       const encoder = await this.encoder;
-      const embedding = await encoder.embed([str1, str2]);
-      const score1 = embedding.slice([0,0], [1]);
-      const score2 = embedding.slice([1,0], [1]);
-      return tf.matMul(score1, score2, false, true).dataSync();
+      const currentEmb = await encoder.embed(currentS);
+      const incomingEmb = await encoder.embed(incomingS);
+      const scores = currentS.map((s1, currentIndex) => {
+        return Promise.all(incomingS.map((s2, incomingIndex) => {
+          const currentSent = tf.slice(currentEmb, [currentIndex, 0], [1]);
+          const incomingSent = tf.slice(incomingEmb, [incomingIndex, 0], [1]);
+          return tf.matMul(currentSent, incomingSent, false, true).data();
+        }))
+      });
+      return Promise.all(scores);
     } catch(e){
       throw e;
     }

@@ -9,7 +9,9 @@ dotenv.config();
 app.enable('trust proxy');
 
 app.get('/', async (req, res) => {
-  const score = await sentence.compare('How old are you?', 'What is your age?');
+  const incoming = ['How old are you?', 'What is your phone model?'];
+  const current = ['What is your age?', 'Can I borrow your cellphone model?'];
+  const score = await sentence.compare(current, incoming);
   res.send(score);
 })
 
