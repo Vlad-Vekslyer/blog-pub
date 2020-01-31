@@ -45,3 +45,18 @@ commitButton.addEventListener("click", () => {
   if(title) document.getElementById("title-form").value = title.value;
   form.submit();
 });
+
+/* EXAMPLE CALL */ 
+// const url = new URL('https://localhost:3000/compare');
+// fetch(url, {
+//   method: 'POST',
+//   mode: 'cors',
+//   body: JSON.stringify({
+//     current: ['How old are you?', 'What is your phone model?'],
+//     incoming: ['What is your age?', 'Can I borrow your cellphone model?']
+//   }),
+//   headers: {
+//     'Content-Type': 'application/json'
+//   }
+// }).then(res => res.json())
+// .then(res => console.log(res));

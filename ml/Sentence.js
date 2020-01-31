@@ -1,10 +1,12 @@
 const tf = require('@tensorflow/tfjs-node');
 const use = require('@tensorflow-models/universal-sentence-encoder');
 
+// relevancy threshold
+const rl = 0.5;
+
 class Sentence {
   constructor() {
     this.encoder = use.load();
-    this.lr = 0.5;
   }
 
   // @currentS is an array of the sentences from the latest contribution
@@ -35,6 +37,10 @@ class Sentence {
       return acc + innerSum;
     }, 0);
     return sum / length;
+  }
+
+  static approximate(average){
+    return average > rl;
   }
 }
 
