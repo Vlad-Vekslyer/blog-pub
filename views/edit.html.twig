@@ -22,8 +22,12 @@
 
       <div id="article">
         {% for contribution in contributions %}
-          <p>{{contribution.body | raw}}</p>
-          <br/>
+          <div class="prev-contribution">
+            <p class="body">{{contribution.body | raw}}</p>
+            <span class="date" hidden>{{contribution.date}}</span>
+            <span class="contributor" hidden>{{ contribution.author }}</span>
+            <br/>
+          </div>
         {% endfor %}
       </div>
 

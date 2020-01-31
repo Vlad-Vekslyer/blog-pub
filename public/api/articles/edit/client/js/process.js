@@ -42,4 +42,23 @@ function getIncoming(elements){
   return sentences;
 }
 
-export {processText, updateInputs, getIncoming};
+function getCurrent(elements){
+  const latestCont = elements[elements.length - 1];
+  const latestContChildren = Array.from(latestCont.children);
+  const latestDate = new Date (latestContChildren.find(child => child.className === 'date').textContent);
+  const latestAuthor = latestContChildren.find(child => child.className === 'contributor').textContent;
+  const latestConts = Array.from(elements).filter(element => {
+    const dateStr = Array.from(element.children)
+    .find(child => child.className === 'date').textContent;
+    const author = Array.from(element.children)
+    .find(child => child.className === 'contributor').textContent;
+    const date = new Date(dateStr);
+    return date.toDateString() === latestDate.toDateString() && author === latestAuthor;
+  });
+  return latestConts.map(cont => {
+    return Array.from(cont.children)
+    .find(child => child.className === 'body').textContent;
+  });
+}
+
+export {processText, updateInputs, getIncoming, getCurrent};

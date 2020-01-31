@@ -32,13 +32,13 @@
 
     // get all the user contributions of a specific article
     public function getContributions($articleId){
-      $statement = $this->connection->prepare("SELECT body,username FROM contributions WHERE article = ? ORDER BY date_created ASC");
+      $statement = $this->connection->prepare("SELECT body,username, date_created FROM contributions WHERE article = ? ORDER BY date_created ASC");
       $statement->bind_param('i', $articleId);
       $statement->execute() or die($this->connection->error);
-      $statement->bind_result($body, $author);
+      $statement->bind_result($body, $author, $date);
       $contributions = array();
       while($statement->fetch()){
-        array_push($contributions, array("body"=>$body, "author"=>$author));
+        array_push($contributions, array("body"=>$body, "author"=>$author, "date" => $date));
       }
       return $contributions;
     }

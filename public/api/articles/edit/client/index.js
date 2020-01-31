@@ -1,6 +1,6 @@
 import Contribution from './js/Contribution.js';
 import decorate from "./js/decorate.js";
-import {updateInputs, getIncoming} from './js/process.js';
+import {updateInputs, getIncoming, getCurrent} from './js/process.js';
 new Contribution();
 
 // initialize decorators
@@ -41,6 +41,8 @@ inputs.forEach(input => input.removeAttribute('value'));
 
 commitButton.addEventListener("click", () => {
   getIncoming(document.querySelectorAll("p[contenteditable='true']"));
+  const current = getCurrent(document.querySelectorAll(".prev-contribution"));
+  console.log(current);
   // let form = document.getElementById("contribution-form");
   // let title = document.getElementById("title-input");
   // if(title) document.getElementById("title-form").value = title.value;
