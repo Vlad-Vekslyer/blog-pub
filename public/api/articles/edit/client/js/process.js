@@ -16,6 +16,7 @@ function processText(decoratedText){
   .catch(error => console.error("Fetch error:" + error.message))
 }
 
+// updates the user input with the processed text from the server
 function updateInputs(decoratedText, selectedCont, formInput, decoration){
   // fire an enter event to create a new textarea if a one-liner was clicked and was added instead of removed
   if(decoratedText.length > formInput.value.length && Object.keys(oneLiners).indexOf(decoration) !== -1) {
@@ -29,4 +30,16 @@ function updateInputs(decoratedText, selectedCont, formInput, decoration){
   });
 }
 
-export {processText, updateInputs};
+function getIncoming(elements){
+  const contributions = Array.from(elements);
+  const sentences = contributions.reduce((acc, cont) => acc + cont.textContent,'')
+  .split('.')
+  .map(cont => {
+    const cleanedCont = cont.replace(/\s+/g, ' ');
+    return cleanedCont[0] === ' ' ? cleanedCont.slice(1) : cleanedCont;
+  })
+  .filter(sentence => sentence.length > 5);
+  return sentences;
+}
+
+export {processText, updateInputs, getIncoming};

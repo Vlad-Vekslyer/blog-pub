@@ -99,7 +99,7 @@ function getAction(obj){
   let matches = Array.from(input.matchAll(regex));
   // get the selection of each match found
   let matchPositions = matches.map(match => {return {start: match.index, end: match.index + match[0].length}});
-  // link together selections that are closely adjacent to each other
+  // link together selections that are adjacent to each other
   let linkedMatchPositions = matchPositions.reduce((accumulator, position, index, arr) => {
     if(index < arr.length - 1 && position.end === arr[index + 1].start) {
       return [...accumulator ,{start: position.start, end: arr[index + 1].end}]
@@ -107,6 +107,7 @@ function getAction(obj){
     if(index > 0 && position.start === arr[index - 1].end) { return accumulator }
     return [...accumulator, position];
   }, [])
+  // if the selection covers only text that is between tags, then return remove, otherwise return add
   for(let position of linkedMatchPositions){
     if(start >= position.start && end <= position.end) {return "remove"};
   }

@@ -1,6 +1,6 @@
 import Contribution from './js/Contribution.js';
 import decorate from "./js/decorate.js";
-import {updateInputs} from './js/process.js';
+import {updateInputs, getIncoming} from './js/process.js';
 new Contribution();
 
 // initialize decorators
@@ -40,13 +40,14 @@ const inputs = document.querySelectorAll("input[type='hidden']");
 inputs.forEach(input => input.removeAttribute('value'));
 
 commitButton.addEventListener("click", () => {
-  let form = document.getElementById("contribution-form");
-  let title = document.getElementById("title-input");
-  if(title) document.getElementById("title-form").value = title.value;
-  form.submit();
+  getIncoming(document.querySelectorAll("p[contenteditable='true']"));
+  // let form = document.getElementById("contribution-form");
+  // let title = document.getElementById("title-input");
+  // if(title) document.getElementById("title-form").value = title.value;
+  // form.submit();
 });
 
-/* EXAMPLE CALL */ 
+/* EXAMPLE CALL */
 // const url = new URL('https://localhost:3000/compare');
 // fetch(url, {
 //   method: 'POST',
