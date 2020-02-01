@@ -8,6 +8,15 @@
 {% block content %}
   {{ include('partials/sidebar.html.twig') }}
   <div class="container">
+    <div class="hidden" id="popup">
+      <p>It seems you may have veered off-topic. Your post will be marked for review by a moderator if you submit it.</p>
+      <ul>
+        <li>Check your contributions for proper punctuation.</li>
+        <li>Make sure you base your writing on the latest contributions in the article.</li>
+      </ul>
+      <button id="commit-sure">Commit Anyway</button>
+      <button id="close-popup">Go Back</button>
+    </div>
     <section id="edit">
       <div id="header">
         <button class="desktop-btn" ><a href="/articles/view">Back</a></button>

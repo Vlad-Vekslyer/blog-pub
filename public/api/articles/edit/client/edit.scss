@@ -1,4 +1,38 @@
-@use '../../../global-scss/global';
+@use '../../../../global-scss/global';
+
+#popup {
+  width: 50%;
+  font-size: 19px;
+  font-family: 'Merriweather Sans';
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+  border: 3px solid black;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 23px;
+    list-style: disclosure-closed;
+  }
+
+  button {
+    @extend %button;
+    font-size: inherit;
+  }
+
+  #commit-sure {
+    color: #237831;
+    border-color: #237831;
+  }
+}
 
 #edit {
   display: flex;

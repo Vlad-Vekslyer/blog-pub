@@ -23,7 +23,7 @@
       $flash->serialize();
       http_response_code(201);
     } else {
-      $flash = new \Blog\Session/Flash('failure', 'Must be logged in to do that');
+      $flash = new \Blog\Session\Flash('failure', 'Must be logged in to do that');
       $flash->serialize();
       http_response_code(401);
     }

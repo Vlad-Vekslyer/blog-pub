@@ -39,27 +39,32 @@ const inputs = document.querySelectorAll("input[type='hidden']");
 
 inputs.forEach(input => input.removeAttribute('value'));
 
-commitButton.addEventListener("click", () => {
-  getIncoming(document.querySelectorAll("p[contenteditable='true']"));
+commitButton.addEventListener("click",async () => {
+  const incoming = getIncoming(document.querySelectorAll("p[contenteditable='true']"));
   const current = getCurrent(document.querySelectorAll(".prev-contribution"));
-  console.log(current);
-  // let form = document.getElementById("contribution-form");
-  // let title = document.getElementById("title-input");
-  // if(title) document.getElementById("title-form").value = title.value;
-  // form.submit();
+  const url = new URL('https://localhost:3000/compare');
+  const {isRelevant} = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({current, incoming}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json());
+  if(isRelevant){
+    submitForm();
+  } else document.getElementById('popup').classList.remove('hidden');
 });
 
-/* EXAMPLE CALL */
-// const url = new URL('https://localhost:3000/compare');
-// fetch(url, {
-//   method: 'POST',
-//   mode: 'cors',
-//   body: JSON.stringify({
-//     current: ['How old are you?', 'What is your phone model?'],
-//     incoming: ['What is your age?', 'Can I borrow your cellphone model?']
-//   }),
-//   headers: {
-//     'Content-Type': 'application/json'
-//   }
-// }).then(res => res.json())
-// .then(res => console.log(res));
+const closePopup = document.getElementById('close-popup');
+const commitPopup = document.getElementById('commit-sure');
+
+closePopup.addEventListener('click', () => document.getElementById('popup').classList.add('hidden'));
+commitPopup.addEventListener('click', submitForm);
+
+function submitForm(){
+  const form = document.getElementById("contribution-form");
+  const title = document.getElementById("title-input");
+  if(title) document.getElementById("title-form").value = title.value;
+  form.submit();
+}

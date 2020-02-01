@@ -3,7 +3,7 @@
 }
 
 body, html {
-  height: 100%;
+  height: auto;
 }
 
 a {
@@ -15,20 +15,20 @@ a {
   display: none;
 }
 
-#edit button {
+#popup button, #edit button {
   padding: 10px 20px;
   border: 2px solid black;
   background-color: #F4F4F4;
   font-family: "Merriweather Sans";
   font-weight: 400;
 }
-#edit button a {
+#popup button a, #edit button a {
   display: inline-block;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
 }
-#edit button:hover {
+#popup button:hover, #edit button:hover {
   cursor: pointer;
   background-color: #ECECEC;
 }
@@ -61,6 +61,35 @@ a {
   font-family: "Merriweather";
   font-weight: 900;
   text-align: center;
+}
+
+#popup {
+  width: 50%;
+  font-size: 19px;
+  font-family: "Merriweather Sans";
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+  border: 3px solid black;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#popup p {
+  margin-bottom: 20px;
+}
+#popup ul {
+  margin-bottom: 20px;
+  padding-left: 23px;
+  list-style: disclosure-closed;
+}
+#popup button {
+  font-size: inherit;
+}
+#popup #commit-sure {
+  color: #237831;
+  border-color: #237831;
 }
 
 #edit {
