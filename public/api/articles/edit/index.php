@@ -15,7 +15,7 @@
         if(\preg_match("/contribution-[0-9]/", $key))
           array_push($contributions, $contribution);
       }
-      \Blog\Processor\Processor::processContributions($contributions);
+      \Blog\Processor\Converter::processContributions($contributions);
       foreach ($contributions as $contribution) {
         $article->commit($contribution, $title, $_SESSION['username']);
       }

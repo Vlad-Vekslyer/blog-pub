@@ -11,6 +11,8 @@ function processText(decoratedText){
       'Content-Type': 'application/json'
     }
   })
+  // .then(res => res.text())
+  // .then(res => console.log(res))
   .then(res => res.json())
   .then(res => res.contributions[0])
   .catch(error => console.error("Fetch error:" + error.message))
