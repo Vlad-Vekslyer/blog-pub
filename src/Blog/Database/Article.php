@@ -9,7 +9,7 @@
 
     // commit the user's contribution to the database
     public function commit($body, $title, $author){
-      $latestArticle = $this->getLatestArticle();
+      $latestArticle = $this->getArticle();
       // has the current article hasn't received its first contribution yet?
       if(!isset($latestArticle['title'])){
         if($title != null){
@@ -28,6 +28,7 @@
       $statement->bind_param('ss', $body, $author);
       $statement->execute() or die($this->connection->error);
       $statement->close();
+      return mysqli_insert_id($this->connection);
     }
 
     // get all the user contributions of a specific article

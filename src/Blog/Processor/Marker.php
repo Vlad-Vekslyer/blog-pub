@@ -8,9 +8,12 @@
       $current = self::getCurrent($article);
       $current = self::format($current);
       $relevancy = self::getRelevancy($incoming, $current);
-      echo $relevancy;
-      echo "<br>";
-      print_r(json_decode($relevancy, true));
+      foreach($contributions as &$contribution){
+        $contribution = array(
+          'body' => $contribution,
+          'marked' => !$relevancy['isRelevant']
+        );
+      }
     }
 
     private static function getRelevancy($incoming, $current){
@@ -28,7 +31,7 @@
       \curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
       $result = \curl_exec($ch);
       \curl_close($ch);
-      return $result;
+      return (array) \json_decode($result, true);
     }
 
     private static function getCurrent($article){
