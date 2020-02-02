@@ -4,7 +4,6 @@
   initialize();
   $article = new \Blog\Database\Article();
   $flash = \Blog\Session\Flash::deserialize();
-
   // update the database if a logged in user sent a contribution
   if (isset($_POST['contribution-1'])){
     if(isset($_SESSION['username'])) {
@@ -23,14 +22,24 @@
       $flash->serialize();
       http_response_code(201);
     } else {
+      // DEBUGGING
+      $contributions = array();
+      $title = isset($_POST['title']) ? $_POST['title'] : null;
+      // make sure the contribution properties are in the correc format before pushing
+      foreach ($_POST as $key => $contribution) {
+        if(\preg_match("/contribution-[0-9]/", $key))
+          array_push($contributions, $contribution);
+      }
+      \Blog\Processor\Converter::processContributions($contributions);
+      \Blog\Processor\Marker::processContributions($contributions, $article);
+      // DEBUGGING
       $flash = new \Blog\Session\Flash('failure', 'Must be logged in to do that');
       $flash->serialize();
       http_response_code(401);
     }
-    header('Location: /articles/view');
-    exit();
+    // header('Location: /articles/view');
+    // exit();
   }
-
   // display the view
   $article->getArticle(NULL, function($articleData){
     global $article;

@@ -4,7 +4,7 @@
 
   class Converter extends Processor{
     // turns custom syntax tags into HTML markup
-    public static function processContributions(&$contributions){
+    public static function processContributions(&$contributions, $article = null){
       foreach ($contributions as &$value) {
         $value = \htmlspecialchars($value, ENT_QUOTES);
         // check if the tag is a one-liner by looking at the first two characters

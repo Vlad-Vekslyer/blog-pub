@@ -35,7 +35,7 @@ function updateInputs(decoratedText, selectedCont, formInput, decoration){
 function getIncoming(elements){
   const contributions = Array.from(elements);
   const sentences = contributions.reduce((acc, cont) => acc + cont.textContent,'')
-  .split('.')
+  .split(/[.?]/)
   .map(cont => {
     const cleanedCont = cont.replace(/\s+/g, ' ');
     return cleanedCont[0] === ' ' ? cleanedCont.slice(1) : cleanedCont;
