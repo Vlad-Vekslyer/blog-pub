@@ -23,7 +23,8 @@
       ];
       $body = json_encode($body);
       $ch = \curl_init();
-      \curl_setopt($ch, CURLOPT_URL, 'https://localhost:3000/compare');
+      $url = getenv('PHP_ENV') == 'PROD' ? getenv('NODE_HOST') : $_ENV['NODE_HOST'];
+      \curl_setopt($ch, CURLOPT_URL, "$url/compare");
       \curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
       \curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
       \curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

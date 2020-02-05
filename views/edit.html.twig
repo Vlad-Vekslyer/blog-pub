@@ -3,6 +3,7 @@
 {% block links %}
   {{ parent() }}
   <link rel='stylesheet' href='/stylesheets/edit.css'>
+  <meta name="cors-host" content="{{ nodeHost }}">
 {% endblock %}
 
 {% block content %}

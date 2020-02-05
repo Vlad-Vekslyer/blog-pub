@@ -38,6 +38,7 @@
   $article->getArticle(NULL, function($articleData){
     global $article;
     global $flash;
+    $nodeHost = getenv('PHP_ENV') == 'PROD' ? getenv('NODE_HOST') : $_ENV['NODE_HOST'];
     $contributions = $article->getContributions($articleData['id']);
     $pastArticles = $article->getPastArticles();
     $edit = new \Blog\Template\Template('edit.html.twig', [
@@ -46,6 +47,7 @@
       'username' => isset($_SESSION['username']) ? $_SESSION['username'] : NULL,
       'contributions'=>$contributions,
       'article'=>$articleData,
+      'nodeHost' => $nodeHost,
       'pastArticles'=>$pastArticles]);
     $edit->output();
   });
