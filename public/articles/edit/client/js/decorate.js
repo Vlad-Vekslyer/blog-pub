@@ -1,6 +1,6 @@
 import {oneLiners, multiLiners} from "/scripts/tags.js";
-import {computeDOMSelection} from "/scripts/DOMHelper";
-import {occurrenceOf} from "/scripts/StringHelper";
+import {computeDOMSelection} from "/scripts/DOMHelper.js";
+import {occurrenceOf} from "/scripts/StringHelper.js";
 import clean from "./clean.js";
 
 // cleans a string of unnessecarry tags and decorates the string according to the action and text that was selected by the user

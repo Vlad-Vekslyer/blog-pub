@@ -1,4 +1,4 @@
-import {searchAll, getDiffArray} from "/scripts/StringHelper";
+import {searchAll, getDiffArray} from "/scripts/StringHelper.js";
 import {allTags, multiLiners} from "/scripts/tags.js";
 
 const cleaners = {
