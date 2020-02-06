@@ -1,6 +1,6 @@
 <?php
   namespace Blog;
-  require_once '../../../src/Initializer.php';
+  require_once '../../src/Initializer.php';
   initialize();
 
   if(isset($_POST['username']) && isset($_POST['password'])){

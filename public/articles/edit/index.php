@@ -1,6 +1,6 @@
 <?php
   namespace Blog;
-  require_once "../../../../src/Initializer.php";
+  require_once "../../../src/Initializer.php";
   initialize();
   $article = new \Blog\Database\Article();
   $flash = \Blog\Session\Flash::deserialize();
