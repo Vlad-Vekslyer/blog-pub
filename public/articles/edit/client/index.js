@@ -42,7 +42,7 @@ inputs.forEach(input => input.removeAttribute('value'));
 commitButton.addEventListener("click",async () => {
   const incoming = getIncoming(document.querySelectorAll("p[contenteditable='true']"));
   const current = getCurrent(document.querySelectorAll(".prev-contribution"));
-  const url = new URL(document.querySelector('meta[name="cors-host"]').content + "/compare");
+  const url = new URL(document.querySelector('meta[name="cors-host"]').content + "compare");
   const {isRelevant} = await fetch(url, {
     method: 'POST',
     mode: 'cors',
