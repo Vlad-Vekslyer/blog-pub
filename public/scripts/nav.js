@@ -28,7 +28,7 @@ if(flashCloseBtn){
 
 hamburger.addEventListener('click', () => document.querySelector('#nav-footer .menu').classList.toggle('drop'));
 logoutBtns.forEach(button => {
-  button.addEventListener('click', () => fetch('/auth/logout').then(() => location.reload()));
+  button.addEventListener('click', () => fetch('/auth/logout.php').then(() => location.reload()));
 });
 
 loginBackMobile.addEventListener('click', formBack('login'));
