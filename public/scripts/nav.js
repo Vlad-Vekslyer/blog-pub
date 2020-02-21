@@ -86,7 +86,7 @@ function submission(type){
   return function(event){
     event.preventDefault();
     const body = new FormData(this);
-    fetch('/auth/' + type, {
+    fetch('/auth/' + type + '.php', {
       method: 'POST',
       mode: 'same-origin',
       body: body
