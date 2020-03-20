@@ -11,10 +11,10 @@ function processText(decoratedText){
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
-  // .then(res => res.text())
-  // .then(res => console.log(res))
-  .then(res => res.json())
-  .then(res => res.contributions[0])
+  .then(res => res.text())
+  .then(res => console.log(res))
+  // .then(res => res.json())
+  // .then(res => res.contributions[0])
   .catch(error => console.error("Fetch error:" + error.message))
 }
 
