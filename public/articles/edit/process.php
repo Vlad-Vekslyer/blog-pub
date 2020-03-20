@@ -4,7 +4,6 @@
   initialize();
 
   if(isset($_POST['contributions'])){
-    echo 'reached here';
     // processContributions can only accept an array
     $contributions = [$_POST['contributions']];
     \Blog\Processor\Converter::processContributions($contributions);
