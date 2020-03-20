@@ -2,13 +2,13 @@ import {oneLiners} from '/scripts/tags.js';
 
 // sends decorated text to the backend for processing and returns the procesed text
 function processText(decoratedText){
-  let body = JSON.stringify({contributions : [decoratedText]});
+  let body = `contributions=${encodeURIComponent(decoratedText)}`;
   return fetch("/articles/edit/process", {
     method: 'POST',
     mode: "same-origin",
     body: body,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
   // .then(res => res.text())
@@ -32,6 +32,7 @@ function updateInputs(decoratedText, selectedCont, formInput, decoration){
   });
 }
 
+// get the contributions being posted and split them into separate sentences
 function getIncoming(elements){
   const contributions = Array.from(elements);
   const sentences = contributions.reduce((acc, cont) => acc + cont.textContent,'')
@@ -44,11 +45,14 @@ function getIncoming(elements){
   return sentences;
 }
 
+// get the contributions that were lastly posted and split them into sentences
 function getCurrent(elements){
   const latestCont = elements[elements.length - 1];
   const latestContChildren = Array.from(latestCont.children);
+  // we're getting the author and the date of the very last contribution
   const latestDate = new Date (latestContChildren.find(child => child.className === 'date').textContent);
   const latestAuthor = latestContChildren.find(child => child.className === 'contributor').textContent;
+  // we then filter out any contributions that are not from the same author at the same date
   const latestConts = Array.from(elements).filter(element => {
     const dateStr = Array.from(element.children)
     .find(child => child.className === 'date').textContent;

@@ -3,9 +3,9 @@
   require_once "../../../src/Initializer.php";
   initialize();
 
-  if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $data = (array) \json_decode(\file_get_contents("php://input"));
-    $contributions = $data['contributions'];
+  if(isset($_POST['contributions'])){
+    // processContributions can only accept an array
+    $contributions = [$_POST['contributions']];
     \Blog\Processor\Converter::processContributions($contributions);
     $json = json_encode(array('contributions' => $contributions));
     echo $json;
