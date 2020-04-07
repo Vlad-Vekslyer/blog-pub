@@ -92,6 +92,44 @@ a {
   border-color: #237831;
 }
 
+#decorator {
+  font-family: "Merriweather";
+  background-color: #1B1B1B;
+  border-radius: 3px 3px 0px 0px;
+  color: #F4F4F4;
+  opacity: 0;
+  display: none;
+  position: absolute;
+  padding: 8px 8px;
+  z-index: 2;
+}
+#decorator button {
+  text-align: center;
+  width: 35px;
+  padding: 0 5px;
+  background-color: rgba(0, 0, 0, 0);
+  color: inherit;
+  border: none;
+  font-family: inherit;
+}
+#decorator button[name=header] {
+  font-size: 1.4em;
+}
+#decorator .line {
+  display: inline-block;
+  background-color: #2A8E3A;
+  height: 15px;
+  width: 1px;
+  position: relative;
+  bottom: 4px;
+}
+#decorator.show {
+  display: block;
+  animation: decorator-show 300ms linear;
+  animation-fill-mode: forwards;
+  animation-delay: 300ms;
+}
+
 #edit {
   display: flex;
   flex-direction: column;
@@ -109,48 +147,25 @@ a {
 }
 #edit .contributions {
   margin: 20px 0;
+  position: relative;
+}
+#edit .contributions .placeholder {
+  color: gray;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  user-select: none;
+  z-index: -1;
+}
+#edit .contributions .placeholder.hidden {
+  display: none;
 }
 #edit .contributions .contribution {
   width: 100%;
-  min-height: 20px;
+  min-height: 26px;
   overflow-wrap: anywhere;
   resize: none;
-}
-#edit .contributions #decorator {
-  font-family: "Merriweather";
-  background-color: #1B1B1B;
-  border-radius: 3px 3px 0px 0px;
-  color: #F4F4F4;
-  opacity: 0;
-  display: none;
-  position: absolute;
-  padding: 8px 8px;
-}
-#edit .contributions #decorator button {
-  text-align: center;
-  width: 35px;
-  padding: 0 5px;
-  background-color: rgba(0, 0, 0, 0);
-  color: inherit;
-  border: none;
-  font-family: inherit;
-}
-#edit .contributions #decorator button[name=header] {
-  font-size: 1.4em;
-}
-#edit .contributions #decorator .line {
-  display: inline-block;
-  background-color: #2A8E3A;
-  height: 15px;
-  width: 1px;
-  position: relative;
-  bottom: 4px;
-}
-#edit .contributions #decorator.show {
-  display: block;
-  animation: decorator-show 300ms linear;
-  animation-fill-mode: forwards;
-  animation-delay: 300ms;
 }
 #edit #header {
   position: relative;

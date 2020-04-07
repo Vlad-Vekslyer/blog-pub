@@ -10,14 +10,16 @@ class Contribution {
       let contributions = document.querySelector(".contributions");
       let newParagraph = document.createElement("P");
       newParagraph.classList.add("contribution");
-      newParagraph.setAttribute("name", `contribution-${contributionNum++}`);
+      newParagraph.setAttribute("name", `contribution-${contributionNum}`);
       newParagraph.setAttribute("contenteditable", 'true');
       this.contribution = newParagraph;
       this.addEvents(this.toggleSelection, this.createContribution, this.updateForm, this.updateChildNodes);
+      if(contributionNum === 1) this.addEvents(this.addPlaceholder, this.handleEmpty);
       contributions.appendChild(newParagraph);
       newParagraph.focus();
+      contributionNum++;
     } else {
-      alert("Reached maximum number of contributions");
+      alert("Reached maximum number of paragraphs");
     }
   }
 
@@ -35,21 +37,46 @@ class Contribution {
     });
   }
 
+  // update the form corresponding to the contribution being edited
   updateForm(){
     this.contribution.addEventListener("keyup", function(event) {
       if(event.key == "Enter") return;
       let name = this.attributes.getNamedItem("name").nodeValue;
+      // get array of chars in the corresponding form
       let inputArr = document.querySelector(`input[name="${name}"]`).value.split('');
       let newArr = [], i = 0, paragraphArr = this.textContent.split('');
       while(paragraphArr.length > 0 || i < inputArr.length){
         let front = inputArr[i] + inputArr[i + 1];
         let back = inputArr[i] + inputArr[i - 1];
+        /* if front\back strings are tags, then add the tags to newArr.
+        Otherwise, shift off a char from the contribution array and add it to newArr */
         if(allTags.indexOf(front) === -1 && allTags.indexOf(back) === -1) newArr.push(paragraphArr.shift());
         else newArr.push(inputArr[i]);
         i++;
       }
       document.querySelector(`input[name="${name}"]`).value = newArr.join('');
     })
+  }
+
+  // adds the placeholder span inside of the first contribution
+  addPlaceholder(){
+    let placeholderSpan = document.createElement("SPAN");
+    placeholderSpan.classList.add('placeholder');
+    placeholderSpan.innerText = "Write your contribution here...";
+    let contributions = document.querySelector(".contributions");
+    contributions.appendChild(placeholderSpan);
+  }
+
+  // adds placeholder text if contribution is empty
+  handleEmpty(){
+    this.contribution.addEventListener("keydown", function(event) {
+      if(event.key === "Enter") return;
+      const placeholder = document.querySelector('.placeholder');
+      if(!this.textContent) {
+        placeholder.classList.add('hidden');
+        this.focus();
+      }
+    });
   }
 
   updateChildNodes(){

@@ -1,4 +1,4 @@
-@use '../../../../global-scss/global';
+@use '../../../global-scss/global.scss';
 
 #popup {
   width: 50%;
@@ -34,6 +34,48 @@
   }
 }
 
+#decorator {
+  font-family: 'Merriweather';
+  background-color: #1B1B1B;
+  border-radius: 3px 3px 0px 0px;
+  color: #F4F4F4;
+  opacity: 0;
+  display: none;
+  position: absolute;
+  padding: 8px 8px;
+  z-index: 2;
+
+  button {
+    text-align: center;
+    width: 35px;
+    padding: 0 5px;
+    background-color: rgba(0,0,0,0);
+    color: inherit;
+    border: none;
+    font-family: inherit;
+  }
+
+  button[name='header'] {
+    font-size: 1.4em;
+  }
+
+  .line {
+    display: inline-block;
+    background-color: #2A8E3A;
+    height: 15px;
+    width: 1px;
+    position: relative;
+    bottom: 4px;
+  }
+
+  &.show {
+    display: block;
+    animation: decorator-show 300ms linear;
+    animation-fill-mode: forwards;
+    animation-delay: 300ms;
+  }
+}
+
 #edit {
   display: flex;
   flex-direction: column;
@@ -54,54 +96,30 @@
 
   .contributions {
     margin: 20px 0;
+    position: relative;
+
+    .placeholder {
+      color: gray;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      left: 0;
+      user-select: none;
+      z-index: -1;
+
+      &.hidden {
+        display: none;
+      }
+    }
 
     .contribution {
       width: 100%;
-      min-height: 20px;
+      min-height: 26px;
       overflow-wrap: anywhere;
       resize: none;
     }
 
-    #decorator {
-      font-family: 'Merriweather';
-      background-color: #1B1B1B;
-      border-radius: 3px 3px 0px 0px;
-      color: #F4F4F4;
-      opacity: 0;
-      display: none;
-      position: absolute;
-      padding: 8px 8px;
 
-      button {
-        text-align: center;
-        width: 35px;
-        padding: 0 5px;
-        background-color: rgba(0,0,0,0);
-        color: inherit;
-        border: none;
-        font-family: inherit;
-      }
-
-      button[name='header'] {
-        font-size: 1.4em;
-      }
-
-      .line {
-        display: inline-block;
-        background-color: #2A8E3A;
-        height: 15px;
-        width: 1px;
-        position: relative;
-        bottom: 4px;
-      }
-
-      &.show {
-        display: block;
-        animation: decorator-show 300ms linear;
-        animation-fill-mode: forwards;
-        animation-delay: 300ms;
-      }
-    }
   }
 
   #header {
